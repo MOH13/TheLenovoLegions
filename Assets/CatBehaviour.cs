@@ -17,6 +17,8 @@ public class CatBehaviour : MonoBehaviour
     public AudioSource catWalk;
     public AudioSource catMeow;
     public AudioSource catRun;
+    public AudioSource catAttack;
+    public AudioSource catJump;
 
     MyPlayerInput input;
 
@@ -56,7 +58,7 @@ public class CatBehaviour : MonoBehaviour
 
     private bool isGrounded() {
         float extraHeight = 0.1f;
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size - new Vector3(0.1f, 0.1f, 0f), 0f, Vector2.down, extraHeight, platformLayerMask);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, extraHeight, platformLayerMask);
         return raycastHit.collider != null;
     }
 
