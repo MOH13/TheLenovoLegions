@@ -13,6 +13,9 @@ public class CatBehaviour : MonoBehaviour
     public float speed;
     public Rigidbody2D rigidBody;
     private bool onGround;
+    public AudioSource catWalk;
+    public AudioSource catMeow;
+    public AudioSource catRun;
 
     MyPlayerInput input;
 
@@ -33,7 +36,7 @@ public class CatBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground")) {
+        if (collision.CompareTag("Ground")) { // Should improve this, so we only set onGround when cat is on ground and not just touching an object
             onGround = true;
         }
     }
@@ -62,6 +65,7 @@ public class CatBehaviour : MonoBehaviour
     void Update() {
         if (input.Player.Jump.WasPressedThisFrame() && onGround) {
             rigidBody.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
+            catWalk.enabled = false;
         }
     }
 
@@ -70,6 +74,21 @@ public class CatBehaviour : MonoBehaviour
             rigidBody.AddForce(Vector2.down * (speed / 10), ForceMode2D.Impulse);
         }
         var moveDir = input.Player.Move.ReadValue<float>();
-        rigidBody.AddForce(Vector2.right * speed * moveDir * (Time.deltaTime * 60));
+        bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
+        if (moveDir != 0 && onGround)
+        {
+            if (isShiftPressed)
+            {
+                catRun.enabled = true;
+                catWalk.enabled = false;
+            }
+            else
+            {
+                catWalk.enabled = true;
+                catRun.enabled = false;
+            }
+        }
+        var sprintMultiplier = isShiftPressed ? 1.3f : 1;
+        rigidBody.AddForce(Vector2.right * speed * sprintMultiplier * moveDir * (Time.deltaTime * 60));
     }
 }

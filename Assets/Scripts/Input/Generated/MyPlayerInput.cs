@@ -55,6 +55,24 @@ namespace LL.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""37ecd3c8-ccfd-4103-bcf8-af88c0bacf13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shift"",
+                    ""type"": ""Button"",
+                    ""id"": ""cc5147dc-182f-4130-8baa-5f66bc858ab0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +130,28 @@ namespace LL.Input
                     ""action"": ""Dive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13e5f3a1-91dc-42a0-ba61-7b0ad54ecf8e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7a15116-e14e-4dac-b7ac-4405bbd97d46"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -123,6 +163,8 @@ namespace LL.Input
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Dive = m_Player.FindAction("Dive", throwIfNotFound: true);
+            m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+            m_Player_Shift = m_Player.FindAction("Shift", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -187,6 +229,8 @@ namespace LL.Input
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Dive;
+        private readonly InputAction m_Player_Attack;
+        private readonly InputAction m_Player_Shift;
         public struct PlayerActions
         {
             private @MyPlayerInput m_Wrapper;
@@ -194,6 +238,8 @@ namespace LL.Input
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Dive => m_Wrapper.m_Player_Dive;
+            public InputAction @Attack => m_Wrapper.m_Player_Attack;
+            public InputAction @Shift => m_Wrapper.m_Player_Shift;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -212,6 +258,12 @@ namespace LL.Input
                 @Dive.started += instance.OnDive;
                 @Dive.performed += instance.OnDive;
                 @Dive.canceled += instance.OnDive;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+                @Shift.started += instance.OnShift;
+                @Shift.performed += instance.OnShift;
+                @Shift.canceled += instance.OnShift;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -225,6 +277,12 @@ namespace LL.Input
                 @Dive.started -= instance.OnDive;
                 @Dive.performed -= instance.OnDive;
                 @Dive.canceled -= instance.OnDive;
+                @Attack.started -= instance.OnAttack;
+                @Attack.performed -= instance.OnAttack;
+                @Attack.canceled -= instance.OnAttack;
+                @Shift.started -= instance.OnShift;
+                @Shift.performed -= instance.OnShift;
+                @Shift.canceled -= instance.OnShift;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -247,6 +305,8 @@ namespace LL.Input
             void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnDive(InputAction.CallbackContext context);
+            void OnAttack(InputAction.CallbackContext context);
+            void OnShift(InputAction.CallbackContext context);
         }
     }
 }
