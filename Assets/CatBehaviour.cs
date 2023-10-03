@@ -75,20 +75,20 @@ public class CatBehaviour : MonoBehaviour
         }
         var moveDir = input.Player.Move.ReadValue<float>();
         bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
-        if (moveDir != 0 && onGround)
-        {
-            if (isShiftPressed)
-            {
+        if (moveDir != 0 && onGround) {
+            if (isShiftPressed) {
                 catRun.enabled = true;
                 catWalk.enabled = false;
             }
-            else
-            {
+            else {
                 catWalk.enabled = true;
                 catRun.enabled = false;
             }
+        } else {
+            catWalk.enabled = false;
+            catRun.enabled = false;
         }
-        var sprintMultiplier = isShiftPressed ? 1.3f : 1;
+        var sprintMultiplier = isShiftPressed ? 1.3f : 1; // Maybe a variable or something
         rigidBody.AddForce(Vector2.right * speed * sprintMultiplier * moveDir * (Time.deltaTime * 60));
     }
 }
