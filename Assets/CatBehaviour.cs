@@ -43,7 +43,7 @@ public class CatBehaviour : MonoBehaviour
     }
 
     void Update() {
-        if (input.Player.Jump.WasPressedThisFrame() && isGrounded()) {
+        if (input.Player.Jump.WasPerformedThisFrame() && isGrounded()) {
             rigidBody.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
             catWalk.enabled = false;
         }
@@ -67,7 +67,7 @@ public class CatBehaviour : MonoBehaviour
         if (input.Player.Dive.IsPressed()) {
             rigidBody.AddForce(Vector2.down * (speed / 10), ForceMode2D.Impulse);
         }
-        var sprintMultiplier = isShiftPressed ? 1.3f : 1; // Maybe a variable or something
+        var sprintMultiplier = isShiftPressed && isGrounded() ? 1.3f : 1; // Maybe a variable or something
         rigidBody.AddForce(Vector2.right * speed * sprintMultiplier * moveDir * (Time.deltaTime * 60));
     }
 
