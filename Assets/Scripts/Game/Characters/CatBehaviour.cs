@@ -10,7 +10,8 @@ using System;
 
 public class CatBehaviour : MonoBehaviour
 {
-    public float groundSpeed;
+    public float groundAcceleration;
+    public float maxGroundSpeed;
     public float jumpSpeed;
     public float diveSpeed;
     public Rigidbody2D rigidBody;
@@ -46,7 +47,6 @@ public class CatBehaviour : MonoBehaviour
     void Update() {
         if (input.Player.Jump.WasPressedThisFrame() && isGrounded()) {
             rigidBody.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
-            Debug.Log("jumped");
             catWalk.enabled = false;
         }
         if (input.Player.Dive.WasPressedThisFrame())
@@ -71,7 +71,10 @@ public class CatBehaviour : MonoBehaviour
     private void handleMovement(bool isShiftPressed, float moveDir)
     {
         var sprintMultiplier = isShiftPressed && isGrounded() ? 1.3f : 1; // Maybe a variable or something
-        rigidBody.AddForce(Vector2.right * groundSpeed * sprintMultiplier * moveDir * Time.deltaTime);
+        var acceleration = Vector2.right * groundAcceleration * sprintMultiplier * moveDir * Time.deltaTime;
+        if (rigidBody.velocity.x < maxGroundSpeed) {
+            rigidBody.AddForce(acceleration);
+        }
     }
 
     private void handleMovementSounds(bool isShiftPressed, float moveDir)
