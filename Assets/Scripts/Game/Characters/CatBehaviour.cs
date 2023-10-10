@@ -7,6 +7,9 @@ using LL.Input;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem.Composites;
 using System;
+using LL.Framework.Stats;
+using System.ComponentModel;
+using LL.Game.Stats;
 
 public class CatBehaviour : MonoBehaviour
 {
@@ -22,12 +25,16 @@ public class CatBehaviour : MonoBehaviour
     public AudioSource catRun;
     public AudioSource catAttack;
     public AudioSource catJump;
+    public LiveStatsBehavior stats;
+    public StatResource moveSpeed;
+  
 
     MyPlayerInput input;
 
     private void OnEnable()
     {
         input.Player.Enable();
+        
     }
     private void OnDisable()
     {
@@ -39,6 +46,7 @@ public class CatBehaviour : MonoBehaviour
         input = new MyPlayerInput();
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider2d = GetComponent<BoxCollider2D>();
+        stats = GetComponent<LiveStatsBehavior>();
     }
 
     void Start() {
@@ -71,7 +79,7 @@ public class CatBehaviour : MonoBehaviour
     private void handleMovement(bool isShiftPressed, float moveDir)
     {
         var sprintMultiplier = isShiftPressed && isGrounded() ? 1.3f : 1; // Maybe a variable or something
-        var acceleration = Vector2.right * groundAcceleration * sprintMultiplier * moveDir * Time.deltaTime;
+        var acceleration = Vector2.right * stats.GetValue(moveSpeed) * sprintMultiplier * moveDir * Time.deltaTime;
         if (rigidBody.velocity.x < maxGroundSpeed) {
             rigidBody.AddForce(acceleration);
         }
