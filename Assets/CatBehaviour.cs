@@ -10,7 +10,9 @@ using System;
 
 public class CatBehaviour : MonoBehaviour
 {
-    public float speed;
+    public float groundSpeed;
+    public float jumpSpeed;
+    public float diveSpeed;
     public Rigidbody2D rigidBody;
     [SerializeField] private LayerMask platformLayerMask;
     public BoxCollider2D boxCollider2d;
@@ -39,13 +41,17 @@ public class CatBehaviour : MonoBehaviour
     }
 
     void Start() {
-        speed = 5;
     }
 
     void Update() {
-        if (input.Player.Jump.WasPerformedThisFrame() && isGrounded()) {
-            rigidBody.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
+        if (input.Player.Jump.WasPressedThisFrame() && isGrounded()) {
+            rigidBody.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+            Debug.Log("jumped");
             catWalk.enabled = false;
+        }
+        if (input.Player.Dive.WasPressedThisFrame())
+        {
+            rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
         }
     }
 
@@ -64,11 +70,8 @@ public class CatBehaviour : MonoBehaviour
 
     private void handleMovement(bool isShiftPressed, float moveDir)
     {
-        if (input.Player.Dive.IsPressed()) {
-            rigidBody.AddForce(Vector2.down * (speed / 10), ForceMode2D.Impulse);
-        }
         var sprintMultiplier = isShiftPressed && isGrounded() ? 1.3f : 1; // Maybe a variable or something
-        rigidBody.AddForce(Vector2.right * speed * sprintMultiplier * moveDir * (Time.deltaTime * 60));
+        rigidBody.AddForce(Vector2.right * groundSpeed * sprintMultiplier * moveDir * Time.deltaTime);
     }
 
     private void handleMovementSounds(bool isShiftPressed, float moveDir)
