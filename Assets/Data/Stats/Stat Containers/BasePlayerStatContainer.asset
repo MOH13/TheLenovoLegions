@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3323fb693b3e14198b5070ca3ebf60, type: 3}
+  m_Name: BasePlayerStatContainer
+  m_EditorClassIdentifier: 
+  statEntries:
+  - <Stat>k__BackingField: {fileID: 11400000, guid: f3191b3b8e5ed9844ac361306d66be9e, type: 2}
+    <BaseValue>k__BackingField: 5
+  - <Stat>k__BackingField: {fileID: 11400000, guid: b0521dc1bb4c48640a99d7e0da32b989, type: 2}
+    <BaseValue>k__BackingField: 6
+  - <Stat>k__BackingField: {fileID: 11400000, guid: e9ac5ade83376ee4d884e9658d3688e3, type: 2}
+    <BaseValue>k__BackingField: 5
+  - <Stat>k__BackingField: {fileID: 11400000, guid: 66a759c67f725cf439f3c202f409ee00, type: 2}
+    <BaseValue>k__BackingField: 5
+  - <Stat>k__BackingField: {fileID: 11400000, guid: 4362ead050ada5e489cd69960c44b7d7, type: 2}
+    <BaseValue>k__BackingField: 5
+  - <Stat>k__BackingField: {fileID: 11400000, guid: 6166c39d270ba164d86750dd0dd1c847, type: 2}
+    <BaseValue>k__BackingField: 5
+  - <Stat>k__BackingField: {fileID: 11400000, guid: 8ef0cbbd980311b4194a519482054070, type: 2}
+    <BaseValue>k__BackingField: 5
+  - <Stat>k__BackingField: {fileID: 11400000, guid: 3fd52e7388569204d89161c6d1e7e5fc, type: 2}
+    <BaseValue>k__BackingField: 5
