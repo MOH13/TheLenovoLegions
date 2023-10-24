@@ -13,10 +13,14 @@ using LL.Game.Stats;
 
 public class CatBehaviour : MonoBehaviour
 {
-    public float groundAcceleration;
+    public float baseAcceleration;
+    public float baseSprintMultiplier;
     public float maxGroundSpeed;
     public float jumpSpeed;
     public float diveSpeed;
+    public float health;
+    public float damage;
+    public float airAcceleration;
     public Rigidbody2D rigidBody;
     [SerializeField] private LayerMask platformLayerMask;
     public BoxCollider2D boxCollider2d;
@@ -27,6 +31,13 @@ public class CatBehaviour : MonoBehaviour
     public AudioSource catJump;
     public LiveStatsBehavior stats;
     public StatResource moveSpeed;
+    public StatResource climbing;
+    public StatResource sneak;
+    public StatResource vitality;
+    public StatResource jumpForce;
+    public StatResource ferocity;
+    public StatResource nightVision;
+    public StatResource airControl;
   
 
     MyPlayerInput input;
@@ -47,6 +58,8 @@ public class CatBehaviour : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
+        health += stats.GetValue(vitality);
+        damage += stats.GetValue(ferocity);
     }
 
     void Start() {
@@ -54,13 +67,14 @@ public class CatBehaviour : MonoBehaviour
 
     void Update() {
         if (input.Player.Jump.WasPressedThisFrame() && isGrounded()) {
-            rigidBody.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+            rigidBody.AddForce(Vector2.up * jumpSpeed * stats.GetValue(jumpForce), ForceMode2D.Impulse);
             catWalk.enabled = false;
         }
         if (input.Player.Dive.WasPressedThisFrame())
         {
             rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
         }
+        handleCombat();
     }
 
     private void FixedUpdate() {
@@ -78,10 +92,14 @@ public class CatBehaviour : MonoBehaviour
 
     private void handleMovement(bool isShiftPressed, float moveDir)
     {
-        var sprintMultiplier = isShiftPressed && isGrounded() ? 1.3f : 1; // Maybe a variable or something
-        var acceleration = Vector2.right * stats.GetValue(moveSpeed) * sprintMultiplier * moveDir * Time.deltaTime;
-        if (rigidBody.velocity.x < maxGroundSpeed) {
-            rigidBody.AddForce(acceleration);
+        if (isGrounded() && rigidBody.velocity.magnitude < maxGroundSpeed) {
+            var sprintMultiplier = isShiftPressed && isGrounded() ? baseSprintMultiplier : 1; // Maybe a variable or something
+            var groundAcceleration = Vector2.right * stats.GetValue(moveSpeed) * baseAcceleration * sprintMultiplier * moveDir * Time.deltaTime;
+            rigidBody.AddForce(groundAcceleration);
+        }
+        else if (!isGrounded()) {
+            var airAcceleration = Vector2.right * stats.GetValue(airControl) * baseAcceleration * moveDir * Time.deltaTime;
+            rigidBody.AddForce(airAcceleration);
         }
     }
 
@@ -106,4 +124,15 @@ public class CatBehaviour : MonoBehaviour
             catRun.enabled = false;
         }
     }
+
+    private void handleCombat() {
+        if (health <= 0) {
+            exitGame();
+        }
+        if (input.Player.Attack.WasPressedThisFrame()) {
+            
+        }
+    }
+
+    private void exitGame() { }
 }

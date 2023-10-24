@@ -20,7 +20,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: e9ac5ade83376ee4d884e9658d3688e3, type: 2}
     <BaseValue>k__BackingField: 5
   - stat: {fileID: 11400000, guid: 66a759c67f725cf439f3c202f409ee00, type: 2}
-    <BaseValue>k__BackingField: 5
+    <BaseValue>k__BackingField: 2
   - stat: {fileID: 11400000, guid: 4362ead050ada5e489cd69960c44b7d7, type: 2}
     <BaseValue>k__BackingField: 5
   - stat: {fileID: 11400000, guid: 6166c39d270ba164d86750dd0dd1c847, type: 2}
