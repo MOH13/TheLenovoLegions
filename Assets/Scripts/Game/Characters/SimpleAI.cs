@@ -1,3 +1,4 @@
+using LL.Game.Stats;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,13 @@ public class SimpleAI : MonoBehaviour
     public float speed;
     public float chaseDistance; // chasing starts at this distance
     private float distance;
+    public float sneakFactor;
+    public CatBehaviour catBehaviour;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        catBehaviour.stats.GetValue(catBehaviour.sneak);
     }
 
     // Update is called once per frame
@@ -23,7 +26,7 @@ public class SimpleAI : MonoBehaviour
         distance = Vector2.Distance(aiPosition, mainCharacterPosition);
         Vector2 direction = (mainCharacterPosition - aiPosition);
         direction.Normalize();
-        if (distance < chaseDistance)
+        if (distance < chaseDistance - sneakFactor)
         {
             transform.position = Vector2.MoveTowards(aiPosition, mainCharacterPosition, speed * Time.deltaTime);
         }
