@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using LL.Framework.Stats;
+using LL.Game.Equipment;
 using UnityEngine;
 
 namespace LL.Framework.Equipment
