@@ -16,11 +16,8 @@ public class CatBehaviour : MonoBehaviour
     public float baseAcceleration;
     public float baseSprintMultiplier;
     public float maxGroundSpeed;
-    public float jumpSpeed;
     public float diveSpeed;
     public float health;
-    public float damage;
-    public float airAcceleration;
     public Rigidbody2D rigidBody;
     [SerializeField] private LayerMask platformLayerMask;
     public BoxCollider2D boxCollider2d;
@@ -58,8 +55,7 @@ public class CatBehaviour : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
-        health += stats.GetValue(vitality);
-        damage += stats.GetValue(ferocity);
+        health = stats.GetValue(vitality);
     }
 
     void Start() {
@@ -67,7 +63,7 @@ public class CatBehaviour : MonoBehaviour
 
     void Update() {
         if (input.Player.Jump.WasPressedThisFrame() && isGrounded()) {
-            rigidBody.AddForce(Vector2.up * jumpSpeed * stats.GetValue(jumpForce), ForceMode2D.Impulse);
+            rigidBody.AddForce(Vector2.up * stats.GetValue(jumpForce), ForceMode2D.Impulse);
             catWalk.enabled = false;
         }
         if (input.Player.Dive.WasPressedThisFrame())
@@ -75,13 +71,17 @@ public class CatBehaviour : MonoBehaviour
             rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
         }
         handleCombat();
-    }
-
-    private void FixedUpdate() {
         var moveDir = input.Player.Move.ReadValue<float>();
         bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
         handleMovementSounds(isShiftPressed, moveDir);
         handleMovement(isShiftPressed, moveDir);
+    }
+
+    private void FixedUpdate() {
+        //var moveDir = input.Player.Move.ReadValue<float>();
+        //bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
+        //handleMovementSounds(isShiftPressed, moveDir);
+        //handleMovement(isShiftPressed, moveDir);
     }
 
     private bool isGrounded() {
