@@ -45,15 +45,27 @@ namespace LL.Framework.Equipment
         public TEquipment? Equip(TEquipment piece)
         {
             var slots = Container.GetSlots();
+            int? firstCompatible = null;
             for (int i = 0; i < slots.Length; i++)
             {
                 var slot = slots[i].Slot;
                 if (slot.SlotName == piece.Slot.SlotName)
                 {
                     var previous = Equipment[i];
-                    Equipment[i] = piece;
-                    return previous;
+                    if (previous == null)
+                    {
+                        Equipment[i] = piece;
+                        return default;
+                    }
+                    firstCompatible ??= i;
                 }
+            }
+
+            if (firstCompatible != null)
+            {
+                var previous = Equipment[(int)firstCompatible];
+                Equipment[(int)firstCompatible] = piece;
+                return previous;
             }
             throw new ArgumentException($"Had no slot for equipment '{piece.EquipmentName}' of slot type '{piece.Slot.SlotName}'");
         }

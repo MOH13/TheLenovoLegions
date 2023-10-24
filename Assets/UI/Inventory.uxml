@@ -1,0 +1,43 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/LLBaseUSS.uss?fileID=7433441132597879392&amp;guid=94e24d03a1321d644878af3cf87cb57a&amp;type=3#LLBaseUSS" />
+    <ui:VisualElement name="Anchor" style="flex-direction: row-reverse; height: 100%;">
+        <LL.UI.TooltipShowerElement>
+            <ui:VisualElement name="panel" style="background-color: rgb(140, 140, 140); height: 100%; width: 330px; padding-top: 15px; padding-bottom: 15px; padding-left: 15px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+                <ui:ScrollView style="flex-grow: 1;">
+                    <ui:Label tabindex="-1" text="&lt;b&gt;Equipment&lt;/b&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="equipment-label" />
+                    <ui:VisualElement name="equipment-slots" style="flex-direction: row; flex-wrap: wrap;">
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="&lt;b&gt;Inventory&lt;/b&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="inventory-label" />
+                    <ui:VisualElement name="inventory-items" style="flex-grow: 0; flex-direction: row; flex-wrap: wrap;">
+                        <LL.UI.EquipmentVisualElement />
+                        <LL.UI.EquipmentVisualElement />
+                        <LL.UI.EquipmentVisualElement />
+                        <LL.UI.EquipmentVisualElement />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="stats-overview" focusable="true" style="flex-grow: 1;">
+                        <ui:Label tabindex="-1" text="&lt;b&gt;Cattributes&lt;b&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="stats-label" />
+                        <ui:VisualElement style="flex-direction: row;">
+                            <ui:VisualElement name="stats-names" style="flex-grow: 1; width: 50%;">
+                                <ui:Label tabindex="-1" text="Mystat1" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                                <ui:Label tabindex="-1" text="Mystat2" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="stats-values" style="flex-grow: 1; width: 50%;">
+                                <ui:Label tabindex="-1" text="10 (+2)" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                                <ui:Label tabindex="-1" text="20 (+10)" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+                <ui:Button text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="close-button" style="position: absolute; right: 0; top: 0;" />
+            </ui:VisualElement>
+        </LL.UI.TooltipShowerElement>
+    </ui:VisualElement>
+</ui:UXML>
