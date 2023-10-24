@@ -25,7 +25,7 @@ namespace LL.Game.Equipment.Editor
 
                 if (inventoryFoldout)
                 {
-                    pieceToAdd = (EquipmentResource?)EditorGUILayout.ObjectField("Effect to add", pieceToAdd, typeof(EquipmentResource), false);
+                    pieceToAdd = (EquipmentResource?)EditorGUILayout.ObjectField("Equipment to add", pieceToAdd, typeof(EquipmentResource), false);
 
                     if (GUILayout.Button("Add") && pieceToAdd != null)
                     {

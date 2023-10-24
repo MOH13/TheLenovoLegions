@@ -6,6 +6,8 @@ namespace LL.Game.Equipment
 {
     public class InventoryBehavior : MonoBehaviour, IInventory<StatResource, EffectResource, EquipmentSlotResource, EquipmentResource, LiveEquipmentBehavior>
     {
+        public SlotContainerResource Container => inventory.CurrentEquipment.Container;
+
         [SerializeField]
         Inventory<StatResource, EffectResource, EquipmentSlotResource, EquipmentResource, LiveEquipmentBehavior> inventory;
 
