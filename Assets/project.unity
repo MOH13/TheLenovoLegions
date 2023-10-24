@@ -746,6 +746,7 @@ GameObject:
   - component: {fileID: 1231871879}
   - component: {fileID: 1231871878}
   - component: {fileID: 1231871877}
+  - component: {fileID: 1231871884}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -912,7 +913,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836d7b4e69eda2344be5197c1ae43a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  groundAcceleration: 500
+  maxGroundSpeed: 5
+  jumpSpeed: 5
+  diveSpeed: 2
   rigidBody: {fileID: 1231871880}
   platformLayerMask:
     serializedVersion: 2
@@ -923,6 +927,8 @@ MonoBehaviour:
   catRun: {fileID: 2053280712}
   catAttack: {fileID: 0}
   catJump: {fileID: 0}
+  stats: {fileID: 0}
+  MoveSpeed: {fileID: 11400000, guid: f3191b3b8e5ed9844ac361306d66be9e, type: 2}
 --- !u!212 &1231871882
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -990,6 +996,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 791831648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.002}
+--- !u!114 &1231871884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231871875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d89d8ad0a481f3448feda03145c6b07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+    <Container>k__BackingField: {fileID: 11400000, guid: ba2dd2f619898c2429ad46b1ab78732c, type: 2}
 --- !u!1 &1257230150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,6 +1022,7 @@ GameObject:
   - component: {fileID: 1257230153}
   - component: {fileID: 1257230152}
   - component: {fileID: 1257230151}
+  - component: {fileID: 1257230155}
   m_Layer: 0
   m_Name: Main camera
   m_TagString: Untagged
@@ -1096,7 +1117,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.924884
+  orthographic size: 9.413612
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1121,12 +1142,27 @@ Transform:
   m_GameObject: {fileID: 1257230150}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.53, y: -24.87, z: -10.148484}
+  m_LocalPosition: {x: -38.18, y: -26.5, z: -10.148484}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1257230155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257230150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ac9d1871d8f894ba594c0ad7adc356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1231871883}
+  offset: {x: 0, y: 0, z: -5}
+  smoothTime: 0.5
 --- !u!1 &1360669674
 GameObject:
   m_ObjectHideFlags: 0
