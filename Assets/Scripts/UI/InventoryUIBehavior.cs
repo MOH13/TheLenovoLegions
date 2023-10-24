@@ -26,20 +26,20 @@ namespace LL.UI
 
         private class Logic
         {
-            InventoryBehavior inventory;
+            readonly InventoryBehavior inventory;
 
-            LiveStatsBehavior stats;
+            readonly LiveStatsBehavior stats;
 
-            VisualElement equipmentRoot;
-            List<SlotVisualElement> slotElements;
+            readonly VisualElement equipmentRoot;
+            readonly List<SlotVisualElement> slotElements;
 
-            VisualElement inventoryRoot;
-            List<EquipmentVisualElement> inventoryElements;
+            readonly VisualElement inventoryRoot;
+            readonly List<EquipmentVisualElement> inventoryElements;
 
             EquipmentVisualElement? selectedInventoryElement;
 
-            List<Label> statValueLabels;
-            List<float> previousStatValues;
+            readonly List<Label> statValueLabels;
+            readonly List<float> previousStatValues;
 
             public Logic(InventoryBehavior inventory, LiveStatsBehavior stats, UIDocument document, Action closeAction)
             {
@@ -252,7 +252,7 @@ namespace LL.UI
             logic = new(inventory, stats, document, () => gameObject.SetActive(false));
         }
 
-        void Update()
+        void LateUpdate()
         {
             Refresh();
         }

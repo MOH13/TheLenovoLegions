@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/USS/LLBaseUSS.uss?fileID=7433441132597879392&amp;guid=94e24d03a1321d644878af3cf87cb57a&amp;type=3#LLBaseUSS" />
-    <ui:VisualElement name="Anchor" style="flex-direction: row-reverse; height: 100%;">
+    <ui:VisualElement name="Anchor" picking-mode="Ignore" style="flex-direction: row-reverse; height: 100%;">
         <LL.UI.TooltipShowerElement>
             <ui:VisualElement name="panel" style="background-color: rgb(140, 140, 140); height: 100%; width: 330px; padding-top: 15px; padding-bottom: 15px; padding-left: 15px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
                 <ui:ScrollView style="flex-grow: 1;">

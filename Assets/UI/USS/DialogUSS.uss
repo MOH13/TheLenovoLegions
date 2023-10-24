@@ -1,0 +1,25 @@
+#panel-container {
+    width: 100%;
+}
+
+.dialog-left #panel-container {
+    width: 50%;
+    align-self: flex-start;
+}
+
+.dialog-right #panel-container {
+    width: 50%;
+    align-self: flex-end;
+}
+
+.dialog-center #panel-container {
+    width: 100%;
+}
+
+.dialog-bottom #Anchor {
+    flex-direction: column-reverse;
+}
+
+.dialog-top #Anchor {
+    flex-direction: column;
+}
