@@ -13,7 +13,7 @@ public class EnemyBehaviour : MonoBehaviour
     public float attackCooldown;
     public float currentAttackCooldown;
     public float acceleration;
-    private bool dirRight;
+    private Vector2 direction;
     public Transform attackLocation;
     public LayerMask player;
     public Rigidbody2D rigidBody;
@@ -32,7 +32,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        dirRight = true;
+        direction = Vector2.right;
     }
 
     // Update is called once per frame
@@ -41,7 +41,6 @@ public class EnemyBehaviour : MonoBehaviour
         if (currentAttackCooldown <= 0) {
             Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player); // fix so attackLocation corresponds to the way it is "looking"
             if (hit != null) {
-                // More optimal way to do this rather than getting component every time?
                 hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
                 currentAttackCooldown = attackCooldown;
             }
@@ -49,18 +48,17 @@ public class EnemyBehaviour : MonoBehaviour
         else {
             currentAttackCooldown -= Time.deltaTime;
         }
-        if (dirRight)
+            transform.Translate(direction * acceleration * Time.deltaTime);
+    }
+    private void OnCollisionEnter2D(Collision2D collision){
+        if (transform.position.x < collision.GetContact(0).point.x)
         {
-            transform.Translate(Vector2.right * acceleration * Time.deltaTime);
+            Debug.Log("collision from right");
+            direction = Vector2.left;
         }
         else {
-            transform.Translate(Vector2.left * acceleration * Time.deltaTime);
+            direction = Vector2.right;
+            Debug.Log("collision from left");
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    { // should be colission with a "wall type"
-        if (false)
-        dirRight = !dirRight;   
     }
 }
