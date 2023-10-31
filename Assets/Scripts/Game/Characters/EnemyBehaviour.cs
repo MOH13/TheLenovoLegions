@@ -16,6 +16,7 @@ public class EnemyBehaviour : MonoBehaviour
     private Vector2 direction;
     public Transform attackLocation;
     public LayerMask player;
+    public LayerMask platform;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
 
@@ -49,16 +50,19 @@ public class EnemyBehaviour : MonoBehaviour
             currentAttackCooldown -= Time.deltaTime;
         }
             transform.Translate(direction * acceleration * Time.deltaTime);
-    }
-    private void OnCollisionEnter2D(Collision2D collision){
-        if (transform.position.x < collision.GetContact(0).point.x)
+        float extraDist = 0.01f;
+        Vector3 size = new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y * 0.99f); // make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
+        RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, platform);
+        RaycastHit2D rightCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.right, extraDist, platform);
+        if (leftCollision.collider != null)
         {
-            Debug.Log("collision from right");
+            Debug.Log("hello");
+            direction = Vector2.right;
+        }
+        else if (rightCollision.collider != null) {
+            Debug.Log("hello2");
             direction = Vector2.left;
         }
-        else {
-            direction = Vector2.right;
-            Debug.Log("collision from left");
-        }
+
     }
 }
