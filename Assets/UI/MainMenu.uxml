@@ -1,3 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1;" />
+    <Style src="project://database/Assets/UI/MainMenuStyles.uss?fileID=7433441132597879392&amp;guid=35142171ba690614a89082dd2f7a97dc&amp;type=3#MainMenuStyles" />
+    <ui:VisualElement name="LeftSection" style="flex-grow: 1; width: 45%; left: 50px; background-color: rgba(0, 0, 0, 0.74); justify-content: flex-start; align-items: center; align-self: auto;">
+        <ui:VisualElement style="flex-grow: 1; height: auto; max-height: 33%; min-height: 0;">
+            <ui:Label tabindex="-1" text="Purrsuit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" style="-unity-font: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=2af15c4c41c297345bf05eaf46b70ac6&amp;type=3#NotInter-Regular&apos;); color: rgb(188, 131, 10); -unity-font-style: bold-and-italic; font-size: 100px; -unity-text-align: upper-center; top: 35%; bottom: auto;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Buttons" style="flex-grow: 1; flex-direction: column; position: relative; align-items: stretch; justify-content: center; width: auto; align-self: auto; -unity-text-align: upper-left; height: 340px; padding-bottom: 20%; -unity-font-style: bold; word-spacing: 0;">
+            <ui:Button text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayButton" class="menu-button" />
+            <ui:Button text="Levels" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LevelsButton" class="menu-button" />
+            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsButton" class="menu-button" />
+            <ui:Button text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Exit" class="menu-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>
