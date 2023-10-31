@@ -16,12 +16,15 @@ public class CatBehaviour : MonoBehaviour
     public float baseAcceleration;
     public float baseSprintMultiplier;
     public float maxGroundSpeed;
-    public float jumpSpeed;
     public float diveSpeed;
     public float health;
-    public float damage;
-    public float airAcceleration;
+    public float attackCooldown;
+    public float currentAttackCooldown;
+    public float attackRange;
+    public float attackDamage;
+    public Transform attackLocation;
     public Rigidbody2D rigidBody;
+    [SerializeField] private LayerMask enemies;
     [SerializeField] private LayerMask platformLayerMask;
     public BoxCollider2D boxCollider2d;
     public AudioSource catWalk;
@@ -58,8 +61,7 @@ public class CatBehaviour : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
-        health += stats.GetValue(vitality);
-        damage += stats.GetValue(ferocity);
+        health = stats.GetValue(vitality);
     }
 
     void Start() {
@@ -67,7 +69,7 @@ public class CatBehaviour : MonoBehaviour
 
     void Update() {
         if (input.Player.Jump.WasPressedThisFrame() && isGrounded()) {
-            rigidBody.AddForce(Vector2.up * jumpSpeed * stats.GetValue(jumpForce), ForceMode2D.Impulse);
+            rigidBody.AddForce(Vector2.up * stats.GetValue(jumpForce), ForceMode2D.Impulse);
             catWalk.enabled = false;
         }
         if (input.Player.Dive.WasPressedThisFrame())
@@ -75,13 +77,17 @@ public class CatBehaviour : MonoBehaviour
             rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
         }
         handleCombat();
-    }
-
-    private void FixedUpdate() {
         var moveDir = input.Player.Move.ReadValue<float>();
         bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
         handleMovementSounds(isShiftPressed, moveDir);
         handleMovement(isShiftPressed, moveDir);
+    }
+
+    private void FixedUpdate() {
+        //var moveDir = input.Player.Move.ReadValue<float>();
+        //bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
+        //handleMovementSounds(isShiftPressed, moveDir);
+        //handleMovement(isShiftPressed, moveDir);
     }
 
     private bool isGrounded() {
@@ -126,13 +132,32 @@ public class CatBehaviour : MonoBehaviour
     }
 
     private void handleCombat() {
+        // Needs animation
         if (health <= 0) {
-            exitGame();
+            restartGame();
+            Destroy(gameObject);
         }
-        if (input.Player.Attack.WasPressedThisFrame()) {
-            
+        if (input.Player.Attack.WasPressedThisFrame())
+        {
+            if (currentAttackCooldown <= 0)
+            {
+                Collider2D[] damage = Physics2D.OverlapCircleAll(attackLocation.position, attackRange, enemies);
+                foreach (Collider2D collision in damage)
+                {
+                    collision.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
+                }
+            }
+            currentAttackCooldown = attackCooldown;
+
+        }
+        else {
+            currentAttackCooldown -= Time.deltaTime;
         }
     }
 
-    private void exitGame() { }
+    public void takeDamage(float damage) {
+        health -= damage;
+    }
+
+    private void restartGame() { }
 }
