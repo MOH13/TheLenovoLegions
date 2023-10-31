@@ -21,6 +21,7 @@ public class CatBehaviour : MonoBehaviour
     public float attackCooldown;
     public float currentAttackCooldown;
     public float attackRange;
+    public float attackDamage;
     public Transform attackLocation;
     public Rigidbody2D rigidBody;
     [SerializeField] private LayerMask enemies;
@@ -134,6 +135,7 @@ public class CatBehaviour : MonoBehaviour
         // Needs animation
         if (health <= 0) {
             restartGame();
+            Destroy(gameObject);
         }
         if (input.Player.Attack.WasPressedThisFrame())
         {
@@ -142,7 +144,7 @@ public class CatBehaviour : MonoBehaviour
                 Collider2D[] damage = Physics2D.OverlapCircleAll(attackLocation.position, attackRange, enemies);
                 foreach (Collider2D collision in damage)
                 {
-                    Destroy(collision.gameObject); // change to reduce health instead
+                    collision.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
                 }
             }
             currentAttackCooldown = attackCooldown;
@@ -151,6 +153,10 @@ public class CatBehaviour : MonoBehaviour
         else {
             currentAttackCooldown -= Time.deltaTime;
         }
+    }
+
+    public void takeDamage(float damage) {
+        health -= damage;
     }
 
     private void restartGame() { }
