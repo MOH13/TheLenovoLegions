@@ -41,6 +41,7 @@ public class CatBehaviour : MonoBehaviour
     public StatResource ferocity;
     public StatResource nightVision;
     public StatResource airControl;
+    private float groundTimer;
   
 
     MyPlayerInput input;
@@ -68,6 +69,7 @@ public class CatBehaviour : MonoBehaviour
     }
 
     void Update() {
+        groundCheck();
         if (input.Player.Jump.WasPressedThisFrame() && isGrounded()) {
             rigidBody.AddForce(Vector2.up * stats.GetValue(jumpForce), ForceMode2D.Impulse);
             catWalk.enabled = false;
@@ -81,6 +83,7 @@ public class CatBehaviour : MonoBehaviour
         bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
         handleMovementSounds(isShiftPressed, moveDir);
         handleMovement(isShiftPressed, moveDir);
+        groundTimer += Time.deltaTime;
     }
 
     private void FixedUpdate() {
@@ -90,10 +93,16 @@ public class CatBehaviour : MonoBehaviour
         //handleMovement(isShiftPressed, moveDir);
     }
 
-    private bool isGrounded() {
+    private void groundCheck() {
         float extraHeight = 0.1f;
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, extraHeight, platformLayerMask);
-        return raycastHit.collider != null;
+        if (raycastHit.collider != null) {
+            groundTimer = 0;
+        }
+    }
+
+    private bool isGrounded() {
+        return groundTimer < 1;
     }
 
     private void handleMovement(bool isShiftPressed, float moveDir)
