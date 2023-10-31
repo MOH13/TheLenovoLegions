@@ -18,7 +18,12 @@ public class CatBehaviour : MonoBehaviour
     public float maxGroundSpeed;
     public float diveSpeed;
     public float health;
+    public float attackCooldown;
+    public float currentAttackCooldown;
+    public float attackRange;
+    public Transform attackLocation;
     public Rigidbody2D rigidBody;
+    [SerializeField] private LayerMask enemies;
     [SerializeField] private LayerMask platformLayerMask;
     public BoxCollider2D boxCollider2d;
     public AudioSource catWalk;
@@ -126,13 +131,27 @@ public class CatBehaviour : MonoBehaviour
     }
 
     private void handleCombat() {
+        // Needs animation
         if (health <= 0) {
-            exitGame();
+            restartGame();
         }
-        if (input.Player.Attack.WasPressedThisFrame()) {
-            
+        if (input.Player.Attack.WasPressedThisFrame())
+        {
+            if (currentAttackCooldown <= 0)
+            {
+                Collider2D[] damage = Physics2D.OverlapCircleAll(attackLocation.position, attackRange, enemies);
+                foreach (Collider2D collision in damage)
+                {
+                    Destroy(collision.gameObject); // change to reduce health instead
+                }
+            }
+            currentAttackCooldown = attackCooldown;
+
+        }
+        else {
+            currentAttackCooldown -= Time.deltaTime;
         }
     }
 
-    private void exitGame() { }
+    private void restartGame() { }
 }
