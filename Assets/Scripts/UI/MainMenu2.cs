@@ -10,7 +10,7 @@ public class MainMenu2 : MonoBehaviour
     private Button _playButton;
     private Button _exitButton;
     private Button _levelsButton;
-    private Button _settingsButton;
+    // private Button _settingsButton;
     
     [SerializeField] private VisualTreeAsset _levelsButtonsTemplate;
     private VisualElement _levelsButtons;
@@ -25,7 +25,7 @@ public class MainMenu2 : MonoBehaviour
         _exitButton = _document.rootVisualElement.Q<Button>("ExitButton");
         _exitButton.clicked += OnExitButton;
 
-        _settingsButton = _document.rootVisualElement.Q<Button>("SettingsButton");
+        //_settingsButton = _document.rootVisualElement.Q<Button>("SettingsButton");
 
         _buttonsWrapper = _document.rootVisualElement.Q<VisualElement>("Buttons");
         _levelsButton = _document.rootVisualElement.Q<Button>("LevelsButton");
@@ -86,7 +86,7 @@ public class MainMenu2 : MonoBehaviour
         _buttonsWrapper.Clear();
         _buttonsWrapper.Add(_playButton);
         _buttonsWrapper.Add(_levelsButton);
-        _buttonsWrapper.Add(_settingsButton);
+        // _buttonsWrapper.Add(_settingsButton);
         _buttonsWrapper.Add(_exitButton);
     }
 
