@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainMenuStyles.uss?fileID=7433441132597879392&amp;guid=35142171ba690614a89082dd2f7a97dc&amp;type=3#MainMenuStyles" />
+    <ui:VisualElement name="Wrapper" style="flex-grow: 1; -unity-font-definition: initial;">
+        <ui:Button text="Level 1 " parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level1Button" class="menu-button" style="-unity-font-style: normal;" />
+        <ui:Button text="Level 2" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level2Button" class="menu-button" style="-unity-font-style: normal;" />
+        <ui:Button text="Level 3" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Level3Button" class="menu-button" style="-unity-font-style: normal;" />
+        <ui:Button text="Back" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BackButton" class="menu-button" style="-unity-font-style: normal;" />
+    </ui:VisualElement>
+</ui:UXML>
