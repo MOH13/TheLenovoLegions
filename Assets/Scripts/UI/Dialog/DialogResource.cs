@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LL.UI.Dialog
@@ -21,22 +22,22 @@ namespace LL.UI.Dialog
     public struct DialogFrame
     {
         [field: SerializeField]
-        public string Text { get; private set; }
+        public string Text { get; set; }
 
         [field: SerializeField]
-        public Texture2D LeftIcon { get; private set; }
+        public Texture2D? LeftIcon { get; set; }
 
         [field: SerializeField]
-        public Texture2D RightIcon { get; private set; }
+        public Texture2D? RightIcon { get; set; }
 
         [field: SerializeField]
-        public AudioClip Audio { get; private set; }
+        public AudioClip Audio { get; set; }
 
         [field: SerializeField]
-        public DialogPositionHorizontal PositionHorizontal { get; private set; }
+        public DialogPositionHorizontal PositionHorizontal { get; set; }
 
         [field: SerializeField]
-        public DialogPositionVertical PositionVertical { get; private set; }
+        public DialogPositionVertical PositionVertical { get; set; }
     }
 
     [CreateAssetMenu(fileName = "Dialog", menuName = "UI/Dialog", order = 10)]
@@ -46,6 +47,13 @@ namespace LL.UI.Dialog
 
         [SerializeField]
         DialogFrame[] frames;
+
+        public static DialogResource Create(DialogFrame[] frames)
+        {
+            var dialog = CreateInstance<DialogResource>();
+            dialog.frames = frames;
+            return dialog;
+        }
     }
 }
 

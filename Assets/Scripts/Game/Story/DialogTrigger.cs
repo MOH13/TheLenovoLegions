@@ -3,29 +3,39 @@ using System.Collections.Generic;
 using LL.UI.Dialog;
 using UnityEngine;
 
-public class DialogTrigger : MonoBehaviour
+namespace LL.Game.Story
 {
-    [SerializeField]
-    DialogUIBehavior dialogUI;
-
-    [SerializeField]
-    LayerMask layerMask;
-
-    [SerializeField]
-    DialogResource dialog;
-
-    [SerializeField]
-    bool onlyShowOnce = true;
-
-    void OnTriggerEnter2D(Collider2D col)
+    public class DialogTrigger : MonoBehaviour
     {
-        if ((col.gameObject.layer | layerMask) != 0)
+        [SerializeField]
+        DialogUIBehavior dialogUI;
+
+        [SerializeField]
+        LayerMask layerMask;
+
+        [SerializeField]
+        DialogResource dialog;
+
+        [SerializeField]
+        bool onlyShowOnce = true;
+
+        public LayerMask LayerMask => layerMask;
+
+        public void SetDialog(DialogResource dialog)
         {
-            dialogUI.SetDialog(dialog);
+            this.dialog = dialog;
         }
-        if (onlyShowOnce)
+
+        void OnTriggerEnter2D(Collider2D col)
         {
-            gameObject.SetActive(false);
+            if ((col.gameObject.layer | layerMask) != 0)
+            {
+                dialogUI.SetDialog(dialog);
+            }
+            if (onlyShowOnce)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

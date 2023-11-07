@@ -18,9 +18,15 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField]
     float baseAcceleration;
     [SerializeField]
+    float baseAirAcceleration = 0.5f;
+    [SerializeField]
     float baseSprintMultiplier;
     [SerializeField]
-    float maxGroundSpeed;
+    float maxGroundSpeedMultiplier;
+    [SerializeField]
+    float jumpImpulseMultiplier = 0.5f;
+    [SerializeField]
+    float jumpForceMultiplier = 1f;
     [SerializeField]
     float diveSpeed;
     [SerializeField]
@@ -65,6 +71,8 @@ public class CatBehaviour : MonoBehaviour
     StatResource airControl;
     private float groundTimer;
 
+    private float jumpTimer;
+
     private float lastInputDirection;
 
     private bool running;
@@ -107,8 +115,15 @@ public class CatBehaviour : MonoBehaviour
         groundCheck();
         if (input.Player.Jump.WasPressedThisFrame() && isGrounded())
         {
-            rigidBody.AddForce(Vector2.up * stats.GetValue(jumpForce), ForceMode2D.Impulse);
+            var jumpImpulse = stats.GetValue(jumpForce) * jumpImpulseMultiplier;
+            rigidBody.AddForce(jumpImpulse * Vector2.up, ForceMode2D.Impulse);
             OnJump?.Invoke(this, new EventArgs());
+            jumpTimer = 0;
+        }
+        else if (input.Player.Jump.IsPressed())
+        {
+            var additionalJumpForce = stats.GetValue(jumpForce) * jumpForceMultiplier * Mathf.Pow(2, -jumpTimer * 5);
+            rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
         }
         if (input.Player.Dive.WasPressedThisFrame())
         {
@@ -121,6 +136,7 @@ public class CatBehaviour : MonoBehaviour
         bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
         handleMovement(isShiftPressed, moveDir);
         groundTimer += Time.deltaTime;
+        jumpTimer += Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -148,16 +164,17 @@ public class CatBehaviour : MonoBehaviour
 
     private void handleMovement(bool isShiftPressed, float moveDir)
     {
-        if (isGrounded() && HorizontalSpeed < maxGroundSpeed)
+        var moveSpeedStat = stats.GetValue(moveSpeed);
+        var sprintMultiplier = isShiftPressed && isGrounded() ? baseSprintMultiplier : 1;
+        if (isGrounded() && HorizontalSpeed < moveSpeedStat * sprintMultiplier * maxGroundSpeedMultiplier)
         {
-            var sprintMultiplier = isShiftPressed && isGrounded() ? baseSprintMultiplier : 1; // Maybe a variable or something
-            var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * stats.GetValue(moveSpeed) * Time.deltaTime * Vector2.right;
-            rigidBody.AddForce(groundAcceleration);
+            var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * moveSpeedStat;
+            rigidBody.AddForce(groundAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
         }
         else if (!isGrounded())
         {
-            var airAcceleration = baseAcceleration * moveDir * stats.GetValue(airControl) * Time.deltaTime * Vector2.right;
-            rigidBody.AddForce(airAcceleration);
+            var airAcceleration = baseAirAcceleration * moveDir * stats.GetValue(airControl);
+            rigidBody.AddForce(airAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
         }
     }
 
