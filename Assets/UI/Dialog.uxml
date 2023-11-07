@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/LLBaseUSS.uss?fileID=7433441132597879392&amp;guid=94e24d03a1321d644878af3cf87cb57a&amp;type=3#LLBaseUSS" />
+    <Style src="project://database/Assets/UI/USS/DialogUSS.uss?fileID=7433441132597879392&amp;guid=fb3a464250fa09c4c94bc70975541078&amp;type=3#DialogUSS" />
+    <ui:VisualElement name="Anchor" style="height: 100%;">
+        <LL.UI.TooltipShowerElement>
+            <ui:VisualElement name="panel-container" style="flex-grow: 1;">
+                <ui:VisualElement name="panel" style="background-color: rgb(140, 140, 140); padding-top: 30px; padding-bottom: 15px; padding-left: 15px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-top: 45px; margin-right: 15px; margin-bottom: 15px; margin-left: 15px; flex-grow: 1;">
+                    <ui:VisualElement name="left-icon" style="background-image: url(&apos;project://database/Assets/TempArt/AquamarineYarn.png?fileID=2800000&amp;guid=77eb2f2516664024d9cf1a2f008b962d&amp;type=3#AquamarineYarn&apos;); left: 25px; width: 50px; height: 50px; position: absolute; top: -25px;" />
+                    <ui:VisualElement name="right-icon" style="background-image: url(&apos;project://database/Assets/TempArt/AquamarineYarn.png?fileID=2800000&amp;guid=77eb2f2516664024d9cf1a2f008b962d&amp;type=3#AquamarineYarn&apos;); width: 50px; height: 50px; position: absolute; top: -25px; right: 25px;" />
+                    <ui:Label tabindex="-1" text="abc" parse-escape-sequences="true" display-tooltip-when-elided="true" name="dialog-text" style="white-space: normal;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </LL.UI.TooltipShowerElement>
+    </ui:VisualElement>
+</ui:UXML>
