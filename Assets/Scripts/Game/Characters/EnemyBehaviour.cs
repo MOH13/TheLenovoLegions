@@ -13,9 +13,10 @@ public class EnemyBehaviour : MonoBehaviour
     public float attackCooldown;
     public float currentAttackCooldown;
     public float acceleration;
-    private bool dirRight;
+    private Vector2 direction;
     public Transform attackLocation;
     public LayerMask player;
+    public LayerMask platform;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
 
@@ -32,7 +33,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        dirRight = true;
+        direction = Vector2.right;
     }
 
     // Update is called once per frame
@@ -41,7 +42,6 @@ public class EnemyBehaviour : MonoBehaviour
         if (currentAttackCooldown <= 0) {
             Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player); // fix so attackLocation corresponds to the way it is "looking"
             if (hit != null) {
-                // More optimal way to do this rather than getting component every time?
                 hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
                 currentAttackCooldown = attackCooldown;
             }
@@ -49,18 +49,20 @@ public class EnemyBehaviour : MonoBehaviour
         else {
             currentAttackCooldown -= Time.deltaTime;
         }
-        if (dirRight)
+            transform.Translate(direction * acceleration * Time.deltaTime);
+        float extraDist = 0.01f;
+        Vector3 size = new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y * 0.99f); // make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
+        RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, platform);
+        RaycastHit2D rightCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.right, extraDist, platform);
+        if (leftCollision.collider != null)
         {
-            transform.Translate(Vector2.right * acceleration * Time.deltaTime);
+            Debug.Log("hello");
+            direction = Vector2.right;
         }
-        else {
-            transform.Translate(Vector2.left * acceleration * Time.deltaTime);
+        else if (rightCollision.collider != null) {
+            Debug.Log("hello2");
+            direction = Vector2.left;
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    { // should be colission with a "wall type"
-        if (false)
-        dirRight = !dirRight;   
     }
 }
