@@ -6,10 +6,16 @@
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     font-size: 60px;
+    -unity-font: url('project://database/Assets/Under%20Hiport.ttf?fileID=12800000&guid=6964499b8a4645346a5107ab905ae7d5&type=3#Under Hiport');
+    -unity-font-definition: initial;
+    transition-duration: 0.2s;
 }
 
 .menu-button:hover {
     font-size: 70px;
-    -unity-background-image-tint-color: rgb(188, 131, 10);
-    color: rgb(188, 131, 10);
+    -unity-background-image-tint-color: rgb(243, 185, 107);
+    color: rgb(243, 185, 107);
+    rotate: 0;
+    transition-delay: 0s;
+    transition-duration: 0.2s;
 }
