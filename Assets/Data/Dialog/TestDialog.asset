@@ -16,12 +16,12 @@ MonoBehaviour:
   - <Text>k__BackingField: I'm a talking piece of aquamarine yarn!
     <LeftIcon>k__BackingField: {fileID: 0}
     <RightIcon>k__BackingField: {fileID: 2800000, guid: 77eb2f2516664024d9cf1a2f008b962d, type: 3}
-    <Audio>k__BackingField: {fileID: 0}
+    <Audio>k__BackingField: {fileID: 8300000, guid: c035a46f4ced5a349bc133228209f852, type: 3}
     <PositionHorizontal>k__BackingField: 0
     <PositionVertical>k__BackingField: 0
   - <Text>k__BackingField: I'm a piece of crimson yarn, and I do not like you!
     <LeftIcon>k__BackingField: {fileID: 2800000, guid: bc1428109a56c8f4eb8ccef61940917b, type: 3}
     <RightIcon>k__BackingField: {fileID: 0}
-    <Audio>k__BackingField: {fileID: 0}
+    <Audio>k__BackingField: {fileID: 8300000, guid: c035a46f4ced5a349bc133228209f852, type: 3}
     <PositionHorizontal>k__BackingField: 1
     <PositionVertical>k__BackingField: 1

@@ -14,12 +14,14 @@ namespace LL.UI.Dialog
         [SerializeField]
         DialogResource? currentDialog;
 
+        [SerializeField]
+        AudioSource? audioSource;
+
         Logic? logic;
 
         void OnEnable()
         {
-            if (this.document != null && this.currentDialog != null)
-                this.logic = new Logic(currentDialog, document);
+            SetDialog(currentDialog);
         }
 
         [ContextMenu("Next frame")]
@@ -30,8 +32,30 @@ namespace LL.UI.Dialog
             return false;
         }
 
+        public void SetDialog(DialogResource? dialog)
+        {
+            this.currentDialog = dialog;
+            if (document != null)
+            {
+                document.enabled = currentDialog != null;
+                if (currentDialog != null)
+                {
+                    this.logic = new Logic(currentDialog, document, audioSource);
+                    this.logic.OnFinish += OnFinish;
+                }
+            }
+        }
+
+        private void OnFinish()
+        {
+            SetDialog(null);
+        }
+
         private class Logic
         {
+            public event Action? OnNextFrame;
+            public event Action? OnFinish;
+
             public const string POSITION_HORIZONTAL_LEFT = "dialog-left";
             public const string POSITION_HORIZONTAL_RIGHT = "dialog-right";
             public const string POSITION_HORIZONTAL_CENTER = "dialog-center";
@@ -39,6 +63,8 @@ namespace LL.UI.Dialog
             public const string POSITION_VERTICAL_BOTTOM = "dialog-bottom";
 
             readonly DialogResource currentDialog;
+
+            readonly AudioSource? audioSource;
 
             int frameIndex;
 
@@ -50,9 +76,10 @@ namespace LL.UI.Dialog
 
             readonly VisualElement rightIcon;
 
-            public Logic(DialogResource currentDialog, UIDocument document)
+            public Logic(DialogResource currentDialog, UIDocument document, AudioSource audioSource)
             {
                 this.currentDialog = currentDialog;
+                this.audioSource = audioSource;
                 this.frameIndex = 0;
 
                 rootElem = document.rootVisualElement;
@@ -60,8 +87,18 @@ namespace LL.UI.Dialog
                 leftIcon = rootElem.Q<VisualElement>("left-icon");
                 rightIcon = rootElem.Q<VisualElement>("right-icon");
 
+                rootElem.RegisterCallback<ClickEvent>(OnClick);
+
                 if (currentDialog.Frames.Length > 0)
+                {
+                    PlaySound();
                     Refresh();
+                }
+            }
+
+            private void OnClick(ClickEvent evt)
+            {
+                NextFrame();
             }
 
             public bool NextFrame()
@@ -70,10 +107,28 @@ namespace LL.UI.Dialog
 
                 if (this.frameIndex < this.currentDialog.Frames.Length)
                 {
+                    PlaySound();
                     Refresh();
+
+                    OnNextFrame?.Invoke();
+
                     return true;
                 }
+
+                OnFinish?.Invoke();
+
                 return false;
+            }
+
+            private void PlaySound()
+            {
+                var sound = this.currentDialog.Frames[this.frameIndex].Audio;
+
+                if (audioSource != null && sound != null)
+                {
+                    audioSource.clip = sound;
+                    audioSource.Play();
+                }
             }
 
             private void Refresh()
