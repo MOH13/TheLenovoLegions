@@ -16,7 +16,6 @@ public class SimpleAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        catBehaviour.stats.GetValue(catBehaviour.sneak);
     }
 
     // Update is called once per frame
