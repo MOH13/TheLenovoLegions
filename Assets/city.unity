@@ -21605,7 +21605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -2.3200073, y: -1.1599731}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &514564179
@@ -22073,8 +22073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cd56e22a82d2b4a9493d985538bd9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutUIImage: {fileID: 0}
-  fadeSpeed: 0.8
 --- !u!1 &1360669674
 GameObject:
   m_ObjectHideFlags: 0
@@ -22251,7 +22249,7 @@ GameObject:
   - component: {fileID: 1911953566}
   - component: {fileID: 1911953565}
   m_Layer: 0
-  m_Name: SceneTrigger
+  m_Name: ResetLevelTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22269,7 +22267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98adaf26f96cd72498c8a82dc7e75b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextLevel: 
+  nextLevel: city
 --- !u!61 &1911953566
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22299,7 +22297,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -22324,8 +22322,8 @@ Transform:
   m_GameObject: {fileID: 1911953564}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.305, y: -27.5, z: 10.638161}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -51.8, y: -32.9, z: 10.638161}
+  m_LocalScale: {x: 103.5, y: 1.0911041, z: 1.0911041}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -22525,7 +22523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 24.91, y: 3.43}
+  m_AnchoredPosition: {x: 25.03, y: 3.43}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2105200183
@@ -22602,6 +22600,10 @@ PrefabInstance:
     - target: {fileID: 3727912597548085787, guid: 5ba6e88c5bc0d77428e981751bd09b08, type: 3}
       propertyPath: m_Name
       value: Cat
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727912597548085787, guid: 5ba6e88c5bc0d77428e981751bd09b08, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4807230371695914182, guid: 5ba6e88c5bc0d77428e981751bd09b08, type: 3}
       propertyPath: catRun
