@@ -528,6 +528,17 @@ namespace LL.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""c3f584fb-4b14-4893-bf06-6b90d03365c7"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d6f5a97e-7526-4117-8267-b76e538d633a"",
                     ""path"": ""*/{Cancel}"",
                     ""interactions"": """",

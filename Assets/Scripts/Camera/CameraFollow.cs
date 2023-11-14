@@ -1,20 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;
-    public Vector2 offset;
-    private Vector2 velocity = Vector2.zero;
-    public float smoothTime;
+    [SerializeField]
+    Transform target;
 
-    public float zValue = -10;
+    [SerializeField]
+    float maxUpwardsOffset = 1f;
+
+    [SerializeField]
+    float maxDownwardsOffset = 1f;
+
+    [SerializeField]
+    float leadDistance = 1f;
+
+    [SerializeField]
+    float flipTime = 1f;
+
+    [SerializeField]
+    float zValue = -10;
+
+    float camDir = 1;
+
+    float targetPreviousXPos;
+
+    void Start()
+    {
+        targetPreviousXPos = target.position.x;
+    }
+
+    void PositionCamera()
+    {
+        var x = target.position.x + camDir * leadDistance;
+        var y = Mathf.Clamp(transform.position.y, target.position.y - maxDownwardsOffset, target.position.y + maxUpwardsOffset);
+
+        transform.position = new Vector3(x, y, zValue);
+    }
 
     void LateUpdate()
     {
-        var targetPosition = (Vector2)target.position + offset;
-        var smoothedPosition = Vector2.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
-        transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, zValue);
+        var xVelocity = (target.position.x - targetPreviousXPos) / Time.deltaTime;
+        float dirChange = 0;
+        if (xVelocity > 0.01f)
+        {
+            dirChange = 2 * Time.deltaTime / flipTime;
+        }
+        else if (xVelocity < -0.01f)
+        {
+            dirChange = -2 * Time.deltaTime / flipTime;
+        }
+        camDir = Mathf.Clamp(camDir + dirChange, -1, 1);
+        targetPreviousXPos = target.position.x;
+
+        PositionCamera();
     }
 }

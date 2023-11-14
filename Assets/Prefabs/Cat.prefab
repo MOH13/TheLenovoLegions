@@ -152,6 +152,7 @@ MonoBehaviour:
   attackDamage: 3
   attackLocation: {fileID: 5873733640275158460}
   rigidBody: {fileID: 5902553486908934666}
+  playerInput: {fileID: 7015876891570263015}
   enemies:
     serializedVersion: 2
     m_Bits: 64

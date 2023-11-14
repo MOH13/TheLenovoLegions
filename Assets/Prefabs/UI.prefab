@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 1584971445860937720}
   - component: {fileID: 3719611122036113775}
   - component: {fileID: 5587709589561617506}
+  - component: {fileID: 7531679978455900027}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -123,6 +124,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a410b213209442fb15a69799f0240a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7531679978455900027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6899713895010008362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381be1b816364ce4aab89069d7a047e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 0}
+  documentsToWatch:
+  - {fileID: 7319981404355310927}
+  - {fileID: 426800328252867321}
+  defaultActionMapName: Player
+  uiActionMapName: UI
 --- !u!1 &8517975331756774571
 GameObject:
   m_ObjectHideFlags: 0

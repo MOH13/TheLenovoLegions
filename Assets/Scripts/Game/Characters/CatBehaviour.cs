@@ -46,6 +46,8 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField]
     Rigidbody2D rigidBody;
     [SerializeField]
+    PlayerInput playerInput;
+    [SerializeField]
     private LayerMask enemies;
     [SerializeField]
     private LayerMask platformLayerMask;
@@ -113,28 +115,32 @@ public class CatBehaviour : MonoBehaviour
     void Update()
     {
         groundCheck();
-        if (input.Player.Jump.WasPressedThisFrame() && isGrounded())
+
+        if (playerInput.currentActionMap.name == "Player")
         {
-            var jumpImpulse = stats.GetValue(jumpForce) * jumpImpulseMultiplier;
-            rigidBody.AddForce(jumpImpulse * Vector2.up, ForceMode2D.Impulse);
-            OnJump?.Invoke(this, new EventArgs());
-            jumpTimer = 0;
+            if (input.Player.Jump.WasPressedThisFrame() && isGrounded())
+            {
+                var jumpImpulse = stats.GetValue(jumpForce) * jumpImpulseMultiplier;
+                rigidBody.AddForce(jumpImpulse * Vector2.up, ForceMode2D.Impulse);
+                OnJump?.Invoke(this, new EventArgs());
+                jumpTimer = 0;
+            }
+            else if (input.Player.Jump.IsPressed())
+            {
+                var additionalJumpForce = stats.GetValue(jumpForce) * jumpForceMultiplier * Mathf.Pow(2, -jumpTimer * 5);
+                rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
+            }
+            if (input.Player.Dive.WasPressedThisFrame())
+            {
+                rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
+            }
+            handleCombat();
+            var moveDir = input.Player.Move.ReadValue<float>();
+            if (Mathf.Abs(moveDir) > 0.05)
+                lastInputDirection = moveDir;
+            bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
+            handleMovement(isShiftPressed, moveDir);
         }
-        else if (input.Player.Jump.IsPressed())
-        {
-            var additionalJumpForce = stats.GetValue(jumpForce) * jumpForceMultiplier * Mathf.Pow(2, -jumpTimer * 5);
-            rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
-        }
-        if (input.Player.Dive.WasPressedThisFrame())
-        {
-            rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
-        }
-        handleCombat();
-        var moveDir = input.Player.Move.ReadValue<float>();
-        if (Mathf.Abs(moveDir) > 0.05)
-            lastInputDirection = moveDir;
-        bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
-        handleMovement(isShiftPressed, moveDir);
         groundTimer += Time.deltaTime;
         jumpTimer += Time.deltaTime;
     }
