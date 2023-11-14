@@ -8,6 +8,9 @@ namespace LL.UI.Dialog
 {
     public class DialogUIBehavior : MonoBehaviour
     {
+        public event Action? OnNextFrame;
+        public event Action? OnFinish;
+
         [SerializeField]
         UIDocument? document;
 
@@ -41,14 +44,21 @@ namespace LL.UI.Dialog
                 if (currentDialog != null)
                 {
                     this.logic = new Logic(currentDialog, document, audioSource);
-                    this.logic.OnFinish += OnFinish;
+                    this.logic.OnNextFrame += LogicOnNextFrame;
+                    this.logic.OnFinish += LogicOnFinish;
                 }
             }
         }
 
-        private void OnFinish()
+        private void LogicOnNextFrame()
+        {
+            OnNextFrame?.Invoke();
+        }
+
+        private void LogicOnFinish()
         {
             SetDialog(null);
+            OnFinish?.Invoke();
         }
 
         private class Logic

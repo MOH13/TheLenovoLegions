@@ -166,7 +166,7 @@ public class CatBehaviour : MonoBehaviour
     {
         var moveSpeedStat = stats.GetValue(moveSpeed);
         var sprintMultiplier = isShiftPressed && isGrounded() ? baseSprintMultiplier : 1;
-        if (isGrounded() && HorizontalSpeed < moveSpeedStat * sprintMultiplier * maxGroundSpeedMultiplier)
+        if (isGrounded() && Mathf.Abs(HorizontalSpeed) < moveSpeedStat * sprintMultiplier * maxGroundSpeedMultiplier)
         {
             var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * moveSpeedStat;
             rigidBody.AddForce(groundAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);

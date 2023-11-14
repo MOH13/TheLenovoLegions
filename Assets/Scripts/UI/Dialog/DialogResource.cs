@@ -21,7 +21,7 @@ namespace LL.UI.Dialog
     [Serializable]
     public struct DialogFrame
     {
-        [field: SerializeField]
+        [field: SerializeField, TextArea]
         public string Text { get; set; }
 
         [field: SerializeField]

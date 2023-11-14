@@ -11,6 +11,9 @@ namespace LL.Game.Equipment
         [field: SerializeField]
         public string EquipmentName { get; private set; } = "NewEquipment";
 
+        [field: SerializeField, TextArea]
+        public string PickupText { get; private set; } = "";
+
         [field: SerializeField]
         public Texture2D? Icon { get; private set; }
 

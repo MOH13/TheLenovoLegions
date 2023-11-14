@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: AquamarineYarn
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Aquamarine Yarn
+  <PickupText>k__BackingField: <i>This item allows you to jump higher! Open your
+    inventory by pressing <b>I</b> to equip it</i>
   <Icon>k__BackingField: {fileID: 2800000, guid: 77eb2f2516664024d9cf1a2f008b962d, type: 3}
   slot: {fileID: 11400000, guid: c02c54581ccd1b44398593a80f18abd0, type: 2}
   effects:

@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Cinemachine;
 using LL.UI.Dialog;
 using UnityEngine;
 
@@ -11,10 +11,16 @@ namespace LL.Game.Story
         DialogUIBehavior dialogUI;
 
         [SerializeField]
+        CinemachineVirtualCamera cam;
+
+        [SerializeField]
         LayerMask layerMask;
 
         [SerializeField]
         DialogResource dialog;
+
+        [SerializeField]
+        bool canShow = true;
 
         [SerializeField]
         bool onlyShowOnce = true;
@@ -28,14 +34,25 @@ namespace LL.Game.Story
 
         void OnTriggerEnter2D(Collider2D col)
         {
-            if ((col.gameObject.layer | layerMask) != 0)
+            if (canShow && (col.gameObject.layer | layerMask) != 0)
             {
                 dialogUI.SetDialog(dialog);
+                if (cam != null)
+                {
+                    cam.enabled = true;
+                    dialogUI.OnFinish += OnFinish;
+                }
+                if (onlyShowOnce)
+                {
+                    canShow = false;
+                }
             }
-            if (onlyShowOnce)
-            {
-                gameObject.SetActive(false);
-            }
+        }
+
+        private void OnFinish()
+        {
+            cam.enabled = false;
+            dialogUI.OnFinish -= OnFinish;
         }
     }
 }

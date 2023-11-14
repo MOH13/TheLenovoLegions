@@ -22,7 +22,7 @@ namespace LL.Game.Equipment
         {
             var frames = new DialogFrame[1] {
                 new() {
-                    Text = $"You found an item: <b>{equipment.EquipmentName}</b>",
+                    Text = $"You found an item: <b>{equipment.EquipmentName}</b>!\n{equipment.PickupText}",
                     LeftIcon = equipment.Icon,
                     PositionHorizontal = DialogPositionHorizontal.Left,
                     PositionVertical = DialogPositionVertical.Bottom,
