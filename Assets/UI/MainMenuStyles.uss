@@ -6,7 +6,7 @@
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     font-size: 60px;
-    -unity-font: url('project://database/Assets/Under%20Hiport.ttf?fileID=12800000&guid=6964499b8a4645346a5107ab905ae7d5&type=3#Under Hiport');
+    -unity-font: url('project://database/Assets/TextMesh%20Pro/Fonts/Under%20Hiport.ttf?fileID=12800000&guid=6964499b8a4645346a5107ab905ae7d5&type=3#Under Hiport');
     -unity-font-definition: initial;
     transition-duration: 0.2s;
 }
@@ -18,4 +18,14 @@
     rotate: 0;
     transition-delay: 0s;
     transition-duration: 0.2s;
+}
+
+.inventory-button {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.inventory-button:hover {
+    -unity-background-image-tint-color: rgb(243, 185, 107);
+    background-image: url('project://database/Assets/Art/inventory.png?fileID=2800000&guid=7837385ac288be24188c045fada8d1d7&type=3#inventory');
+    background-color: rgba(243, 185, 107, 0);
 }
