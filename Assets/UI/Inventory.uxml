@@ -1,0 +1,44 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/LLBaseUSS.uss?fileID=7433441132597879392&amp;guid=94e24d03a1321d644878af3cf87cb57a&amp;type=3#LLBaseUSS" />
+    <Style src="project://database/Assets/UI/USS/Inventory.uss?fileID=7433441132597879392&amp;guid=6f389ea9ebaccc74a885d3a80c430952&amp;type=3#Inventory" />
+    <ui:VisualElement name="Anchor" picking-mode="Ignore" style="flex-direction: row-reverse; height: 100%;">
+        <LL.UI.TooltipShowerElement>
+            <ui:VisualElement name="panel" style="background-color: rgba(0, 0, 0, 0.87); height: 100%; width: 330px; padding-top: 15px; padding-bottom: 15px; padding-left: 15px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 1px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);">
+                <ui:ScrollView style="flex-grow: 1; height: 431px; width: 312px;">
+                    <ui:Label tabindex="-1" text="&lt;b&gt;Equipment&lt;/b&gt;" parse-escape-sequences="false" display-tooltip-when-elided="true" name="equipment-label" class="menu-label" />
+                    <ui:VisualElement name="equipment-slots" style="flex-direction: row; flex-wrap: wrap; height: 199px; width: 272px;">
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                        <LL.UI.SlotVisualElement />
+                    </ui:VisualElement>
+                    <ui:Label tabindex="-1" text="&lt;b&gt;Inventory&lt;/b&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="inventory-label" class="menu-label" />
+                    <ui:VisualElement name="inventory-items" style="flex-grow: 0; flex-direction: row; flex-wrap: wrap; height: 70px; width: 273px;">
+                        <LL.UI.EquipmentVisualElement />
+                        <LL.UI.EquipmentVisualElement />
+                        <LL.UI.EquipmentVisualElement />
+                        <LL.UI.EquipmentVisualElement />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="stats-overview" focusable="true" style="flex-grow: 1;">
+                        <ui:Label tabindex="-1" text="&lt;b&gt;Cattributes&lt;b&gt;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="stats-label" class="menu-label" />
+                        <ui:VisualElement style="flex-direction: row;">
+                            <ui:VisualElement name="stats-names" style="flex-grow: 1; width: 50%;">
+                                <ui:Label tabindex="-1" text="Mystat1" parse-escape-sequences="true" display-tooltip-when-elided="true" class="stats-label" />
+                                <ui:Label tabindex="-1" text="Mystat2" parse-escape-sequences="true" display-tooltip-when-elided="true" class="stats-label" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="stats-values" style="flex-grow: 1; width: 50%;">
+                                <ui:Label tabindex="-1" text="10 (+2)" parse-escape-sequences="true" display-tooltip-when-elided="true" class="stats-label" />
+                                <ui:Label tabindex="-1" text="20 (+10)" parse-escape-sequences="true" display-tooltip-when-elided="true" class="stats-label" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+                <ui:Button text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="close-button" style="position: absolute; right: 0; top: 0; -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/TextMesh%20Pro/Fonts/Under%20Hiport.ttf?fileID=12800000&amp;guid=6964499b8a4645346a5107ab905ae7d5&amp;type=3#Under Hiport&apos;); -unity-font-style: bold; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); color: rgb(255, 255, 255); background-color: rgb(0, 0, 0);" />
+            </ui:VisualElement>
+        </LL.UI.TooltipShowerElement>
+    </ui:VisualElement>
+</ui:UXML>
