@@ -40,13 +40,13 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (currentAttackCooldown <= 0)
         {
-            Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player); // fix so attackLocation corresponds to the way it is moving
+            Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player);
             if (hit != null)
             {
                 var playerPosition = hit.gameObject.transform;
-                Vector3 enemyDirection = transform.position - playerPosition.position;
-                float angle = Vector3.Angle(transform.forward, enemyDirection);
-                if (angle < 90)
+                Vector3 enemyDirection = playerPosition.position - transform.position;
+                float angle = Vector3.Angle(direction, enemyDirection);
+                if (angle < 30)
                 {
                     hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
                     currentAttackCooldown = attackCooldown;
