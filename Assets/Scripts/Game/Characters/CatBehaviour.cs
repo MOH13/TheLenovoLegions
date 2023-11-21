@@ -14,43 +14,84 @@ using UnityEngine.SceneManagement;
 
 public class CatBehaviour : MonoBehaviour
 {
-    public float baseAcceleration;
-    public float baseSprintMultiplier;
-    public float maxGroundSpeed;
-    public float diveSpeed;
-    public float health;
-    public float attackCooldown;
-    public float currentAttackCooldown;
-    public float attackRange;
-    public float attackDamage;
-    public Transform attackLocation;
-    public Rigidbody2D rigidBody;
-    [SerializeField] private LayerMask enemies;
-    [SerializeField] private LayerMask platformLayerMask;
-    public BoxCollider2D boxCollider2d;
-    public AudioSource catWalk;
-    public AudioSource catMeow;
-    public AudioSource catRun;
-    public AudioSource catAttack;
-    public AudioSource catJump;
-    public LiveStatsBehavior stats;
-    public StatResource moveSpeed;
-    public StatResource climbing;
-    public StatResource sneak;
-    public StatResource vitality;
-    public StatResource jumpForce;
-    public StatResource ferocity;
-    public StatResource nightVision;
-    public StatResource airControl;
+    public event EventHandler? OnJump;
+
+    [SerializeField]
+    float baseAcceleration;
+    [SerializeField]
+    float baseAirAcceleration = 0.5f;
+    [SerializeField]
+    float baseSprintMultiplier;
+    [SerializeField]
+    float maxGroundSpeedMultiplier;
+    [SerializeField]
+    float jumpImpulseMultiplier = 0.5f;
+    [SerializeField]
+    float jumpForceMultiplier = 1f;
+    [SerializeField]
+    float diveSpeed;
+    [SerializeField]
+    float coyoteTime = 0.1f;
+    [SerializeField]
+    float health;
+    [SerializeField]
+    float attackCooldown;
+    [SerializeField]
+    float currentAttackCooldown;
+    [SerializeField]
+    float attackRange;
+    [SerializeField]
+    float attackDamage;
+    [SerializeField]
+    Transform attackLocation;
+    [SerializeField]
+    Rigidbody2D rigidBody;
+    [SerializeField]
+    private LayerMask enemies;
+    [SerializeField]
+    private LayerMask platformLayerMask;
+    [SerializeField]
+    BoxCollider2D boxCollider2d;
+    [SerializeField]
+    LiveStatsBehavior stats;
+    [SerializeField]
+    StatResource moveSpeed;
+    [SerializeField]
+    StatResource climbing;
+    [SerializeField]
+    StatResource sneak;
+    [SerializeField]
+    StatResource vitality;
+    [SerializeField]
+    StatResource jumpForce;
+    [SerializeField]
+    StatResource ferocity;
+    [SerializeField]
+    StatResource nightVision;
+    [SerializeField]
+    StatResource airControl;
     private float groundTimer;
-  
+
+    private float jumpTimer;
+
+    private float lastInputDirection;
+
+    private bool running;
 
     MyPlayerInput input;
+
+    public float LastInputDirection => lastInputDirection;
+
+    public float HorizontalSpeed => rigidBody.velocity.x;
+
+    public float SneakValue => stats.GetValue(sneak);
+
+    public bool Running => running;
 
     private void OnEnable()
     {
         input.Player.Enable();
-        
+
     }
     private void OnDisable()
     {
@@ -66,14 +107,24 @@ public class CatBehaviour : MonoBehaviour
         health = stats.GetValue(vitality);
     }
 
-    void Start() {
+    void Start()
+    {
     }
 
-    void Update() {
+    void Update()
+    {
         groundCheck();
-        if (input.Player.Jump.WasPressedThisFrame() && isGrounded()) {
-            rigidBody.AddForce(Vector2.up * stats.GetValue(jumpForce), ForceMode2D.Impulse);
-            catWalk.enabled = false;
+        if (input.Player.Jump.WasPressedThisFrame() && isGrounded())
+        {
+            var jumpImpulse = stats.GetValue(jumpForce) * jumpImpulseMultiplier;
+            rigidBody.AddForce(jumpImpulse * Vector2.up, ForceMode2D.Impulse);
+            OnJump?.Invoke(this, new EventArgs());
+            jumpTimer = 0;
+        }
+        else if (input.Player.Jump.IsPressed())
+        {
+            var additionalJumpForce = stats.GetValue(jumpForce) * jumpForceMultiplier * Mathf.Pow(2, -jumpTimer * 5);
+            rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
         }
         if (input.Player.Dive.WasPressedThisFrame())
         {
@@ -81,63 +132,50 @@ public class CatBehaviour : MonoBehaviour
         }
         handleCombat();
         var moveDir = input.Player.Move.ReadValue<float>();
-        bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
-        handleMovementSounds(isShiftPressed, moveDir);
+        if (Mathf.Abs(moveDir) > 0.05)
+            lastInputDirection = moveDir;
+        bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
         handleMovement(isShiftPressed, moveDir);
         groundTimer += Time.deltaTime;
+        jumpTimer += Time.deltaTime;
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         //var moveDir = input.Player.Move.ReadValue<float>();
         //bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
         //handleMovementSounds(isShiftPressed, moveDir);
         //handleMovement(isShiftPressed, moveDir);
     }
 
-    private void groundCheck() {
+    private void groundCheck()
+    {
         float extraHeight = 0.1f;
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, extraHeight, platformLayerMask);
-        if (raycastHit.collider != null) {
+        if (raycastHit.collider != null)
+        {
             groundTimer = 0;
         }
     }
 
-    private bool isGrounded() {
-        return groundTimer < 1;
+    public bool isGrounded()
+    {
+        return groundTimer < coyoteTime;
     }
 
     private void handleMovement(bool isShiftPressed, float moveDir)
     {
-        if (isGrounded() && rigidBody.velocity.magnitude < maxGroundSpeed) {
-            var sprintMultiplier = isShiftPressed && isGrounded() ? baseSprintMultiplier : 1; // Maybe a variable or something
-            var groundAcceleration = Vector2.right * stats.GetValue(moveSpeed) * baseAcceleration * sprintMultiplier * moveDir * Time.deltaTime;
-            rigidBody.AddForce(groundAcceleration);
-        }
-        else if (!isGrounded()) {
-            var airAcceleration = Vector2.right * stats.GetValue(airControl) * baseAcceleration * moveDir * Time.deltaTime;
-            rigidBody.AddForce(airAcceleration);
-        }
-    }
-
-    private void handleMovementSounds(bool isShiftPressed, float moveDir)
-    {
-        if (moveDir != 0 && isGrounded())
+        var moveSpeedStat = stats.GetValue(moveSpeed);
+        var sprintMultiplier = isShiftPressed && isGrounded() ? baseSprintMultiplier : 1;
+        if (isGrounded() && Mathf.Abs(HorizontalSpeed) < moveSpeedStat * sprintMultiplier * maxGroundSpeedMultiplier)
         {
-            if (isShiftPressed)
-            {
-                catRun.enabled = true;
-                catWalk.enabled = false;
-            }
-            else
-            {
-                catWalk.enabled = true;
-                catRun.enabled = false;
-            }
+            var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * moveSpeedStat;
+            rigidBody.AddForce(groundAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
         }
-        else
+        else if (!isGrounded())
         {
-            catWalk.enabled = false;
-            catRun.enabled = false;
+            var airAcceleration = baseAirAcceleration * moveDir * stats.GetValue(airControl);
+            rigidBody.AddForce(airAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
         }
     }
 
@@ -158,12 +196,14 @@ public class CatBehaviour : MonoBehaviour
             currentAttackCooldown = attackCooldown;
 
         }
-        else {
+        else
+        {
             currentAttackCooldown -= Time.deltaTime;
         }
     }
 
-    public void takeDamage(float damage) {
+    public void takeDamage(float damage)
+    {
         health -= damage;
     }
 

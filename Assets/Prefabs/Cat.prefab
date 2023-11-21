@@ -46,6 +46,10 @@ GameObject:
   - component: {fileID: 8756835540971472173}
   - component: {fileID: 7015876891570263015}
   - component: {fileID: 4079654753661638129}
+  - component: {fileID: 4192311256287072337}
+  - component: {fileID: 6940345021187351814}
+  - component: {fileID: 5231684267882277454}
+  - component: {fileID: 5156273593427250009}
   m_Layer: 7
   m_Name: Cat
   m_TagString: Untagged
@@ -109,7 +113,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 563099783, guid: 0ca1cb478ea65e746ade5a0f778a11c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -133,10 +137,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836d7b4e69eda2344be5197c1ae43a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseAcceleration: 50
+  baseAcceleration: 0.5
+  baseAirAcceleration: 0.2
   baseSprintMultiplier: 1.3
-  maxGroundSpeed: 5
+  maxGroundSpeedMultiplier: 0.2
+  jumpImpulseMultiplier: 0.35
+  jumpForceMultiplier: 0.5
   diveSpeed: 2
+  coyoteTime: 0.1
   health: 5
   attackCooldown: 0.1
   currentAttackCooldown: 0
@@ -151,11 +159,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   boxCollider2d: {fileID: 0}
-  catWalk: {fileID: 0}
-  catMeow: {fileID: 0}
-  catRun: {fileID: 0}
-  catAttack: {fileID: 0}
-  catJump: {fileID: 0}
   stats: {fileID: 4079654753661638129}
   moveSpeed: {fileID: 11400000, guid: f3191b3b8e5ed9844ac361306d66be9e, type: 2}
   climbing: {fileID: 11400000, guid: e9ac5ade83376ee4d884e9658d3688e3, type: 2}
@@ -250,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: f0fc6191d9fb6544db4a2245c718a2c1, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -261,7 +264,67 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0d4b3e35-b360-4b51-a1cd-8efabe2d746b
+    m_ActionName: Player/Move[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4f6716e9-479d-49b1-b574-0ac32ef650ad
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 05879857-fda3-4030-b78a-26727e37508b
+    m_ActionName: Player/Dive[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 37ecd3c8-ccfd-4103-bcf8-af88c0bacf13
+    m_ActionName: Player/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cc5147dc-182f-4130-8baa-5f66bc858ab0
+    m_ActionName: Player/Shift[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bdf85bd2-7027-4f83-a45f-cd0ae38729eb
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2c3367c-9a44-4f0a-bc99-9f89c1e938d9
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3a97cb18-164d-46c5-899d-f166d77dade1
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d9982010-ce4b-4f29-b849-ea50d323824a
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dda18c55-7331-438b-93d4-0a723b7c0120
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a2c3125e-49b7-4dd5-afc6-7e56b7e2910f
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7167b758-8830-47bf-aae3-f74d7bb90547
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a8f97e65-d228-4224-9cb6-4e9c2adc0d56
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7b767fc8-73de-4d84-bb3a-fbb793a06b9d
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6a1de138-1332-4f0e-9297-bc56a3863790
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -281,3 +344,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     <Container>k__BackingField: {fileID: 11400000, guid: ba2dd2f619898c2429ad46b1ab78732c, type: 2}
+--- !u!114 &4192311256287072337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3727912597548085787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75320b67ccf0eef47b79872813581a92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipment:
+    <Container>k__BackingField: {fileID: 11400000, guid: c6efc6632b47bd841a94f2ddb8703e81, type: 2}
+  stats: {fileID: 4079654753661638129}
+--- !u!114 &6940345021187351814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3727912597548085787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03329a0072166348bc7350f90c6c4a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory:
+    <CurrentEquipment>k__BackingField: {fileID: 4192311256287072337}
+--- !u!95 &5231684267882277454
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3727912597548085787}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b179283237797d84781b529b9a9741a6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5156273593427250009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3727912597548085787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3318d8214483a3449b93910637493939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cat: {fileID: 4807230371695914182}
+  animator: {fileID: 5231684267882277454}
+  walkSound: {fileID: 0}
+  runSound: {fileID: 0}
+  meowSound: {fileID: 0}
+  attackSound: {fileID: 0}
+  jumpSound: {fileID: 0}

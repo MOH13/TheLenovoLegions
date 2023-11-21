@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a865d81abeff444caac65a4ee3ff650, type: 3}
+  m_Name: City1-Intro
+  m_EditorClassIdentifier: 
+  frames:
+  - <Text>k__BackingField: '<b>You are the cat Mittens.</b>
+
+      The perfect cat,
+      both intelligent and agile. A perfect fit for a perfect owner.
+
+      You love
+      your owner very much, almost as much as you love yarn balls. '
+    <LeftIcon>k__BackingField: {fileID: 0}
+    <RightIcon>k__BackingField: {fileID: 0}
+    <Audio>k__BackingField: {fileID: 0}
+    <PositionHorizontal>k__BackingField: 1
+    <PositionVertical>k__BackingField: 0
+  - <Text>k__BackingField: I wonder where *OWNER NAME* is...
+    <LeftIcon>k__BackingField: {fileID: 2800000, guid: fbc5aead908809d4db567c31a4d2209c, type: 3}
+    <RightIcon>k__BackingField: {fileID: 0}
+    <Audio>k__BackingField: {fileID: 8300000, guid: c035a46f4ced5a349bc133228209f852, type: 3}
+    <PositionHorizontal>k__BackingField: 1
+    <PositionVertical>k__BackingField: 0

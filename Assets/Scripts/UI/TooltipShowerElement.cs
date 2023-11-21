@@ -98,7 +98,8 @@ namespace LL.UI
 
         private void PositionElement(VisualElement elem, Vector2 position)
         {
-            var pos = this.WorldToLocal(RuntimePanelUtils.ScreenToPanel(this.panel, position));
+            var scale = Screen.height / panel.visualTree.worldBound.height;
+            var pos = this.WorldToLocal(RuntimePanelUtils.ScreenToPanel(this.panel, position * scale));
             elem.style.left = pos.x;
             elem.style.top = pos.y;
         }
