@@ -10,6 +10,7 @@ using System;
 using LL.Framework.Stats;
 using System.ComponentModel;
 using LL.Game.Stats;
+using UnityEngine.SceneManagement;
 
 public class CatBehaviour : MonoBehaviour
 {
@@ -178,13 +179,9 @@ public class CatBehaviour : MonoBehaviour
         }
     }
 
-    private void handleCombat()
-    {
-        // Needs animation
-        if (health <= 0)
-        {
-            restartGame();
-            Destroy(gameObject);
+    private void handleCombat() {
+        if (health <= 0) {
+            SceneController.instance.NextLevel(SceneManager.GetActiveScene().name);
         }
         if (input.Player.Attack.WasPressedThisFrame())
         {
