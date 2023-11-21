@@ -15,7 +15,7 @@ namespace LL.Game.Checkpoints
         {
             if (((1 << col.gameObject.layer) & layerMask) != 0)
             {
-                SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+                SceneController.Instance.NextLevel(SceneManager.GetActiveScene().name);
                 // var checkpointee = col.gameObject.GetComponent<Checkpointable>();
                 // checkpointee.ResetToCheckpoint();
             }

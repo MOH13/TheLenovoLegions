@@ -186,9 +186,11 @@ public class CatBehaviour : MonoBehaviour
         }
     }
 
-    private void handleCombat() {
-        if (health <= 0) {
-            SceneController.instance.NextLevel(SceneManager.GetActiveScene().name);
+    private void handleCombat()
+    {
+        if (health <= 0)
+        {
+            SceneController.Instance.NextLevel(SceneManager.GetActiveScene().name);
         }
         if (input.Player.Attack.WasPressedThisFrame())
         {
