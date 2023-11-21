@@ -10,10 +10,13 @@ using System;
 using LL.Framework.Stats;
 using System.ComponentModel;
 using LL.Game.Stats;
+using UnityEngine.SceneManagement;
 
 public class CatBehaviour : MonoBehaviour
 {
     public event EventHandler? OnJump;
+    public event EventHandler? OnAttack;
+    public event EventHandler? OnHit;
 
     [SerializeField]
     float baseAcceleration;
@@ -150,10 +153,6 @@ public class CatBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //var moveDir = input.Player.Move.ReadValue<float>();
-        //bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
-        //handleMovementSounds(isShiftPressed, moveDir);
-        //handleMovement(isShiftPressed, moveDir);
     }
 
     private void groundCheck()
@@ -187,18 +186,15 @@ public class CatBehaviour : MonoBehaviour
         }
     }
 
-    private void handleCombat()
-    {
-        // Needs animation
-        if (health <= 0)
-        {
-            restartGame();
-            Destroy(gameObject);
+    private void handleCombat() {
+        if (health <= 0) {
+            SceneController.instance.NextLevel(SceneManager.GetActiveScene().name);
         }
         if (input.Player.Attack.WasPressedThisFrame())
         {
             if (currentAttackCooldown <= 0)
             {
+                OnAttack?.Invoke(this, new EventArgs());
                 Collider2D[] damage = Physics2D.OverlapCircleAll(attackLocation.position, attackRange, enemies);
                 foreach (Collider2D collision in damage)
                 {
@@ -216,6 +212,7 @@ public class CatBehaviour : MonoBehaviour
 
     public void takeDamage(float damage)
     {
+        OnHit?.Invoke(this, new EventArgs());
         health -= damage;
     }
 

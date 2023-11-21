@@ -33,7 +33,7 @@ namespace LL.Game.Story
 
         void OnTriggerEnter2D(Collider2D col)
         {
-            if (canShow && (col.gameObject.layer & layerMask) != 0)
+            if (canShow && ((1 << col.gameObject.layer) & layerMask) != 0)
             {
                 dialogUI.SetDialog(dialog);
                 if (cam != null)

@@ -26,16 +26,32 @@ public class CatVFX : MonoBehaviour
     AudioSource? attackSound;
     [SerializeField]
     AudioSource? jumpSound;
+    [SerializeField]
+    AudioSource? hitSound;
 
     // Start is called before the first frame update
     void Start()
     {
         cat.OnJump += OnJump;
+        cat.OnAttack += OnAttack;
+        cat.OnHit += OnHit;
     }
 
     private void OnJump(object sender, EventArgs e)
     {
         animator.SetTrigger(JUMPED_KEY);
+    }
+
+    private void OnAttack(object sender, EventArgs e)
+    {
+        if(attackSound != null)
+            attackSound.Play();
+    }
+
+    private void OnHit(object sender, EventArgs e)
+    {
+        if(hitSound != null)
+            hitSound.Play();
     }
 
     // Update is called once per frame
