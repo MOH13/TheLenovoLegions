@@ -16,14 +16,14 @@ public class CameraSnapper : MonoBehaviour
 
     public LayerMask LayerMask => layerMask;
 
-    void Start()
+    void Awake()
     {
         cam.enabled = false;
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if ((col.gameObject.layer | layerMask) != 0)
+        if (((1 << col.gameObject.layer) & layerMask) != 0)
         {
             cam.enabled = true;
         }
@@ -31,7 +31,7 @@ public class CameraSnapper : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if ((col.gameObject.layer | layerMask) != 0)
+        if (((1 << col.gameObject.layer) & layerMask) != 0)
         {
             cam.enabled = false;
             if (onlyShowOnce)
