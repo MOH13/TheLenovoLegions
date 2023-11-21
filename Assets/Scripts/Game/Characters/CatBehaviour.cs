@@ -15,6 +15,8 @@ using UnityEngine.SceneManagement;
 public class CatBehaviour : MonoBehaviour
 {
     public event EventHandler? OnJump;
+    public event EventHandler? OnAttack;
+    public event EventHandler? OnHit;
 
     [SerializeField]
     float baseAcceleration;
@@ -46,6 +48,8 @@ public class CatBehaviour : MonoBehaviour
     Transform attackLocation;
     [SerializeField]
     Rigidbody2D rigidBody;
+    [SerializeField]
+    PlayerInput playerInput;
     [SerializeField]
     private LayerMask enemies;
     [SerializeField]
@@ -88,8 +92,12 @@ public class CatBehaviour : MonoBehaviour
 
     public bool Running => running;
 
+    public bool DisableInput { get; set; } = false;
+
     private void OnEnable()
     {
+        if (input == null)
+            input = new MyPlayerInput();
         input.Player.Enable();
 
     }
@@ -100,58 +108,57 @@ public class CatBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        input = new MyPlayerInput();
+    }
+
+    void Start()
+    {
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
         health = stats.GetValue(vitality);
     }
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         groundCheck();
-        if (input.Player.Jump.WasPressedThisFrame() && isGrounded())
+
+        if (!DisableInput)
         {
-            var jumpImpulse = stats.GetValue(jumpForce) * jumpImpulseMultiplier;
-            rigidBody.AddForce(jumpImpulse * Vector2.up, ForceMode2D.Impulse);
-            OnJump?.Invoke(this, new EventArgs());
-            jumpTimer = 0;
+            if (input.Player.Jump.WasPressedThisFrame() && isGrounded())
+            {
+                var jumpImpulse = stats.GetValue(jumpForce) * jumpImpulseMultiplier;
+                rigidBody.AddForce(jumpImpulse * Vector2.up, ForceMode2D.Impulse);
+                OnJump?.Invoke(this, new EventArgs());
+                jumpTimer = 0;
+            }
+            else if (input.Player.Jump.IsPressed())
+            {
+                var additionalJumpForce = stats.GetValue(jumpForce) * jumpForceMultiplier * Mathf.Pow(2, -jumpTimer * 5);
+                rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
+            }
+            if (input.Player.Dive.WasPressedThisFrame())
+            {
+                rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
+            }
+            handleCombat();
+            var moveDir = input.Player.Move.ReadValue<float>();
+            if (Mathf.Abs(moveDir) > 0.05)
+                lastInputDirection = moveDir;
+            bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
+            handleMovement(isShiftPressed, moveDir);
         }
-        else if (input.Player.Jump.IsPressed())
-        {
-            var additionalJumpForce = stats.GetValue(jumpForce) * jumpForceMultiplier * Mathf.Pow(2, -jumpTimer * 5);
-            rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
-        }
-        if (input.Player.Dive.WasPressedThisFrame())
-        {
-            rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
-        }
-        handleCombat();
-        var moveDir = input.Player.Move.ReadValue<float>();
-        if (Mathf.Abs(moveDir) > 0.05)
-            lastInputDirection = moveDir;
-        bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
-        handleMovement(isShiftPressed, moveDir);
         groundTimer += Time.deltaTime;
         jumpTimer += Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
-        //var moveDir = input.Player.Move.ReadValue<float>();
-        //bool isShiftPressed = input.Player.Shift.ReadValue<float>() == 1;
-        //handleMovementSounds(isShiftPressed, moveDir);
-        //handleMovement(isShiftPressed, moveDir);
     }
 
     private void groundCheck()
     {
         float extraHeight = 0.1f;
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, extraHeight, platformLayerMask);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, (boxCollider2d.bounds.size + 0.5f * boxCollider2d.edgeRadius * Vector3.one) * 0.995f, 0f, Vector2.down, extraHeight, platformLayerMask);
         if (raycastHit.collider != null)
         {
             groundTimer = 0;
@@ -187,6 +194,7 @@ public class CatBehaviour : MonoBehaviour
         {
             if (currentAttackCooldown <= 0)
             {
+                OnAttack?.Invoke(this, new EventArgs());
                 Collider2D[] damage = Physics2D.OverlapCircleAll(attackLocation.position, attackRange, enemies);
                 foreach (Collider2D collision in damage)
                 {
@@ -204,6 +212,7 @@ public class CatBehaviour : MonoBehaviour
 
     public void takeDamage(float damage)
     {
+        OnHit?.Invoke(this, new EventArgs());
         health -= damage;
     }
 

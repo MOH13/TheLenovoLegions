@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -23,7 +18,8 @@ public class EnemyBehaviour : MonoBehaviour
     internal void takeDamage(float damage)
     {
         health -= damage;
-        if (health <= 0) {
+        if (health <= 0)
+        {
             Destroy(gameObject);
         }
     }
@@ -39,25 +35,30 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentAttackCooldown <= 0) {
+        if (currentAttackCooldown <= 0)
+        {
             Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player); // fix so attackLocation corresponds to the way it is "looking"
-            if (hit != null) {
+            if (hit != null)
+            {
                 hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
                 currentAttackCooldown = attackCooldown;
             }
         }
-        else {
+        else
+        {
             currentAttackCooldown -= Time.deltaTime;
         }
-            transform.Translate(direction * acceleration * Time.deltaTime);
+        transform.Translate(direction * acceleration * Time.deltaTime);
         float extraDist = 0.01f;
         Vector3 size = new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y * 0.99f); // we make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
         RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, platform);
         RaycastHit2D rightCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.right, extraDist, platform);
-        if (leftCollision.collider != null) {
+        if (leftCollision.collider != null)
+        {
             direction = Vector2.right;
         }
-        else if (rightCollision.collider != null) {
+        else if (rightCollision.collider != null)
+        {
             direction = Vector2.left;
         }
 

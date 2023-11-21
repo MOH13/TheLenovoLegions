@@ -1,5 +1,4 @@
 using UnityEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 using LL.Framework.Stats;
 
@@ -16,7 +15,7 @@ namespace LL.Game.Stats.Editor
         {
             var stats = (LiveStatsBehavior)target;
 
-            EditorGUILayout.PropertyField(serializedObject.FindPropertyOrFail("stats").FindPropertyRelativeOrFail("<Container>k__BackingField"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("stats").FindPropertyRelative("<Container>k__BackingField"));
 
             statsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(statsFoldout, "Stats");
 

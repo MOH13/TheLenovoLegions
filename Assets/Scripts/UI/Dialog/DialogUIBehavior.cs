@@ -1,6 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -35,8 +33,17 @@ namespace LL.UI.Dialog
             return false;
         }
 
+        void Update()
+        {
+            if (this.logic != null)
+                this.logic.GrabFocus();
+        }
+
         public void SetDialog(DialogResource? dialog)
         {
+            if (currentDialog != null)
+                logic!.Disable();
+
             this.currentDialog = dialog;
             if (document != null)
             {
@@ -97,7 +104,10 @@ namespace LL.UI.Dialog
                 leftIcon = rootElem.Q<VisualElement>("left-icon");
                 rightIcon = rootElem.Q<VisualElement>("right-icon");
 
+                rootElem.focusable = true;
+
                 rootElem.RegisterCallback<ClickEvent>(OnClick);
+                rootElem.RegisterCallback<NavigationSubmitEvent>(OnSubmit);
 
                 if (currentDialog.Frames.Length > 0)
                 {
@@ -106,7 +116,18 @@ namespace LL.UI.Dialog
                 }
             }
 
+            public void Disable()
+            {
+                rootElem.UnregisterCallback<ClickEvent>(OnClick);
+                rootElem.UnregisterCallback<NavigationSubmitEvent>(OnSubmit);
+            }
+
             private void OnClick(ClickEvent evt)
+            {
+                NextFrame();
+            }
+
+            private void OnSubmit(NavigationSubmitEvent evt)
             {
                 NextFrame();
             }
@@ -128,6 +149,11 @@ namespace LL.UI.Dialog
                 OnFinish?.Invoke();
 
                 return false;
+            }
+
+            public void GrabFocus()
+            {
+                textElem.Focus();
             }
 
             private void PlaySound()
