@@ -81,3 +81,10 @@
 #stats-overview:focus {
     background-color: rgb(156, 156, 156);
 }
+
+Label {
+    -unity-font: url('project://database/Assets/TextMesh%20Pro/Fonts/TT%20Rounds%20Neue%20Trial%20Regular.ttf?fileID=12800000&guid=c44f65a46b0abf245a85b8ff567994e4&type=3#TT Rounds Neue Trial Regular');
+    -unity-font-definition: initial;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+}

@@ -89,8 +89,12 @@ public class CatBehaviour : MonoBehaviour
 
     public bool Running => running;
 
+    public bool DisableInput { get; set; } = false;
+
     private void OnEnable()
     {
+        if (input == null)
+            input = new MyPlayerInput();
         input.Player.Enable();
 
     }
@@ -101,22 +105,21 @@ public class CatBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        input = new MyPlayerInput();
+    }
+
+    void Start()
+    {
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
         health = stats.GetValue(vitality);
     }
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         groundCheck();
 
-        if (playerInput.currentActionMap.name == "Player")
+        if (!DisableInput)
         {
             if (input.Player.Jump.WasPressedThisFrame() && isGrounded())
             {
@@ -156,7 +159,7 @@ public class CatBehaviour : MonoBehaviour
     private void groundCheck()
     {
         float extraHeight = 0.1f;
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, extraHeight, platformLayerMask);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, (boxCollider2d.bounds.size + 0.5f * boxCollider2d.edgeRadius * Vector3.one) * 0.995f, 0f, Vector2.down, extraHeight, platformLayerMask);
         if (raycastHit.collider != null)
         {
             groundTimer = 0;

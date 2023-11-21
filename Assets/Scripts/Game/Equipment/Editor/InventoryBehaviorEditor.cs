@@ -1,5 +1,4 @@
 using UnityEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LL.Game.Equipment.Editor
@@ -15,7 +14,7 @@ namespace LL.Game.Equipment.Editor
         {
             var inventory = (InventoryBehavior)target;
 
-            EditorGUILayout.PropertyField(serializedObject.FindPropertyOrFail("inventory").FindPropertyRelativeOrFail("<CurrentEquipment>k__BackingField"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("inventory").FindPropertyRelative("<CurrentEquipment>k__BackingField"));
 
             if (Application.isPlaying)
             {

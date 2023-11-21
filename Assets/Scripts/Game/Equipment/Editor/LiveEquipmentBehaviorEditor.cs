@@ -1,5 +1,4 @@
 using UnityEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LL.Game.Equipment.Editor
@@ -13,9 +12,9 @@ namespace LL.Game.Equipment.Editor
         {
             var equipment = (LiveEquipmentBehavior)target;
 
-            EditorGUILayout.PropertyField(serializedObject.FindPropertyOrFail("equipment").FindPropertyRelativeOrFail("<Container>k__BackingField"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("equipment").FindPropertyRelative("<Container>k__BackingField"));
 
-            EditorGUILayout.PropertyField(serializedObject.FindPropertyOrFail("stats"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("stats"));
 
             equipmentFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(equipmentFoldout, "Equipment");
 

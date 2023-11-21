@@ -32,6 +32,8 @@ namespace LL.UI
             this.AddToClassList(SLOT_BASE_CLASS);
             this.Add(this.label);
             this.Add(this.equipmentElement);
+
+            DoSetup();
         }
 
         public void DoSetup()
