@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 5156273593427250009}
   m_Layer: 7
   m_Name: Cat
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -414,3 +414,4 @@ MonoBehaviour:
   meowSound: {fileID: 0}
   attackSound: {fileID: 0}
   jumpSound: {fileID: 0}
+  hitSound: {fileID: 0}
