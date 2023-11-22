@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: LavenderYarn
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Lavender Yarn
+  <PickupText>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 2800000, guid: ffbcc228bc25f6a498a46e17983180c7, type: 3}
   slot: {fileID: 11400000, guid: c02c54581ccd1b44398593a80f18abd0, type: 2}
   effects:
   - {fileID: 11400000, guid: 33616bb41ea35c642bae0421028ada17, type: 2}
