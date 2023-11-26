@@ -25,7 +25,7 @@ MonoBehaviour:
     <Audio>k__BackingField: {fileID: 0}
     <PositionHorizontal>k__BackingField: 1
     <PositionVertical>k__BackingField: 0
-  - <Text>k__BackingField: I wonder where *OWNER NAME* is...
+  - <Text>k__BackingField: I wonder where my owner is...
     <LeftIcon>k__BackingField: {fileID: 2800000, guid: fbc5aead908809d4db567c31a4d2209c, type: 3}
     <RightIcon>k__BackingField: {fileID: 0}
     <Audio>k__BackingField: {fileID: 8300000, guid: 3c126cecad05cf44586b861345592fee, type: 3}
