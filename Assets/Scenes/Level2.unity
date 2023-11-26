@@ -46897,7 +46897,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4065688370998068925, guid: 80f78b0c65abbfa4f96a50292bf43580, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
-      value: 0
+      value: 0.09049774
       objectReference: {fileID: 0}
     - target: {fileID: 4065688370998068925, guid: 80f78b0c65abbfa4f96a50292bf43580, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
@@ -46905,11 +46905,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4065688370998068925, guid: 80f78b0c65abbfa4f96a50292bf43580, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
-      value: 1
+      value: 0.54298645
       objectReference: {fileID: 0}
     - target: {fileID: 4065688370998068925, guid: 80f78b0c65abbfa4f96a50292bf43580, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 1
+      value: 0.96579474
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46969,6 +46969,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1664204884241849391, guid: 10d034f759c325e459d7147e08488b14, type: 3}
+      propertyPath: m_PanelSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 6dd721f44dc60fd41a013e378840da47, type: 2}
     - target: {fileID: 3981368849009846567, guid: 10d034f759c325e459d7147e08488b14, type: 3}
       propertyPath: stats
       value: 

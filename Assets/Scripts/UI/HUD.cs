@@ -40,6 +40,7 @@ public class HUD : MonoBehaviour
         _hudButtons = _document.rootVisualElement.Q<VisualElement>("Buttons");
 
         _pauseMenu = _pauseMenuTemplate.CloneTree();
+        _pauseMenu.style.height = Length.Percent(100);
         _resumeButton = _pauseMenu.Q<Button>("ResumeButton");
         _resumeButton.clicked += OnResumeButton;
         _restartButton = _pauseMenu.Q<Button>("RestartButton");
