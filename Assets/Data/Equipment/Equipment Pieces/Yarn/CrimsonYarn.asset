@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: CrimsonYarn
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Crimson Yarn
-  <Icon>k__BackingField: {fileID: 2800000, guid: bc1428109a56c8f4eb8ccef61940917b, type: 3}
+  <PickupText>k__BackingField: <i>This item increases your vitality!</i>
+  <Icon>k__BackingField: {fileID: 2800000, guid: 156ec01eb2e3317498aaec78631d3d76, type: 3}
   slot: {fileID: 11400000, guid: c02c54581ccd1b44398593a80f18abd0, type: 2}
   effects:
   - {fileID: 11400000, guid: 61533a25e67065e48a11daee628e117a, type: 2}

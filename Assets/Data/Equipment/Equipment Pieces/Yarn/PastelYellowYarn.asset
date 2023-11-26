@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: PastelYellowYarn
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Pastel Yellow Yarn
-  <Icon>k__BackingField: {fileID: 2800000, guid: e110854ff5a6aa84292470401c5989a4, type: 3}
+  <PickupText>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 2800000, guid: 86605c0dd5f83b144918ece4b084c838, type: 3}
   slot: {fileID: 11400000, guid: c02c54581ccd1b44398593a80f18abd0, type: 2}
   effects:
   - {fileID: 11400000, guid: 33616bb41ea35c642bae0421028ada17, type: 2}
