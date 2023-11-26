@@ -37,6 +37,8 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField]
     float health;
     [SerializeField]
+    HealthBar healthBar;
+    [SerializeField]
     float attackCooldown;
     [SerializeField]
     float currentAttackCooldown;
@@ -116,6 +118,8 @@ public class CatBehaviour : MonoBehaviour
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
         health = stats.GetValue(vitality);
+        healthBar.SetMaxHealth(health);
+        healthBar.SetHealth(health);
     }
 
     void Update()
@@ -214,7 +218,9 @@ public class CatBehaviour : MonoBehaviour
     {
         OnHit?.Invoke(this, new EventArgs());
         health -= damage;
+        healthBar.SetHealth(health);
     }
+
 
     private void restartGame() { }
 }
