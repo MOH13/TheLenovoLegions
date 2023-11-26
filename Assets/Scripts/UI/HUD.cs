@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour
     private Button _pauseButton;
     private Button _resumeButton;
     private Button _restartButton;
+    private Button _hubButton;
     private Button _mainMenuButton;
     private Button _inventoryButton;
 
@@ -43,6 +44,8 @@ public class HUD : MonoBehaviour
         _resumeButton.clicked += OnResumeButton;
         _restartButton = _pauseMenu.Q<Button>("RestartButton");
         _restartButton.clicked += OnRestartButton;
+        _hubButton = _pauseMenu.Q<Button>("HubButton");
+        _hubButton.clicked += OnHubButton;
         _mainMenuButton = _pauseMenu.Q<Button>("MainMenuButton");
         _mainMenuButton.clicked += OnMainMenuButton;
 
@@ -87,6 +90,12 @@ public class HUD : MonoBehaviour
         // TODO
         var _currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(_currentScene.name);
+        Time.timeScale = 1;
+    }
+
+    public void OnHubButton()
+    {
+        SceneManager.LoadScene("HubLevel");
         Time.timeScale = 1;
     }
 
