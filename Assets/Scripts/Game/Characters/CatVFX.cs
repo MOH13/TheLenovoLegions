@@ -44,13 +44,13 @@ public class CatVFX : MonoBehaviour
 
     private void OnAttack(object sender, EventArgs e)
     {
-        if(attackSound != null)
+        if (attackSound != null)
             attackSound.Play();
     }
 
     private void OnHit(object sender, EventArgs e)
     {
-        if(hitSound != null)
+        if (hitSound != null)
             hitSound.Play();
     }
 
@@ -60,6 +60,7 @@ public class CatVFX : MonoBehaviour
         animator.SetFloat(HORIZONTAL_SPEED_KEY, Mathf.Abs(cat.HorizontalSpeed));
         animator.SetBool(FACING_LEFT_KEY, cat.LastInputDirection < 0);
         animator.SetBool(AIRBORNE_KEY, !cat.isGrounded());
+        UpdateMovementSounds();
     }
 
     static void SetSoundStatus(AudioSource? sound, bool enabled)

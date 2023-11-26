@@ -50,9 +50,10 @@ GameObject:
   - component: {fileID: 6940345021187351814}
   - component: {fileID: 5231684267882277454}
   - component: {fileID: 5156273593427250009}
+  - component: {fileID: 6370392996349823684}
   m_Layer: 7
   m_Name: Cat
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836d7b4e69eda2344be5197c1ae43a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseAcceleration: 0.6
+  baseAcceleration: 0.8
   baseAirAcceleration: 0.2
   baseSprintMultiplier: 1.3
   maxGroundSpeedMultiplier: 0.2
@@ -228,7 +229,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.03}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -239,7 +240,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.34, y: 0.34}
+  m_Size: {x: 0.34, y: 0.28}
   m_EdgeRadius: 0.08
 --- !u!114 &7015876891570263015
 MonoBehaviour:
@@ -414,3 +415,16 @@ MonoBehaviour:
   meowSound: {fileID: 0}
   attackSound: {fileID: 0}
   jumpSound: {fileID: 0}
+  hitSound: {fileID: 0}
+--- !u!114 &6370392996349823684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3727912597548085787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3493981e6eb6f57449396b78ad67cf16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

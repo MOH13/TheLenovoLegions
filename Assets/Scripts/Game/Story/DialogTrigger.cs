@@ -26,6 +26,8 @@ namespace LL.Game.Story
 
         public LayerMask LayerMask => layerMask;
 
+        public bool CanShow { get => canShow; set { canShow = value; } }
+
         public void SetDialog(DialogResource dialog)
         {
             this.dialog = dialog;

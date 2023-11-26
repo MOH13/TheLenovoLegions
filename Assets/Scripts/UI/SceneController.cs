@@ -5,26 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    public static SceneController instance;
+    public static SceneController Instance { get; private set; }
     [SerializeField] Animator transitionAnim;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else {
+        else
+        {
             Destroy(gameObject);
         }
     }
 
-    public void NextLevel(string level) {
+    public void NextLevel(string level)
+    {
         StartCoroutine(LoadLevel(level));
     }
 
-    IEnumerator LoadLevel(string level) {
+    IEnumerator LoadLevel(string level)
+    {
         transitionAnim.SetTrigger("End");
         yield return new WaitForSeconds(1);
         SceneManager.LoadSceneAsync(level);
