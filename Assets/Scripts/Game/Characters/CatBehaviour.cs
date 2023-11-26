@@ -1,14 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using LL.Input;
-using UnityEngine.Animations;
-using UnityEngine.InputSystem.Composites;
 using System;
-using LL.Framework.Stats;
-using System.ComponentModel;
 using LL.Game.Stats;
 using UnityEngine.SceneManagement;
 
@@ -34,6 +27,16 @@ public class CatBehaviour : MonoBehaviour
     float diveSpeed;
     [SerializeField]
     float coyoteTime = 0.1f;
+    [SerializeField]
+    float stepCheckHeightLower = 0.01f;
+    [SerializeField]
+    float stepCheckHeightUpper = 0.1f;
+    [SerializeField]
+    float stepCheckDistance = 0.05f;
+    [SerializeField]
+    float stepSnapHeight = 0.1f;
+    [SerializeField]
+    float stepSnapXOffset = 0.03f;
     [SerializeField]
     float health;
     [SerializeField]
@@ -70,8 +73,6 @@ public class CatBehaviour : MonoBehaviour
     StatResource jumpForce;
     [SerializeField]
     StatResource ferocity;
-    [SerializeField]
-    StatResource nightVision;
     [SerializeField]
     StatResource airControl;
     private float groundTimer;
@@ -158,7 +159,7 @@ public class CatBehaviour : MonoBehaviour
     private void groundCheck()
     {
         float extraHeight = 0.1f;
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, (boxCollider2d.bounds.size + 0.5f * boxCollider2d.edgeRadius * Vector3.one) * 0.995f, 0f, Vector2.down, extraHeight, platformLayerMask);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, (boxCollider2d.bounds.size + 2 * boxCollider2d.edgeRadius * Vector3.one) * 0.995f, 0f, Vector2.down, extraHeight, platformLayerMask);
         if (raycastHit.collider != null)
         {
             groundTimer = 0;
@@ -174,15 +175,39 @@ public class CatBehaviour : MonoBehaviour
     {
         var moveSpeedStat = stats.GetValue(moveSpeed);
         var sprintMultiplier = isShiftPressed && isGrounded() ? baseSprintMultiplier : 1;
-        if (isGrounded() && Mathf.Abs(HorizontalSpeed) < moveSpeedStat * sprintMultiplier * maxGroundSpeedMultiplier)
+        if (isGrounded())
         {
-            var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * moveSpeedStat;
-            rigidBody.AddForce(groundAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
+            handleStepSnap(moveDir);
+            if (Mathf.Abs(HorizontalSpeed) < moveSpeedStat * sprintMultiplier * maxGroundSpeedMultiplier)
+            {
+                var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * moveSpeedStat;
+                rigidBody.AddForce(groundAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
+            }
         }
         else if (!isGrounded())
         {
             var airAcceleration = baseAirAcceleration * moveDir * stats.GetValue(airControl);
             rigidBody.AddForce(airAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
+        }
+    }
+
+    private void handleStepSnap(float moveDir)
+    {
+        if (Mathf.Abs(moveDir) < 0.05f)
+            return;
+
+        var checkDir = moveDir > 0 ? Vector2.right : Vector2.left;
+        var bounds = boxCollider2d.bounds;
+        var start = new Vector2(bounds.center.x + (bounds.extents.x + boxCollider2d.edgeRadius) * Mathf.Sign(moveDir), bounds.min.y - boxCollider2d.edgeRadius);
+
+        if (Physics2D.Raycast(start + Vector2.up * stepCheckHeightLower, checkDir, stepCheckDistance, platformLayerMask).collider != null)
+        {
+            // Lower check is occluded
+            if (Physics2D.Raycast(start + Vector2.up * stepCheckHeightUpper, checkDir, stepCheckDistance, platformLayerMask).collider == null)
+            {
+                // Upper check is not occluded
+                transform.position = transform.position + new Vector3(Mathf.Sign(moveDir) * stepSnapXOffset, stepSnapHeight, 0);
+            }
         }
     }
 
