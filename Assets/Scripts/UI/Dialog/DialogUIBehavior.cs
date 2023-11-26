@@ -93,7 +93,7 @@ namespace LL.UI.Dialog
 
             readonly VisualElement rightIcon;
 
-            public Logic(DialogResource currentDialog, UIDocument document, AudioSource audioSource)
+            public Logic(DialogResource currentDialog, UIDocument document, AudioSource? audioSource)
             {
                 this.currentDialog = currentDialog;
                 this.audioSource = audioSource;

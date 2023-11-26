@@ -30,7 +30,7 @@ namespace LL.UI.Dialog
         public Texture2D? RightIcon { get; set; }
 
         [field: SerializeField]
-        public AudioClip Audio { get; set; }
+        public AudioClip? Audio { get; set; }
 
         [field: SerializeField]
         public DialogPositionHorizontal PositionHorizontal { get; set; }

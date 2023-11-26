@@ -13,6 +13,9 @@ namespace LL.Game.Equipment
         [SerializeField]
         EquipmentResource equipment;
 
+        [SerializeField]
+        AudioClip? activationAudio;
+
         void Start()
         {
             dialogTrigger.SetDialog(CreateDialog());
@@ -26,6 +29,7 @@ namespace LL.Game.Equipment
                     LeftIcon = equipment.Icon,
                     PositionHorizontal = DialogPositionHorizontal.Left,
                     PositionVertical = DialogPositionVertical.Bottom,
+                    Audio = activationAudio,
                 }
             };
             return DialogResource.Create(frames);

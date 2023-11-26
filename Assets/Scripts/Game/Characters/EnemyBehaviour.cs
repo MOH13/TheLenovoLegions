@@ -8,18 +8,21 @@ public class EnemyBehaviour : MonoBehaviour
     public float attackCooldown;
     public float currentAttackCooldown;
     public float acceleration;
-    private Vector2 direction;
+    private Vector3 direction;
     public Transform attackLocation;
     public LayerMask player;
     public LayerMask platform;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
+    //[SerializeField] Animator transitionAnim;
 
     internal void takeDamage(float damage)
     {
         health -= damage;
         if (health <= 0)
         {
+            //transitionAnim.SetTrigger("Death");
+            //new WaitForSeconds(1);
             Destroy(gameObject);
         }
     }
@@ -29,7 +32,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        direction = Vector2.right;
+        direction = Vector3.right;
     }
 
     // Update is called once per frame
@@ -37,11 +40,17 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (currentAttackCooldown <= 0)
         {
-            Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player); // fix so attackLocation corresponds to the way it is "looking"
+            Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player); // fix so attackLocation corresponds to the way it is moving
             if (hit != null)
             {
-                hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
-                currentAttackCooldown = attackCooldown;
+                var playerPosition = hit.gameObject.transform;
+                Vector3 enemyDirection = transform.position - playerPosition.position;
+                float angle = Vector3.Angle(transform.forward, enemyDirection);
+                if (angle < 90)
+                {
+                    hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
+                    currentAttackCooldown = attackCooldown;
+                }
             }
         }
         else
