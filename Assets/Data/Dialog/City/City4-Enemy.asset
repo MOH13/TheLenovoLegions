@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a865d81abeff444caac65a4ee3ff650, type: 3}
+  m_Name: City4-Enemy
+  m_EditorClassIdentifier: 
+  frames:
+  - <Text>k__BackingField: This does not look friendly.. I should be careful.
+    <LeftIcon>k__BackingField: {fileID: 2800000, guid: fbc5aead908809d4db567c31a4d2209c, type: 3}
+    <RightIcon>k__BackingField: {fileID: 0}
+    <Audio>k__BackingField: {fileID: 8300000, guid: c035a46f4ced5a349bc133228209f852, type: 3}
+    <PositionHorizontal>k__BackingField: 2
+    <PositionVertical>k__BackingField: 0
+  - <Text>k__BackingField: Use <b>Left Mouse</b> to attack the enemy.
+    <LeftIcon>k__BackingField: {fileID: 2800000, guid: fbc5aead908809d4db567c31a4d2209c, type: 3}
+    <RightIcon>k__BackingField: {fileID: 0}
+    <Audio>k__BackingField: {fileID: 8300000, guid: c035a46f4ced5a349bc133228209f852, type: 3}
+    <PositionHorizontal>k__BackingField: 2
+    <PositionVertical>k__BackingField: 0
