@@ -59,7 +59,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         transform.Translate(direction * acceleration * Time.deltaTime);
         float extraDist = 0.01f;
-        Vector3 size = new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y * 0.99f); // we make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
+        Vector3 size = new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y * 0.95f); // we make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
         RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, platform);
         RaycastHit2D rightCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.right, extraDist, platform);
         if (leftCollision.collider != null)
