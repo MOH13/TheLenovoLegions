@@ -31,6 +31,107 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8347008021329216366}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2922781191911049867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4088068032698719143}
+  - component: {fileID: 903588756539779943}
+  - component: {fileID: 3253969780542288999}
+  m_Layer: 7
+  m_Name: CatLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4088068032698719143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922781191911049867}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8347008021329216366}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &903588756539779943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922781191911049867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_LightVolumeIntensity: 0.05
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 1
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &3253969780542288999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922781191911049867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f231fbf9047fcba42ab4674d5dd86f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseInnerRadius: 0.06
+  baseOuterRadius: 0.2
+  baseIntensity: 0.03
+  stats: {fileID: 4079654753661638129}
+  nightVision: {fileID: 11400000, guid: 4362ead050ada5e489cd69960c44b7d7, type: 2}
+  catLight: {fileID: 903588756539779943}
 --- !u!1 &3727912597548085787
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,6 +173,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5873733640275158460}
+  - {fileID: 4088068032698719143}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.002}
 --- !u!212 &7089267821961235387
@@ -146,6 +248,11 @@ MonoBehaviour:
   jumpForceMultiplier: 0.5
   diveSpeed: 2
   coyoteTime: 0.1
+  stepCheckHeightLower: 0.01
+  stepCheckHeightUpper: 0.1
+  stepCheckDistance: 0.04
+  stepSnapHeight: 0.12
+  stepSnapXOffset: 0.02
   health: 5
   attackCooldown: 0.1
   currentAttackCooldown: 0
@@ -168,7 +275,6 @@ MonoBehaviour:
   vitality: {fileID: 11400000, guid: 8ef0cbbd980311b4194a519482054070, type: 2}
   jumpForce: {fileID: 11400000, guid: b0521dc1bb4c48640a99d7e0da32b989, type: 2}
   ferocity: {fileID: 11400000, guid: 3fd52e7388569204d89161c6d1e7e5fc, type: 2}
-  nightVision: {fileID: 11400000, guid: 4362ead050ada5e489cd69960c44b7d7, type: 2}
   airControl: {fileID: 11400000, guid: 66a759c67f725cf439f3c202f409ee00, type: 2}
 --- !u!50 &5902553486908934666
 Rigidbody2D:
@@ -240,8 +346,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.34, y: 0.28}
-  m_EdgeRadius: 0.08
+  m_Size: {x: 0.48, y: 0.44}
+  m_EdgeRadius: 0.01
 --- !u!114 &7015876891570263015
 MonoBehaviour:
   m_ObjectHideFlags: 0
