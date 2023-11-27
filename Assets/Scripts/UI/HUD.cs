@@ -50,10 +50,6 @@ public class HUD : MonoBehaviour
         _mainMenuButton = _pauseMenu.Q<Button>("MainMenuButton");
         _mainMenuButton.clicked += OnMainMenuButton;
 
-        //_inventory = _inventoryTemplate.CloneTree();
-        //_closeButton = _inventory.Q<Button>("close-button");
-        //_closeButton.clicked += OnCloseButton;
-
         _inventoryButton = _document.rootVisualElement.Q<Button>("InventoryButton");
         _inventoryButton.clicked += OnInventoryButton;
     }
