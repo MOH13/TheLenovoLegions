@@ -28,6 +28,8 @@ public class CatVFX : MonoBehaviour
     [SerializeField]
     AudioSource? jumpSound;
     [SerializeField]
+    AudioSource? landSound;
+    [SerializeField]
     AudioSource? hitSound;
 
     // Start is called before the first frame update
@@ -45,12 +47,12 @@ public class CatVFX : MonoBehaviour
 
     private void OnAttack(object sender, EventArgs e)
     {
-        soundManager.PlaySound(attackSound, 0.05f);
+        soundManager.PlaySound(attackSound);
     }
 
     private void OnHit(object sender, EventArgs e)
     {
-        soundManager.PlaySound(hitSound, 0.2f);
+        soundManager.PlaySound(hitSound);
     }
 
     // Update is called once per frame
@@ -63,6 +65,17 @@ public class CatVFX : MonoBehaviour
 
     void PlayMovementSound()
     {
-        soundManager.PlaySound(walkSound, 0.3f);
+        soundManager.PlaySound(walkSound);
     }
+
+    void PlayJumpSound() {
+        soundManager.PlaySound(jumpSound);
+    }
+
+    void PlayLandSound()
+    {
+        soundManager.PlaySound(landSound);
+    }
+
+
 }

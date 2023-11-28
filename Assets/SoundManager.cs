@@ -18,11 +18,14 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySound(AudioSource audioSource, float volume) {
+    public void PlaySound(AudioSource audioSource) {
         if (audioSource != null && !audioSource.isPlaying)
         {
-            AudioListener.volume = volume;
             audioSource.Play();
         }
+    }
+
+    public void SetVolume(float volume) {
+        AudioListener.volume = volume;
     }
 }
