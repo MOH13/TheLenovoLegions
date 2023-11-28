@@ -1,3 +1,4 @@
+using LL.Input;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.WebSockets;
@@ -25,9 +26,15 @@ public class HUD : MonoBehaviour
     private VisualElement _hudLayover;
     private VisualElement _hudButtons;
 
-    //[SerializeField] private VisualTreeAsset _inventoryTemplate;
-    // private VisualElement _inventory;
-    //private Button _closeButton;
+    private MyPlayerInput input;
+
+
+    private void OnEnable()
+    {
+        if (input == null)
+            input = new MyPlayerInput();
+        input.UI.Enable();
+    }
 
     private void Start()
     {
@@ -54,10 +61,15 @@ public class HUD : MonoBehaviour
         _inventoryButton.clicked += OnInventoryButton;
     }
 
+    private void Update()
+    {
+        if (input.UI.Inventory.WasPressedThisFrame() && !_inventory.activeInHierarchy)
+            OnInventoryButton();
+    }
+
     public void OnPauseButton()
     {
         Time.timeScale = 0;
-        //_hudLayover.Clear();
         _hudButtons.visible = false;
         _hudLayover.Add(_pauseMenu);
     }
@@ -84,7 +96,6 @@ public class HUD : MonoBehaviour
 
     public void OnRestartButton()
     {
-        // TODO
         var _currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(_currentScene.name);
         Time.timeScale = 1;
