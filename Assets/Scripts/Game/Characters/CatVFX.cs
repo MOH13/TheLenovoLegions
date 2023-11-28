@@ -47,12 +47,12 @@ public class CatVFX : MonoBehaviour
 
     private void OnAttack(object sender, EventArgs e)
     {
-        soundManager.PlaySound(attackSound);
+        soundManager.PlaySound(attackSound, 0.1f);
     }
 
     private void OnHit(object sender, EventArgs e)
     {
-        soundManager.PlaySound(hitSound);
+        soundManager.PlaySound(hitSound, 0.05f);
     }
 
     // Update is called once per frame
@@ -65,16 +65,16 @@ public class CatVFX : MonoBehaviour
 
     void PlayMovementSound()
     {
-        soundManager.PlaySound(walkSound);
+        soundManager.PlaySound(walkSound, 0.2f);
     }
 
     void PlayJumpSound() {
-        soundManager.PlaySound(jumpSound);
+        soundManager.PlaySound(jumpSound, 0.9f);
     }
 
     void PlayLandSound()
     {
-        soundManager.PlaySound(landSound);
+        soundManager.PlaySound(landSound, 0.6f);
     }
 
 

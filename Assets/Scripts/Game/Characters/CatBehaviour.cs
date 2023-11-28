@@ -145,8 +145,8 @@ public class CatBehaviour : MonoBehaviour
             {
                 rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
             }
-            handleCombat();
             var moveDir = input.Player.Move.ReadValue<float>();
+            handleCombat();
             if (Mathf.Abs(moveDir) > 0.05)
                 lastInputDirection = moveDir;
             bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
@@ -226,11 +226,19 @@ public class CatBehaviour : MonoBehaviour
             if (currentAttackCooldown <= 0)
             {
                 OnAttack?.Invoke(this, new EventArgs());
+                Vector2 playerDirection = lastInputDirection > 0 ? Vector2.right : Vector2.left;
                 Collider2D[] damage = Physics2D.OverlapCircleAll(attackLocation.position, attackRange, enemies);
                 foreach (Collider2D collision in damage)
                 {
-                    collision.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
+                    var enemyPosition = collision.gameObject.transform;
+                    Vector3 enemyDirection = enemyPosition.position - transform.position;
+                    float angle = Vector3.Angle(playerDirection, enemyDirection);
+                    if (angle < 30)
+                    {
+                        collision.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
+                    }
                 }
+
             }
             currentAttackCooldown = attackCooldown;
 
