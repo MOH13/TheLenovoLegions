@@ -4,6 +4,7 @@ using LL.Input;
 using System;
 using LL.Game.Stats;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 public class CatBehaviour : MonoBehaviour
 {
@@ -22,11 +23,15 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField]
     float jumpImpulseMultiplier = 0.5f;
     [SerializeField]
+    float wallJumpImpulseMultiplier = 0.3f;
+    [SerializeField]
     float jumpForceMultiplier = 1f;
     [SerializeField]
     float diveSpeed;
     [SerializeField]
     float coyoteTime = 0.1f;
+    [SerializeField]
+    float baseClimbingDuration = 2f;
     [SerializeField]
     float stepCheckHeightLower = 0.01f;
     [SerializeField]
@@ -81,6 +86,9 @@ public class CatBehaviour : MonoBehaviour
 
     private float jumpTimer;
 
+    private Vector2? wallClimbingDirection;
+    private float remainingClimbStrength;
+
     private float lastInputDirection;
 
     private bool running;
@@ -125,46 +133,52 @@ public class CatBehaviour : MonoBehaviour
 
     void Update()
     {
-        groundCheck();
-
         if (!DisableInput)
         {
-            if (input.Player.Jump.WasPressedThisFrame() && isGrounded())
+            if (input.Player.Jump.WasPressedThisFrame() && (isGrounded() || wallClimbingDirection != null))
             {
-                var jumpImpulse = stats.GetValue(jumpForce) * jumpImpulseMultiplier;
-                rigidBody.AddForce(jumpImpulse * Vector2.up, ForceMode2D.Impulse);
+                var jumpImpulse =
+                    isGrounded()
+                    ? stats.GetValue(jumpForce) * jumpImpulseMultiplier * Vector2.up
+                    : stats.GetValue(climbing) * wallJumpImpulseMultiplier * (Vector2.up - wallClimbingDirection!.Value);
+                rigidBody.AddForce(jumpImpulse, ForceMode2D.Impulse);
                 OnJump?.Invoke(this, new EventArgs());
                 jumpTimer = 0;
-            }
-            else if (input.Player.Jump.IsPressed())
-            {
-                var additionalJumpForce = stats.GetValue(jumpForce) * jumpForceMultiplier * Mathf.Pow(2, -jumpTimer * 5);
-                rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
+                remainingClimbStrength = 1;
             }
             if (input.Player.Dive.WasPressedThisFrame())
             {
                 rigidBody.AddForce(Vector2.down * diveSpeed, ForceMode2D.Impulse);
             }
-            handleCombat();
-            var moveDir = input.Player.Move.ReadValue<float>();
-            if (Mathf.Abs(moveDir) > 0.05)
-                lastInputDirection = moveDir;
-            bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
-            handleMovement(isShiftPressed, moveDir);
         }
-        groundTimer += Time.deltaTime;
         jumpTimer += Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
+        groundCheck();
+
+        if (!DisableInput)
+        {
+            if (input.Player.Jump.IsPressed())
+            {
+                var additionalJumpForce = stats.GetValue(jumpForce) * jumpForceMultiplier * Mathf.Pow(2, -jumpTimer * 5);
+                rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
+            }
+            var moveDir = input.Player.Move.ReadValue<float>();
+            if (Mathf.Abs(moveDir) > 0.05)
+                lastInputDirection = moveDir;
+            bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
+            handleMovement(isShiftPressed, moveDir);
+            groundTimer += Time.deltaTime;
+        }
     }
 
     private void groundCheck()
     {
         float extraHeight = 0.1f;
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, (boxCollider2d.bounds.size + 2 * boxCollider2d.edgeRadius * Vector3.one) * 0.995f, 0f, Vector2.down, extraHeight, platformLayerMask);
-        if (raycastHit.collider != null)
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider2d.bounds.center, (boxCollider2d.bounds.size + 2 * boxCollider2d.edgeRadius * Vector3.one) * 0.95f, 0f, Vector2.down, extraHeight, platformLayerMask);
+        if (raycastHit.collider != null && Vector2.Dot(Vector2.up, raycastHit.normal) > 0.5f)
         {
             groundTimer = 0;
         }
@@ -177,6 +191,8 @@ public class CatBehaviour : MonoBehaviour
 
     private void handleMovement(bool isShiftPressed, float moveDir)
     {
+        wallClimbingDirection = null;
+
         var moveSpeedStat = stats.GetValue(moveSpeed);
         var sprintMultiplier = isShiftPressed && isGrounded() ? baseSprintMultiplier : 1;
         if (isGrounded())
@@ -190,8 +206,30 @@ public class CatBehaviour : MonoBehaviour
         }
         else if (!isGrounded())
         {
-            var airAcceleration = baseAirAcceleration * moveDir * stats.GetValue(airControl);
-            rigidBody.AddForce(airAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
+            if (remainingClimbStrength > 0 && Mathf.Abs(moveDir) > 0.1f && Physics2D.Raycast(boxCollider2d.bounds.center, moveDir > 0 ? Vector2.right : Vector2.left, 0.05f + boxCollider2d.bounds.extents.x, platformLayerMask))
+            {
+                var climbingStat = stats.GetValue(climbing);
+
+                wallClimbingDirection = Mathf.Sign(moveDir) * Vector2.right;
+                var falling = rigidBody.velocity.y < 0;
+                float multiplier = 1;
+                if (remainingClimbStrength > 0.90f)
+                {
+                    multiplier = Mathf.Lerp(0.5f, 1, (1 - remainingClimbStrength) * 10);
+                }
+                else if (remainingClimbStrength < 0.2f)
+                {
+                    multiplier = Mathf.Lerp(1, 0.5f, (0.2f - remainingClimbStrength) * 5);
+                }
+                var force = falling ? 5 - Physics2D.gravity.y : -5;
+                rigidBody.AddForce(multiplier * force * Time.deltaTime * Vector2.up / Time.fixedDeltaTime);
+                remainingClimbStrength -= Time.deltaTime / (baseClimbingDuration * climbingStat);
+            }
+            else
+            {
+                var airAcceleration = baseAirAcceleration * moveDir * stats.GetValue(airControl);
+                rigidBody.AddForce(airAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
+            }
         }
     }
 
@@ -247,7 +285,6 @@ public class CatBehaviour : MonoBehaviour
         health -= damage;
         healthBar.SetHealth(health);
     }
-
 
     private void restartGame() { }
 }

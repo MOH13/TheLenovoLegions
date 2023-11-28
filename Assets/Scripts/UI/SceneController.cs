@@ -8,6 +8,8 @@ public class SceneController : MonoBehaviour
     public static SceneController Instance { get; private set; }
     [SerializeField] Animator transitionAnim;
 
+    string? currentlyLoading;
+
     private void Awake()
     {
         if (Instance == null)
@@ -28,9 +30,14 @@ public class SceneController : MonoBehaviour
 
     IEnumerator LoadLevel(string level)
     {
+        if (currentlyLoading != null)
+            yield break;
+
+        currentlyLoading = level;
         transitionAnim.SetTrigger("End");
         yield return new WaitForSeconds(1);
         SceneManager.LoadSceneAsync(level);
         transitionAnim.SetTrigger("Start");
+        currentlyLoading = null;
     }
 }
