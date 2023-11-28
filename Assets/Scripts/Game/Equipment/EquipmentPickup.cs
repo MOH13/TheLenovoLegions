@@ -21,6 +21,16 @@ namespace LL.Game.Equipment
         void Start()
         {
             dialogTrigger.SetDialog(CreateDialog());
+            UpdateSpriteRenderer();
+        }
+
+        void OnValidate()
+        {
+            UpdateSpriteRenderer();
+        }
+
+        void UpdateSpriteRenderer()
+        {
             if (spriteRenderer != null)
             {
                 spriteRenderer.sprite = equipment.Icon;

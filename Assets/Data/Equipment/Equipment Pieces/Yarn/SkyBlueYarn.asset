@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: SkyBlueYarn
   <PickupText>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 2800000, guid: 8a6afc933a9626845b15dab0625fe454, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 8a6afc933a9626845b15dab0625fe454, type: 3}
   slot: {fileID: 11400000, guid: c02c54581ccd1b44398593a80f18abd0, type: 2}
   effects:
   - {fileID: 11400000, guid: 33616bb41ea35c642bae0421028ada17, type: 2}

@@ -143,7 +143,10 @@ public class CatBehaviour : MonoBehaviour
                     isGrounded()
                     ? stats.GetValue(jumpForce) * jumpImpulseMultiplier * Vector2.up
                     : stats.GetValue(climbing) * wallJumpImpulseMultiplier * (Vector2.up - wallClimbingDirection!.Value);
-                rigidBody.AddForce(jumpImpulse, ForceMode2D.Impulse);
+                if (isGrounded())
+                    rigidBody.AddForce(jumpImpulse, ForceMode2D.Impulse);
+                else
+                    rigidBody.velocity = jumpImpulse;
                 OnJump?.Invoke(this, new EventArgs());
                 jumpTimer = 0;
                 remainingClimbStrength = 1;
