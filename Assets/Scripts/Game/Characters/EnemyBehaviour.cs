@@ -11,7 +11,7 @@ public class EnemyBehaviour : MonoBehaviour
     private Vector3 direction;
     public Transform attackLocation;
     public LayerMask player;
-    public LayerMask platform;
+    public LayerMask collisionLayerMask;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
     //[SerializeField] Animator transitionAnim;
@@ -60,8 +60,8 @@ public class EnemyBehaviour : MonoBehaviour
         transform.Translate(direction * acceleration * Time.deltaTime);
         float extraDist = 0.01f + boxCollider.bounds.extents.x * 0.05f;
         Vector3 size = new Vector2(boxCollider.bounds.size.x * 0.95f, boxCollider.bounds.size.y * 0.95f); // we make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
-        RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, platform);
-        RaycastHit2D rightCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.right, extraDist, platform);
+        RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, collisionLayerMask);
+        RaycastHit2D rightCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.right, extraDist, collisionLayerMask);
         if (leftCollision.collider != null)
         {
             direction = Vector2.right;

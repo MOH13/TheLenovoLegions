@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CrimsonYarnBuff
   m_EditorClassIdentifier: 
   <EffectName>k__BackingField: Aquamarine Yarn Buff
-  stat: {fileID: 11400000, guid: b0521dc1bb4c48640a99d7e0da32b989, type: 2}
+  stat: {fileID: 11400000, guid: 8ef0cbbd980311b4194a519482054070, type: 2}
   <ModifierType>k__BackingField: 1
   <Value>k__BackingField: 1

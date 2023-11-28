@@ -17,4 +17,4 @@ MonoBehaviour:
   <Icon>k__BackingField: {fileID: 2800000, guid: 156ec01eb2e3317498aaec78631d3d76, type: 3}
   slot: {fileID: 11400000, guid: c02c54581ccd1b44398593a80f18abd0, type: 2}
   effects:
-  - {fileID: 11400000, guid: 61533a25e67065e48a11daee628e117a, type: 2}
+  - {fileID: 11400000, guid: 89cb1d9c1b5684045b5aab33f1159fe0, type: 2}
