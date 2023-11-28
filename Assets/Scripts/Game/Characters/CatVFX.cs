@@ -17,9 +17,10 @@ public class CatVFX : MonoBehaviour
     Animator animator;
 
     [SerializeField]
-    AudioSource? walkSound;
+    SoundManager soundManager;
+
     [SerializeField]
-    AudioSource? runSound;
+    AudioSource? walkSound;
     [SerializeField]
     AudioSource? meowSound;
     [SerializeField]
@@ -44,14 +45,12 @@ public class CatVFX : MonoBehaviour
 
     private void OnAttack(object sender, EventArgs e)
     {
-        if (attackSound != null)
-            attackSound.Play();
+        soundManager.PlaySound(attackSound, 0.05f);
     }
 
     private void OnHit(object sender, EventArgs e)
     {
-        if (hitSound != null)
-            hitSound.Play();
+        soundManager.PlaySound(hitSound, 0.2f);
     }
 
     // Update is called once per frame
@@ -60,25 +59,10 @@ public class CatVFX : MonoBehaviour
         animator.SetFloat(HORIZONTAL_SPEED_KEY, Mathf.Abs(cat.HorizontalSpeed));
         animator.SetBool(FACING_LEFT_KEY, cat.LastInputDirection < 0);
         animator.SetBool(AIRBORNE_KEY, !cat.isGrounded());
-        UpdateMovementSounds();
     }
 
-    static void SetSoundStatus(AudioSource? sound, bool enabled)
+    void PlayMovementSound()
     {
-        if (sound != null) sound.enabled = enabled;
-    }
-
-    void UpdateMovementSounds()
-    {
-        if (cat.HorizontalSpeed == 0 || !cat.isGrounded())
-        {
-            SetSoundStatus(walkSound, false);
-            SetSoundStatus(runSound, false);
-        }
-        else
-        {
-            SetSoundStatus(walkSound, !cat.Running);
-            SetSoundStatus(runSound, cat.Running);
-        }
+        soundManager.PlaySound(walkSound, 0.3f);
     }
 }
