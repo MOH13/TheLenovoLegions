@@ -11,7 +11,7 @@ public class EnemyBehaviour : MonoBehaviour
     private Vector3 direction;
     public Transform attackLocation;
     public LayerMask player;
-    public LayerMask platform;
+    public LayerMask collisionLayerMask;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
     //[SerializeField] Animator transitionAnim;
@@ -45,7 +45,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 var playerPosition = hit.gameObject.transform;
                 Vector3 enemyDirection = playerPosition.position - transform.position;
-                float angle = Vector3.Angle(direction, enemyDirection);
+                float angle = Vector2.Angle(direction, enemyDirection);
                 if (angle < 30)
                 {
                     hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
@@ -58,11 +58,10 @@ public class EnemyBehaviour : MonoBehaviour
             currentAttackCooldown -= Time.deltaTime;
         }
         transform.Translate(direction * acceleration * Time.deltaTime);
-        float extraDist = 0.01f;
-        LayerMask layerMask = LayerMask.GetMask("Platforms", "InvisibleCollider");
-        Vector3 size = new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y * 0.95f); // we make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
-        RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, layerMask);
-        RaycastHit2D rightCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.right, extraDist, layerMask);
+        float extraDist = 0.01f + boxCollider.bounds.extents.x * 0.05f;
+        Vector3 size = new Vector2(boxCollider.bounds.size.x * 0.95f, boxCollider.bounds.size.y * 0.95f); // we make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
+        RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, collisionLayerMask);
+        RaycastHit2D rightCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.right, extraDist, collisionLayerMask);
         if (leftCollision.collider != null)
         {
             direction = Vector2.right;

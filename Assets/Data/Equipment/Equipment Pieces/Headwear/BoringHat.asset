@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BoringHat
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Boring Hat
+  <PickupText>k__BackingField: 
   <Icon>k__BackingField: {fileID: 2800000, guid: 306dd0af43c08fd46b62c49dd422920b, type: 3}
   slot: {fileID: 11400000, guid: d0dcd77fbe3e43c40a8aad6db3e4c48c, type: 2}
   effects:

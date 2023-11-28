@@ -9,6 +9,7 @@ public class CatVFX : MonoBehaviour
     public const string AIRBORNE_KEY = "airborne";
     public const string HORIZONTAL_SPEED_KEY = "horizontal-speed";
     public const string FACING_LEFT_KEY = "facing-left";
+    public const string WALL_CLIMBING_KEY = "climbing";
 
     [SerializeField]
     CatBehaviour cat;
@@ -61,6 +62,7 @@ public class CatVFX : MonoBehaviour
         animator.SetFloat(HORIZONTAL_SPEED_KEY, Mathf.Abs(cat.HorizontalSpeed));
         animator.SetBool(FACING_LEFT_KEY, cat.LastInputDirection < 0);
         animator.SetBool(AIRBORNE_KEY, !cat.isGrounded());
+        animator.SetBool(WALL_CLIMBING_KEY, cat.WallClimbingDirection.HasValue);
     }
 
     void PlayMovementSound()

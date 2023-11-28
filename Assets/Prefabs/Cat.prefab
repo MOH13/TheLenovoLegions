@@ -245,15 +245,18 @@ MonoBehaviour:
   baseSprintMultiplier: 1.3
   maxGroundSpeedMultiplier: 0.2
   jumpImpulseMultiplier: 0.35
+  wallJumpImpulseMultiplier: 0.25
   jumpForceMultiplier: 0.5
   diveSpeed: 2
   coyoteTime: 0.1
+  baseClimbingDuration: 2
   stepCheckHeightLower: 0.01
   stepCheckHeightUpper: 0.1
   stepCheckDistance: 0.04
   stepSnapHeight: 0.12
   stepSnapXOffset: 0.02
   health: 5
+  healthBar: {fileID: 0}
   attackCooldown: 0.1
   currentAttackCooldown: 0
   attackRange: 1

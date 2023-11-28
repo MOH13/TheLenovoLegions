@@ -17,7 +17,7 @@ namespace LL.Game.Equipment.Editor
             // example.PreviewIcon must be a supported format: ARGB32, RGBA32, RGB24,
             // Alpha8 or one of float formats
             Texture2D tex = new(width, height);
-            EditorUtility.CopySerialized(piece.Icon, tex);
+            EditorUtility.CopySerialized(piece.Icon.texture, tex);
 
             return tex;
         }

@@ -64,7 +64,7 @@ namespace LL.UI
 
         public void DoSetup()
         {
-            this.icon.image = this.Equipment == null ? null : this.Equipment.Icon;
+            this.icon.sprite = this.Equipment == null ? null : this.Equipment.Icon;
             if (this.Equipment != null)
             {
                 this.RemoveFromClassList(EQUIPMENT_EMPTY_CLASS);
