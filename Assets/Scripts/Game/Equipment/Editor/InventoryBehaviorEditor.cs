@@ -38,7 +38,10 @@ namespace LL.Game.Equipment.Editor
                     {
                         EditorGUILayout.BeginHorizontal();
 
-                        GUILayout.Box(piece.Icon, GUILayout.Width(50), GUILayout.Height(50));
+                        if (piece != null && piece.Icon != null)
+                        {
+                            GUILayout.Box(piece.Icon.texture, GUILayout.Width(50), GUILayout.Height(50));
+                        }
 
                         EditorGUILayout.BeginVertical();
                         GUILayout.FlexibleSpace();

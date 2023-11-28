@@ -15,10 +15,16 @@ namespace LL.Game.Equipment
 
         [SerializeField]
         AudioClip? activationAudio;
+        [SerializeField]
+        SpriteRenderer? spriteRenderer;
 
         void Start()
         {
             dialogTrigger.SetDialog(CreateDialog());
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sprite = equipment.Icon;
+            }
         }
 
         private DialogResource CreateDialog()

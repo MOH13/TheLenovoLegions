@@ -24,10 +24,10 @@ namespace LL.UI.Dialog
         public string Text { get; set; }
 
         [field: SerializeField]
-        public Texture2D? LeftIcon { get; set; }
+        public Sprite? LeftIcon { get; set; }
 
         [field: SerializeField]
-        public Texture2D? RightIcon { get; set; }
+        public Sprite? RightIcon { get; set; }
 
         [field: SerializeField]
         public AudioClip? Audio { get; set; }

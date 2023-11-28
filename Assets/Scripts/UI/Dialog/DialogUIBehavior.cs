@@ -203,8 +203,8 @@ namespace LL.UI.Dialog
                 }
 
                 textElem.text = currentFrame.Text;
-                leftIcon.style.backgroundImage = currentFrame.LeftIcon;
-                rightIcon.style.backgroundImage = currentFrame.RightIcon;
+                leftIcon.style.backgroundImage = new StyleBackground(currentFrame.LeftIcon);
+                rightIcon.style.backgroundImage = new StyleBackground(currentFrame.RightIcon);
             }
         }
     }

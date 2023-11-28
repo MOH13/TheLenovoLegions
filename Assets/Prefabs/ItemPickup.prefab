@@ -50,6 +50,7 @@ MonoBehaviour:
   dialogTrigger: {fileID: 5528772152749037586}
   equipment: {fileID: 11400000, guid: e20b624e0c12a8243827a6e5c9cad099, type: 2}
   activationAudio: {fileID: 8300000, guid: 4d21e34a26920ec47991d21fc59f4f91, type: 3}
+  spriteRenderer: {fileID: 4959700221830660523}
 --- !u!114 &5528772152749037586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +143,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.10728, y: 0.10728, z: 0.10728}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3403269425470375665}
@@ -188,7 +189,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 13
-  m_Sprite: {fileID: 21300000, guid: 77eb2f2516664024d9cf1a2f008b962d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b8791821da3d3614b9ff7e2b20f629b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

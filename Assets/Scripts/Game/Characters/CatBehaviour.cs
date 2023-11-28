@@ -95,6 +95,8 @@ public class CatBehaviour : MonoBehaviour
 
     MyPlayerInput input;
 
+    public Vector2? WallClimbingDirection => wallClimbingDirection;
+
     public float LastInputDirection => lastInputDirection;
 
     public float HorizontalSpeed => rigidBody.velocity.x;
