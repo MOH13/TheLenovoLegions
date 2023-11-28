@@ -40,6 +40,7 @@ public class HUD : MonoBehaviour
         _hudButtons = _document.rootVisualElement.Q<VisualElement>("Buttons");
 
         _pauseMenu = _pauseMenuTemplate.CloneTree();
+        _pauseMenu.style.height = Length.Percent(100);
         _resumeButton = _pauseMenu.Q<Button>("ResumeButton");
         _resumeButton.clicked += OnResumeButton;
         _restartButton = _pauseMenu.Q<Button>("RestartButton");
@@ -48,10 +49,6 @@ public class HUD : MonoBehaviour
         _hubButton.clicked += OnHubButton;
         _mainMenuButton = _pauseMenu.Q<Button>("MainMenuButton");
         _mainMenuButton.clicked += OnMainMenuButton;
-
-        //_inventory = _inventoryTemplate.CloneTree();
-        //_closeButton = _inventory.Q<Button>("close-button");
-        //_closeButton.clicked += OnCloseButton;
 
         _inventoryButton = _document.rootVisualElement.Q<Button>("InventoryButton");
         _inventoryButton.clicked += OnInventoryButton;
