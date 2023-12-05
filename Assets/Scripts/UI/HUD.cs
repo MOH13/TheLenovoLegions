@@ -1,3 +1,4 @@
+using LL.Input;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.WebSockets;
@@ -16,7 +17,7 @@ public class HUD : MonoBehaviour
     private Button _hubButton;
     private Button _mainMenuButton;
     private Button _inventoryButton;
-
+    
     [SerializeField]
     private GameObject _inventory;
 
@@ -25,16 +26,21 @@ public class HUD : MonoBehaviour
     private VisualElement _hudLayover;
     private VisualElement _hudButtons;
 
-    //[SerializeField] private VisualTreeAsset _inventoryTemplate;
-    // private VisualElement _inventory;
-    //private Button _closeButton;
+    private MyPlayerInput input;
+
+
+    private void OnEnable()
+    {
+        if (input == null)
+            input = new MyPlayerInput();
+        input.UI.Enable();
+    }
 
     private void Start()
     {
         _document = GetComponent<UIDocument>();
         _pauseButton = _document.rootVisualElement.Q<Button>("PauseButton");
         _pauseButton.clicked += OnPauseButton;
-
 
         _hudLayover = _document.rootVisualElement.Q<VisualElement>("HUDLayover");
         _hudButtons = _document.rootVisualElement.Q<VisualElement>("Buttons");
@@ -54,10 +60,15 @@ public class HUD : MonoBehaviour
         _inventoryButton.clicked += OnInventoryButton;
     }
 
+    private void Update()
+    {
+        if (input.UI.Inventory.WasPressedThisFrame() && !_inventory.activeInHierarchy)
+            OnInventoryButton();
+    }
+
     public void OnPauseButton()
     {
         Time.timeScale = 0;
-        //_hudLayover.Clear();
         _hudButtons.visible = false;
         _hudLayover.Add(_pauseMenu);
     }
@@ -84,7 +95,6 @@ public class HUD : MonoBehaviour
 
     public void OnRestartButton()
     {
-        // TODO
         var _currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(_currentScene.name);
         Time.timeScale = 1;
