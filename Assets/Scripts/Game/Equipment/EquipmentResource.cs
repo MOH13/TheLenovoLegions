@@ -15,7 +15,7 @@ namespace LL.Game.Equipment
         public string PickupText { get; private set; } = "";
 
         [field: SerializeField]
-        public Texture2D? Icon { get; private set; }
+        public Sprite? Icon { get; private set; }
 
         [SerializeField]
         private EquipmentSlotResource? slot;

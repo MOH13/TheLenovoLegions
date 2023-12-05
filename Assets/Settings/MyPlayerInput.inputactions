@@ -154,7 +154,18 @@
                 {
                     "name": "",
                     "id": "13e5f3a1-91dc-42a0-ba61-7b0ad54ecf8e",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "710ac001-bd1a-4db1-a1f6-d384ab73ad6c",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

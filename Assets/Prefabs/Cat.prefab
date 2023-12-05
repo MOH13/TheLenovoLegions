@@ -245,15 +245,18 @@ MonoBehaviour:
   baseSprintMultiplier: 1.3
   maxGroundSpeedMultiplier: 0.2
   jumpImpulseMultiplier: 0.35
+  wallJumpImpulseMultiplier: 0.25
   jumpForceMultiplier: 0.5
   diveSpeed: 2
   coyoteTime: 0.1
+  baseClimbingDuration: 2
   stepCheckHeightLower: 0.01
   stepCheckHeightUpper: 0.1
   stepCheckDistance: 0.04
   stepSnapHeight: 0.12
   stepSnapXOffset: 0.02
   health: 5
+  healthBar: {fileID: 0}
   attackCooldown: 0.1
   currentAttackCooldown: 0
   attackRange: 1
@@ -433,6 +436,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6a1de138-1332-4f0e-9297-bc56a3863790
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8e2eefcf-0678-4102-9ded-36d82efe6777
+    m_ActionName: UI/Inventory[/Keyboard/i]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
