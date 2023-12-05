@@ -10,6 +10,7 @@ public class CatVFX : MonoBehaviour
     public const string HORIZONTAL_SPEED_KEY = "horizontal-speed";
     public const string FACING_LEFT_KEY = "facing-left";
     public const string WALL_CLIMBING_KEY = "climbing";
+    public const string ATTACK_KEY = "attack";
 
     [SerializeField]
     CatBehaviour cat;
@@ -47,6 +48,7 @@ public class CatVFX : MonoBehaviour
     {
         if (attackSound != null)
             attackSound.Play();
+        animator.SetTrigger(ATTACK_KEY);
     }
 
     private void OnHit(object sender, EventArgs e)
