@@ -97,10 +97,22 @@ public class SaveManager : MonoBehaviour
             }
         }
 
+        var equipmentPickups = FindObjectsByType<EquipmentPickup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        List<string> inactiveItemPickups = new();
+
+        foreach (var pickup in equipmentPickups)
+        {
+            if (!pickup.isActiveAndEnabled)
+            {
+                inactiveItemPickups.Add(pickup.gameObject.name);
+            }
+        }
+
         var levelJson = JsonUtility.ToJson(new LevelSave
         {
             inactiveDialogs = inactiveDialogs,
-            inactiveItemPickups = new(),
+            inactiveItemPickups = inactiveItemPickups,
         });
 
         var levelKey = LEVEL_KEY_PREFIX + SceneManager.GetActiveScene().name;
@@ -180,6 +192,16 @@ public class SaveManager : MonoBehaviour
             }
         }
 
+        var equipmentPickups = FindObjectsByType<EquipmentPickup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (var pickup in equipmentPickups)
+        {
+            if (savedLevel.inactiveItemPickups.Contains(pickup.gameObject.name))
+            {
+                pickup.gameObject.SetActive(false);
+            }
+        }
+
         PlayerPrefs.SetString(levelKey, levelJson);
     }
 
@@ -204,7 +226,7 @@ public class SaveManager : MonoBehaviour
             if (Application.isEditor)
             {
                 var result = EditorUtility.DisplayDialogComplex(
-                    "Eror loading checkpoint",
+                    "Error loading checkpoint",
                     "Checkpoint level does not match",
                     "Reset checkpoint",
                     "Do nothing",
