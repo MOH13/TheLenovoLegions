@@ -158,6 +158,7 @@ public class CatBehaviour : MonoBehaviour
             }
         }
         jumpTimer += Time.deltaTime;
+        handleCombat();
     }
 
     private void FixedUpdate()
@@ -172,7 +173,6 @@ public class CatBehaviour : MonoBehaviour
                 rigidBody.AddForce(additionalJumpForce * Time.deltaTime / Time.fixedDeltaTime * Vector2.up, ForceMode2D.Force);
             }
             var moveDir = input.Player.Move.ReadValue<float>();
-            handleCombat();
             if (Mathf.Abs(moveDir) > 0.05)
                 lastInputDirection = moveDir;
             bool isShiftPressed = running = input.Player.Shift.ReadValue<float>() == 1;
@@ -309,6 +309,4 @@ public class CatBehaviour : MonoBehaviour
         var healthFraction = health / stats.GetValue(vitality);
         healthBar.SetHealth(healthFraction);
     }
-
-    private void restartGame() { }
 }
