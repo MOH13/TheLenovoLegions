@@ -5,6 +5,7 @@ using System;
 using LL.Game.Stats;
 using UnityEngine.SceneManagement;
 using System.Threading;
+using UnityEditor.PackageManager;
 
 public class CatBehaviour : MonoBehaviour
 {
@@ -48,6 +49,8 @@ public class CatBehaviour : MonoBehaviour
     HealthBar healthBar;
     [SerializeField]
     float attackCooldown;
+    [SerializeField]
+    float enemyBounceVelocity = 0.5f;
     [SerializeField]
     float currentAttackCooldown;
     [SerializeField]
@@ -143,12 +146,12 @@ public class CatBehaviour : MonoBehaviour
                 var jumpImpulse =
                     isGrounded()
                     ? stats.GetValue(jumpForce) * jumpImpulseMultiplier * Vector2.up
-                    : stats.GetValue(climbing) * wallJumpImpulseMultiplier * (Vector2.up - wallClimbingDirection!.Value);
+                    : stats.GetValue(climbing) * wallJumpImpulseMultiplier * (Vector2.up - wallClimbingDirection!.Value * 0.5f);
                 if (isGrounded())
                     rigidBody.AddForce(jumpImpulse, ForceMode2D.Impulse);
                 else
                     rigidBody.velocity = jumpImpulse;
-                OnJump?.Invoke(this, new EventArgs());
+                OnJump?.Invoke(this, new());
                 jumpTimer = 0;
                 remainingClimbStrength = 1;
             }
@@ -209,6 +212,7 @@ public class CatBehaviour : MonoBehaviour
                 var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * moveSpeedStat;
                 rigidBody.AddForce(groundAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
             }
+            remainingClimbStrength = 1;
         }
         else if (!isGrounded())
         {
@@ -293,9 +297,22 @@ public class CatBehaviour : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (((1 << col.gameObject.layer) & enemies) != 0)
+        {
+            if (col.contacts[0].point.y < boxCollider2d.bounds.min.y)
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, enemyBounceVelocity);
+                OnAttack?.Invoke(this, new());
+                col.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
+            }
+        }
+    }
+
     public void takeDamage(float damage)
     {
-        OnHit?.Invoke(this, new EventArgs());
+        OnHit?.Invoke(this, new());
         health -= damage;
         var healthFraction = health / stats.GetValue(vitality);
         healthBar.SetHealth(healthFraction);

@@ -258,6 +258,7 @@ MonoBehaviour:
   health: 5
   healthBar: {fileID: 0}
   attackCooldown: 0.1
+  enemyBounceVelocity: 4
   currentAttackCooldown: 0
   attackRange: 1
   attackDamage: 3

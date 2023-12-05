@@ -56,7 +56,7 @@ namespace LL.Game.Equipment
             if ((col.gameObject.layer | dialogTrigger.LayerMask) != 0)
             {
                 col.gameObject.GetComponent<InventoryBehavior>().AddToInventory(equipment);
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }
