@@ -29,24 +29,4 @@ public class HealthBar : MonoBehaviour
     {
         _health.style.width = _health.style.maxWidth;
     }
-
-
-
-
-
-
-
-    //public Slider slider;
-    //public Gradient gradient;
-
-    //public void SetMaxHealth(float health) {
-    //    slider.maxValue = health;
-    //    slider.value = health;
-    //}
-
-    //public void SetHealth(float health) {
-    //    slider.value = health;
-    //}
-
-
 }

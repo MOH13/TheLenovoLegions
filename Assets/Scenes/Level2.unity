@@ -295,6 +295,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cat
       objectReference: {fileID: 0}
+    - target: {fileID: 4807230371695914182, guid: 5ba6e88c5bc0d77428e981751bd09b08, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1166199048}
     - target: {fileID: 8347008021329216366, guid: 5ba6e88c5bc0d77428e981751bd09b08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.07999802
@@ -52055,6 +52059,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e93c6d8e9a77ab749a574e6786289a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1166199048 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 81040960448648017, guid: 10d034f759c325e459d7147e08488b14, type: 3}
+  m_PrefabInstance: {fileID: 1166199046}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd5db0b920fb3548b3bcdec3cd3a59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1199429777
