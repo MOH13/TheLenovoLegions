@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class HealthBar : MonoBehaviour
 {
+
+    [SerializeField] CatBehaviour _catBehaviour;
     private UIDocument _document;
     private VisualElement _health;
 
@@ -15,14 +13,13 @@ public class HealthBar : MonoBehaviour
     {
         _document = GetComponent<UIDocument>();
         _health = _document.rootVisualElement.Q<VisualElement>("Health");
+        _catBehaviour.OnHit += SetHealth; 
     }
 
-    public void SetHealth(float healthFraction)
+    public void SetHealth(object sender, EventArgs e)
     {
-
-        _health.style.width = Length.Percent(healthFraction * 100);
-        //_health.style.width = new Length(_health.style.maxWidth.value.value * healthFraction);
-
+        var healthFraction = _catBehaviour.health / _catBehaviour.stats.GetValue(_catBehaviour.vitality);
+        _health.style.width = Length.Percent( healthFraction * 100);
     }
 
     public void SetMaxHealth()
