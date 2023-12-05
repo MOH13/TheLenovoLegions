@@ -17,7 +17,7 @@ public class HUD : MonoBehaviour
     private Button _hubButton;
     private Button _mainMenuButton;
     private Button _inventoryButton;
-
+    
     [SerializeField]
     private GameObject _inventory;
 
@@ -41,7 +41,6 @@ public class HUD : MonoBehaviour
         _document = GetComponent<UIDocument>();
         _pauseButton = _document.rootVisualElement.Q<Button>("PauseButton");
         _pauseButton.clicked += OnPauseButton;
-
 
         _hudLayover = _document.rootVisualElement.Q<VisualElement>("HUDLayover");
         _hudButtons = _document.rootVisualElement.Q<VisualElement>("Buttons");

@@ -119,8 +119,9 @@ public class CatBehaviour : MonoBehaviour
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
         health = stats.GetValue(vitality);
-        healthBar.SetMaxHealth(health);
-        healthBar.SetHealth(health);
+        healthBar.SetMaxHealth();
+        var healthFraction = health / stats.GetValue(vitality);
+        healthBar.SetHealth(healthFraction);
     }
 
     void Update()
@@ -245,7 +246,8 @@ public class CatBehaviour : MonoBehaviour
     {
         OnHit?.Invoke(this, new EventArgs());
         health -= damage;
-        healthBar.SetHealth(health);
+        var healthFraction = health / stats.GetValue(vitality);
+        healthBar.SetHealth(healthFraction);
     }
 
 
