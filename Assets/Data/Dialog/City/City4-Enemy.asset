@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frames:
   - <Text>k__BackingField: This does not look friendly.. I should be careful.
-    <LeftIcon>k__BackingField: {fileID: 2800000, guid: fbc5aead908809d4db567c31a4d2209c, type: 3}
+    <LeftIcon>k__BackingField: {fileID: 563099783, guid: 0ca1cb478ea65e746ade5a0f778a11c9, type: 3}
     <RightIcon>k__BackingField: {fileID: 0}
     <Audio>k__BackingField: {fileID: 8300000, guid: c035a46f4ced5a349bc133228209f852, type: 3}
     <PositionHorizontal>k__BackingField: 2
     <PositionVertical>k__BackingField: 0
   - <Text>k__BackingField: Use <b>Left Mouse</b> to attack the enemy.
-    <LeftIcon>k__BackingField: {fileID: 2800000, guid: fbc5aead908809d4db567c31a4d2209c, type: 3}
+    <LeftIcon>k__BackingField: {fileID: 563099783, guid: 0ca1cb478ea65e746ade5a0f778a11c9, type: 3}
     <RightIcon>k__BackingField: {fileID: 0}
     <Audio>k__BackingField: {fileID: 8300000, guid: c035a46f4ced5a349bc133228209f852, type: 3}
     <PositionHorizontal>k__BackingField: 2
