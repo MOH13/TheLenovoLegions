@@ -1,4 +1,5 @@
 using LL.Input;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.WebSockets;
@@ -62,32 +63,51 @@ public class HUD : MonoBehaviour
 
     private void Update()
     {
-        if (input.UI.Inventory.WasPressedThisFrame() && !_inventory.activeInHierarchy)
-            OnInventoryButton();
+        if (input.UI.Inventory.WasPressedThisFrame()) {
+            if (!InventoryActive && !PauseMenuActive) {
+                OnInventoryButton();
+            } else if (InventoryActive && !PauseMenuActive)
+            {
+                OnCloseButton();
+            }
+        }
+
+        if (input.UI.Pause.WasPressedThisFrame())
+        {
+            if (!PauseMenuActive && !InventoryActive) {
+                OnPauseButton();
+            } else if (PauseMenuActive && !InventoryActive)
+            {
+                OnResumeButton();
+            }
+        }
     }
 
     public void OnPauseButton()
     {
         Time.timeScale = 0;
+        PauseMenuActive = true;
         _hudButtons.visible = false;
         _hudLayover.Add(_pauseMenu);
     }
 
     public void OnInventoryButton()
-    {
+    {        
+        InventoryActive = true;
         _inventory.SetActive(true);
 
     }
 
     public void OnCloseButton()
     {
-
+        InventoryActive = false;
         _hudButtons.visible = true;
         Time.timeScale = 1;
     }
 
     public void OnResumeButton()
     {
+        PauseMenuActive = false;
         _hudLayover.Remove(_pauseMenu);
         _hudButtons.visible = true;
         Time.timeScale = 1;
@@ -95,6 +115,7 @@ public class HUD : MonoBehaviour
 
     public void OnRestartButton()
     {
+        PauseMenuActive = false;
         var _currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(_currentScene.name);
         Time.timeScale = 1;
@@ -102,15 +123,21 @@ public class HUD : MonoBehaviour
 
     public void OnHubButton()
     {
+        PauseMenuActive = false;
         SceneManager.LoadScene("HubLevel");
         Time.timeScale = 1;
     }
 
     public void OnMainMenuButton()
     {
+        PauseMenuActive = false;
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1;
     }
+
+    private Boolean PauseMenuActive { get; set; }
+
+    private Boolean InventoryActive { get; set; }
 
 
     // pausebutton should set time scale to 0, clear the HUD and put in the pauseMenu
