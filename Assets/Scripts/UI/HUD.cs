@@ -64,20 +64,18 @@ public class HUD : MonoBehaviour
     private void Update()
     {
         if (input.UI.Inventory.WasPressedThisFrame()) {
-            if (!InventoryActive && !PauseMenuActive) {
+            if (!_inventory.activeInHierarchy && !PauseMenuActive) {
                 OnInventoryButton();
-            } else if (InventoryActive && !PauseMenuActive)
-            {
+            } else if (_inventory.activeInHierarchy && !PauseMenuActive) {
                 OnCloseButton();
             }
         }
 
         if (input.UI.Pause.WasPressedThisFrame())
         {
-            if (!PauseMenuActive && !InventoryActive) {
+            if (!PauseMenuActive && !_inventory.activeInHierarchy) {
                 OnPauseButton();
-            } else if (PauseMenuActive && !InventoryActive)
-            {
+            } else if (PauseMenuActive && !_inventory.activeInHierarchy) {
                 OnResumeButton();
             }
         }
@@ -92,16 +90,14 @@ public class HUD : MonoBehaviour
     }
 
     public void OnInventoryButton()
-    {        
-        InventoryActive = true;
+    {
         _inventory.SetActive(true);
-
     }
 
     public void OnCloseButton()
     {
-        InventoryActive = false;
         _hudButtons.visible = true;
+        _inventory.SetActive(false);
         Time.timeScale = 1;
     }
 
@@ -136,8 +132,6 @@ public class HUD : MonoBehaviour
     }
 
     private Boolean PauseMenuActive { get; set; }
-
-    private Boolean InventoryActive { get; set; }
 
 
     // pausebutton should set time scale to 0, clear the HUD and put in the pauseMenu
