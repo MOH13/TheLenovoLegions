@@ -18,8 +18,6 @@ public class CatVFX : MonoBehaviour
     [SerializeField]
     Animator animator;
 
-    [SerializeField]
-    SoundManager soundManager;
 
     [SerializeField]
     AudioSource? walkSound;
@@ -49,13 +47,13 @@ public class CatVFX : MonoBehaviour
 
     private void OnAttack(object sender, EventArgs e)
     {
-        soundManager.PlaySound(attackSound, 0.1f);
+        SoundManager.instance.PlaySound(attackSound, 0.1f);
         animator.SetTrigger(ATTACK_KEY);
     }
 
     private void OnHit(object sender, EventArgs e)
     {
-        soundManager.PlaySound(hitSound, 0.05f);
+        SoundManager.instance.PlaySound(hitSound, 0.05f);
     }
 
     // Update is called once per frame
@@ -69,16 +67,16 @@ public class CatVFX : MonoBehaviour
 
     void PlayMovementSound()
     {
-        soundManager.PlaySound(walkSound, 0.2f);
+        SoundManager.instance.PlaySound(walkSound, 0.2f);
     }
 
     void PlayJumpSound() {
-        soundManager.PlaySound(jumpSound, 0.9f);
+        SoundManager.instance.PlaySound(jumpSound, 0.9f);
     }
 
     void PlayLandSound()
     {
-        soundManager.PlaySound(landSound, 0.6f);
+        SoundManager.instance.PlaySound(landSound, 0.6f);
     }
 
 
