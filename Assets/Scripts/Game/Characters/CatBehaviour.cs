@@ -129,8 +129,9 @@ public class CatBehaviour : MonoBehaviour
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
         health = stats.GetValue(vitality);
-        healthBar.SetMaxHealth(health);
-        healthBar.SetHealth(health);
+        healthBar.SetMaxHealth();
+        var healthFraction = health / stats.GetValue(vitality);
+        healthBar.SetHealth(healthFraction);
     }
 
     void Update()
@@ -212,11 +213,19 @@ public class CatBehaviour : MonoBehaviour
         }
         else if (!isGrounded())
         {
-            if (remainingClimbStrength > 0 && Mathf.Abs(moveDir) > 0.1f && Physics2D.Raycast(boxCollider2d.bounds.center, moveDir > 0 ? Vector2.right : Vector2.left, 0.05f + boxCollider2d.bounds.extents.x, platformLayerMask))
+            RaycastHit2D hit;
+            if (remainingClimbStrength > 0 && Mathf.Abs(moveDir) > 0.1f && (hit = Physics2D.Raycast(boxCollider2d.bounds.center, moveDir > 0 ? Vector2.right : Vector2.left, 0.1f + boxCollider2d.bounds.extents.x + boxCollider2d.edgeRadius, platformLayerMask)))
             {
+
                 var climbingStat = stats.GetValue(climbing);
 
                 wallClimbingDirection = Mathf.Sign(moveDir) * Vector2.right;
+
+                if (Mathf.Abs(rigidBody.velocity.x) < 0.05f)
+                {
+                    transform.position = new Vector2(hit.point.x - wallClimbingDirection.Value.x * (boxCollider2d.bounds.extents.x + boxCollider2d.edgeRadius) + Physics2D.defaultContactOffset, transform.position.y);
+                }
+
                 var falling = rigidBody.velocity.y < 0;
                 float multiplier = 1;
                 if (remainingClimbStrength > 0.90f)
@@ -297,7 +306,8 @@ public class CatBehaviour : MonoBehaviour
     {
         OnHit?.Invoke(this, new EventArgs());
         health -= damage;
-        healthBar.SetHealth(health);
+        var healthFraction = health / stats.GetValue(vitality);
+        healthBar.SetHealth(healthFraction);
     }
 
     private void restartGame() { }
