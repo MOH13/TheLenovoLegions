@@ -67,7 +67,7 @@ public class CatVFX : MonoBehaviour
 
     void PlayMovementSound()
     {
-        SoundManager.instance.PlaySound(walkSound, 0.2f);
+        SoundManager.instance.PlaySound(walkSound, 0.1f);
     }
 
     void PlayJumpSound() {
