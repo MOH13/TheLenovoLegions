@@ -316,10 +316,6 @@ public class CatBehaviour : MonoBehaviour
 
     public void takeDamage(float damage)
     {
-<<<<<<< HEAD
-=======
-        OnHit?.Invoke(this, new());
->>>>>>> main
         health -= damage;
         OnHit?.Invoke(this, new EventArgs());
     }
