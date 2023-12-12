@@ -71,12 +71,14 @@ public class HUD : MonoBehaviour
             }
         }
 
-        if (input.UI.Pause.WasPressedThisFrame())
-        {
+        if (input.UI.Pause.WasPressedThisFrame()) {
             if (!PauseMenuActive && !_inventory.activeInHierarchy) {
                 OnPauseButton();
             } else if (PauseMenuActive && !_inventory.activeInHierarchy) {
                 OnResumeButton();
+            } else if (!PauseMenuActive && _inventory.activeInHierarchy)
+            {
+                OnCloseButton();
             }
         }
     }
