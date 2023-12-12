@@ -31,7 +31,7 @@ namespace LL.Game.Equipment
         }
 
 #if UNITY_EDITOR
-        [MenuItem("LL/Update equipment database")]
+        [MenuItem("Tools/LL/Update equipment database")]
         public static void UpdateDatabase()
         {
             var instance = Instance;

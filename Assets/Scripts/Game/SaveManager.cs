@@ -249,7 +249,7 @@ public class SaveManager : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    [MenuItem("LL/Saves/Save")]
+    [MenuItem("Tools/LL/Saves/Save")]
 #endif
     public static void Save()
     {
@@ -259,7 +259,7 @@ public class SaveManager : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    [MenuItem("LL/Saves/Load")]
+    [MenuItem("Tools/LL/Saves/Load")]
 #endif
     public static void Load()
     {
@@ -269,7 +269,7 @@ public class SaveManager : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    [MenuItem("LL/Saves/Reset")]
+    [MenuItem("Tools/LL/Saves/Reset")]
 #endif
     public static void Reset()
     {
