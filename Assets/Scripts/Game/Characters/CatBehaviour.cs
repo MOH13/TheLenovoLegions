@@ -290,7 +290,7 @@ public class CatBehaviour : MonoBehaviour
                     var enemyPosition = collision.gameObject.transform;
                     Vector3 enemyDirection = enemyPosition.position - transform.position;
                     float angle = Vector3.Angle(playerDirection, enemyDirection);
-                    if (angle < 30)
+                    if (angle <= 30)
                     {
                         collision.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
                     }
