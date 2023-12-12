@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4714135698158505318}
   - component: {fileID: 1266091098508062643}
   m_Layer: 3
-  m_Name: Platform
+  m_Name: PlatformCave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 90
-  m_Sprite: {fileID: 21300000, guid: 62d2a454e801a6843af50ecb6a77482b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8d182e9190c39ed45bef107b8f18dca4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
