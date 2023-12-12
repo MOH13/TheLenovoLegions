@@ -18,16 +18,17 @@ public class CatVFX : MonoBehaviour
     [SerializeField]
     Animator animator;
 
+
     [SerializeField]
     AudioSource? walkSound;
-    [SerializeField]
-    AudioSource? runSound;
     [SerializeField]
     AudioSource? meowSound;
     [SerializeField]
     AudioSource? attackSound;
     [SerializeField]
     AudioSource? jumpSound;
+    [SerializeField]
+    AudioSource? landSound;
     [SerializeField]
     AudioSource? hitSound;
 
@@ -46,15 +47,13 @@ public class CatVFX : MonoBehaviour
 
     private void OnAttack(object sender, EventArgs e)
     {
-        if (attackSound != null)
-            attackSound.Play();
+        SoundManager.instance.PlaySound(attackSound, 0.1f);
         animator.SetTrigger(ATTACK_KEY);
     }
 
     private void OnHit(object sender, EventArgs e)
     {
-        if (hitSound != null)
-            hitSound.Play();
+        SoundManager.instance.PlaySound(hitSound, 0.05f);
     }
 
     // Update is called once per frame
@@ -64,25 +63,21 @@ public class CatVFX : MonoBehaviour
         animator.SetBool(FACING_LEFT_KEY, cat.LastInputDirection < 0);
         animator.SetBool(AIRBORNE_KEY, !cat.isGrounded());
         animator.SetBool(WALL_CLIMBING_KEY, cat.WallClimbingDirection.HasValue);
-        UpdateMovementSounds();
     }
 
-    static void SetSoundStatus(AudioSource? sound, bool enabled)
+    void PlayMovementSound()
     {
-        if (sound != null) sound.enabled = enabled;
+        SoundManager.instance.PlaySound(walkSound, 0.1f);
     }
 
-    void UpdateMovementSounds()
-    {
-        if (cat.HorizontalSpeed == 0 || !cat.isGrounded())
-        {
-            SetSoundStatus(walkSound, false);
-            SetSoundStatus(runSound, false);
-        }
-        else
-        {
-            SetSoundStatus(walkSound, !cat.Running);
-            SetSoundStatus(runSound, cat.Running);
-        }
+    void PlayJumpSound() {
+        SoundManager.instance.PlaySound(jumpSound, 0.9f);
     }
+
+    void PlayLandSound()
+    {
+        SoundManager.instance.PlaySound(landSound, 0.6f);
+    }
+
+
 }

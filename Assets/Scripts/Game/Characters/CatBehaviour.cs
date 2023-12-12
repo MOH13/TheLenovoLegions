@@ -5,6 +5,7 @@ using System;
 using LL.Game.Stats;
 using UnityEngine.SceneManagement;
 using System.Threading;
+using UnityEditor.PackageManager;
 
 public class CatBehaviour : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class CatBehaviour : MonoBehaviour
     public float health;
     [SerializeField]
     float attackCooldown;
+    [SerializeField]
+    float enemyBounceVelocity = 0.5f;
     [SerializeField]
     float currentAttackCooldown;
     [SerializeField]
@@ -138,12 +141,12 @@ public class CatBehaviour : MonoBehaviour
                 var jumpImpulse =
                     isGrounded()
                     ? stats.GetValue(jumpForce) * jumpImpulseMultiplier * Vector2.up
-                    : stats.GetValue(climbing) * wallJumpImpulseMultiplier * (Vector2.up - wallClimbingDirection!.Value);
+                    : stats.GetValue(climbing) * wallJumpImpulseMultiplier * (Vector2.up - wallClimbingDirection!.Value * 0.5f);
                 if (isGrounded())
                     rigidBody.AddForce(jumpImpulse, ForceMode2D.Impulse);
                 else
                     rigidBody.velocity = jumpImpulse;
-                OnJump?.Invoke(this, new EventArgs());
+                OnJump?.Invoke(this, new());
                 jumpTimer = 0;
                 remainingClimbStrength = 1;
             }
@@ -153,6 +156,7 @@ public class CatBehaviour : MonoBehaviour
             }
         }
         jumpTimer += Time.deltaTime;
+        handleCombat();
     }
 
     private void FixedUpdate()
@@ -204,6 +208,7 @@ public class CatBehaviour : MonoBehaviour
                 var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * moveSpeedStat;
                 rigidBody.AddForce(groundAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
             }
+            remainingClimbStrength = 1;
         }
         else if (!isGrounded())
         {
@@ -273,11 +278,19 @@ public class CatBehaviour : MonoBehaviour
             if (currentAttackCooldown <= 0)
             {
                 OnAttack?.Invoke(this, new EventArgs());
+                Vector2 playerDirection = lastInputDirection > 0 ? Vector2.right : Vector2.left;
                 Collider2D[] damage = Physics2D.OverlapCircleAll(attackLocation.position, attackRange, enemies);
                 foreach (Collider2D collision in damage)
                 {
-                    collision.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
+                    var enemyPosition = collision.gameObject.transform;
+                    Vector3 enemyDirection = enemyPosition.position - transform.position;
+                    float angle = Vector3.Angle(playerDirection, enemyDirection);
+                    if (angle <= 30)
+                    {
+                        collision.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
+                    }
                 }
+
             }
             currentAttackCooldown = attackCooldown;
 
@@ -288,11 +301,26 @@ public class CatBehaviour : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (((1 << col.gameObject.layer) & enemies) != 0)
+        {
+            if (col.contacts[0].point.y < boxCollider2d.bounds.min.y)
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, enemyBounceVelocity);
+                OnAttack?.Invoke(this, new());
+                col.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
+            }
+        }
+    }
+
     public void takeDamage(float damage)
     {
+<<<<<<< HEAD
+=======
+        OnHit?.Invoke(this, new());
+>>>>>>> main
         health -= damage;
         OnHit?.Invoke(this, new EventArgs());
     }
-
-    private void restartGame() { }
 }
