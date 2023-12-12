@@ -44,9 +44,7 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField]
     float stepSnapXOffset = 0.03f;
     [SerializeField]
-    float health;
-    [SerializeField]
-    HealthBar healthBar;
+    public float health;
     [SerializeField]
     float attackCooldown;
     [SerializeField]
@@ -70,7 +68,7 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField]
     BoxCollider2D boxCollider2d;
     [SerializeField]
-    LiveStatsBehavior stats;
+    public LiveStatsBehavior stats;
     [SerializeField]
     StatResource moveSpeed;
     [SerializeField]
@@ -78,7 +76,7 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField]
     StatResource sneak;
     [SerializeField]
-    StatResource vitality;
+    public StatResource vitality;
     [SerializeField]
     StatResource jumpForce;
     [SerializeField]
@@ -132,9 +130,6 @@ public class CatBehaviour : MonoBehaviour
         boxCollider2d = GetComponent<BoxCollider2D>();
         stats = GetComponent<LiveStatsBehavior>();
         health = stats.GetValue(vitality);
-        healthBar.SetMaxHealth();
-        var healthFraction = health / stats.GetValue(vitality);
-        healthBar.SetHealth(healthFraction);
     }
 
     void Update()
@@ -290,7 +285,7 @@ public class CatBehaviour : MonoBehaviour
                     var enemyPosition = collision.gameObject.transform;
                     Vector3 enemyDirection = enemyPosition.position - transform.position;
                     float angle = Vector3.Angle(playerDirection, enemyDirection);
-                    if (angle < 30)
+                    if (angle <= 30)
                     {
                         collision.gameObject.GetComponent<EnemyBehaviour>().takeDamage(attackDamage);
                     }
@@ -321,9 +316,7 @@ public class CatBehaviour : MonoBehaviour
 
     public void takeDamage(float damage)
     {
-        OnHit?.Invoke(this, new());
         health -= damage;
-        var healthFraction = health / stats.GetValue(vitality);
-        healthBar.SetHealth(healthFraction);
+        OnHit?.Invoke(this, new EventArgs());
     }
 }
