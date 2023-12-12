@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class EnemyBehaviour : MonoBehaviour
     public float attackCooldown;
     public float currentAttackCooldown;
     public float acceleration;
+    public bool shouldChase;
+    public float chaseDistance;
     private Vector3 direction;
     public Transform attackLocation;
     public LayerMask player;
@@ -57,7 +61,26 @@ public class EnemyBehaviour : MonoBehaviour
         {
             currentAttackCooldown -= Time.deltaTime;
         }
-        transform.Translate(direction * acceleration * Time.deltaTime);
+        if (shouldChase) {
+            Collider2D playerCollision = Physics2D.OverlapCircle(transform.position, chaseDistance, player);
+            if (playerCollision != null)
+            {
+                Vector3 aiPosition = transform.position, mainCharacterPosition = playerCollision.transform.position;
+                float distance = Vector2.Distance(aiPosition, mainCharacterPosition);
+                Vector2 direction = (mainCharacterPosition - aiPosition);
+                direction.Normalize();
+                if (distance < chaseDistance)
+                {
+                    transform.position = Vector2.MoveTowards(aiPosition, mainCharacterPosition, acceleration * Time.deltaTime);
+                }
+            }
+            else
+            {
+                transform.Translate(direction * acceleration * Time.deltaTime);
+            }
+        } else {
+            transform.Translate(direction * acceleration * Time.deltaTime);
+        }
         float extraDist = 0.01f + boxCollider.bounds.extents.x * 0.05f;
         Vector3 size = new Vector2(boxCollider.bounds.size.x * 0.95f, boxCollider.bounds.size.y * 0.95f); // we make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
         RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, collisionLayerMask);
