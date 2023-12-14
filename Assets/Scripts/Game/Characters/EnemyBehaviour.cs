@@ -1,4 +1,14 @@
+using System;
 using UnityEngine;
+
+[Serializable]
+public struct SwingSetup
+{
+    public bool shouldSwing;
+    public float swingDistance;
+    public float swingPeriod;
+    public float swingAmplitude;
+}
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -10,7 +20,11 @@ public class EnemyBehaviour : MonoBehaviour
     public float acceleration;
     public bool shouldChase;
     public float chaseDistance;
+    public SwingSetup swingSetup = new() { shouldSwing = false, swingDistance = 1, swingPeriod = 2, swingAmplitude = 120 };
     private Vector3 direction;
+
+    public Vector2 OriginalPosition { get; private set; }
+    public float CurrentSwingAngle { get; private set; }
     public Transform attackLocation;
     public LayerMask player;
     public LayerMask collisionLayerMask;
@@ -35,6 +49,7 @@ public class EnemyBehaviour : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         direction = Vector3.right;
+        OriginalPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -59,7 +74,17 @@ public class EnemyBehaviour : MonoBehaviour
         {
             currentAttackCooldown -= Time.deltaTime;
         }
-        if (shouldChase) {
+        if (swingSetup.shouldSwing)
+        {
+            CurrentSwingAngle = swingSetup.swingAmplitude * Mathf.Cos(Mathf.PI * 2 / swingSetup.swingPeriod * Time.time);
+            float angle = (CurrentSwingAngle - 90) * Mathf.Deg2Rad;
+
+            var x = OriginalPosition.x + swingSetup.swingDistance * Mathf.Cos(angle);
+            var y = OriginalPosition.y + swingSetup.swingDistance * Mathf.Sin(angle);
+            transform.position = new Vector2(x, y);
+        }
+        else if (shouldChase)
+        {
             Collider2D playerCollision = Physics2D.OverlapCircle(transform.position, chaseDistance, player); // Maybe move into an OnCollision method
             if (playerCollision != null)
             {
@@ -94,4 +119,18 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
     }
+
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        if (swingSetup.shouldSwing)
+        {
+            Gizmos.DrawWireSphere(transform.position, swingSetup.swingDistance);
+            var x = Mathf.Cos((swingSetup.swingAmplitude - 90) * Mathf.Deg2Rad);
+            var y = Mathf.Sin((swingSetup.swingAmplitude - 90) * Mathf.Deg2Rad);
+            Gizmos.DrawLine(transform.position, transform.position + swingSetup.swingDistance * new Vector3(x, y, 0));
+            Gizmos.DrawLine(transform.position, transform.position + swingSetup.swingDistance * new Vector3(-x, y, 0));
+        }
+    }
+#endif
 }
