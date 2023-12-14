@@ -15,4 +15,4 @@ MonoBehaviour:
   <EffectName>k__BackingField: Air Control Buff
   stat: {fileID: 11400000, guid: 66a759c67f725cf439f3c202f409ee00, type: 2}
   <ModifierType>k__BackingField: 4
-  <Value>k__BackingField: 0.1
+  <Value>k__BackingField: 0.4

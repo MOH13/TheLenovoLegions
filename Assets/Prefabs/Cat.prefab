@@ -240,10 +240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836d7b4e69eda2344be5197c1ae43a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseAcceleration: 0.8
+  baseAcceleration: 1.05
   baseAirAcceleration: 0.2
-  baseSprintMultiplier: 1.3
-  maxGroundSpeedMultiplier: 0.2
+  baseSprintMultiplier: 0.8
+  maxGroundSpeedMultiplier: 0.25
   jumpImpulseMultiplier: 0.35
   wallJumpImpulseMultiplier: 0.25
   jumpForceMultiplier: 0.5
@@ -256,7 +256,6 @@ MonoBehaviour:
   stepSnapHeight: 0.12
   stepSnapXOffset: 0.02
   health: 5
-  healthBar: {fileID: 0}
   attackCooldown: 0.1
   enemyBounceVelocity: 4
   currentAttackCooldown: 0
@@ -350,7 +349,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.48, y: 0.44}
+  m_Size: {x: 0.48, y: 0.41}
   m_EdgeRadius: 0.01
 --- !u!114 &7015876891570263015
 MonoBehaviour:
@@ -525,10 +524,10 @@ MonoBehaviour:
   cat: {fileID: 4807230371695914182}
   animator: {fileID: 5231684267882277454}
   walkSound: {fileID: 0}
-  runSound: {fileID: 0}
   meowSound: {fileID: 0}
   attackSound: {fileID: 0}
   jumpSound: {fileID: 0}
+  landSound: {fileID: 0}
   hitSound: {fileID: 0}
 --- !u!114 &6370392996349823684
 MonoBehaviour:

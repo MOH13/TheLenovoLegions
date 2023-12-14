@@ -4,8 +4,6 @@ using LL.Input;
 using System;
 using LL.Game.Stats;
 using UnityEngine.SceneManagement;
-using System.Threading;
-using UnityEditor.PackageManager;
 
 public class CatBehaviour : MonoBehaviour
 {
@@ -203,7 +201,7 @@ public class CatBehaviour : MonoBehaviour
         if (isGrounded())
         {
             handleStepSnap(moveDir);
-            if (Mathf.Abs(HorizontalSpeed) < moveSpeedStat * sprintMultiplier * maxGroundSpeedMultiplier)
+            if (HorizontalSpeed * moveDir < moveSpeedStat * sprintMultiplier * maxGroundSpeedMultiplier)
             {
                 var groundAcceleration = baseAcceleration * moveDir * sprintMultiplier * moveSpeedStat;
                 rigidBody.AddForce(groundAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);
@@ -239,7 +237,7 @@ public class CatBehaviour : MonoBehaviour
                 rigidBody.AddForce(multiplier * force * Time.deltaTime * Vector2.up / Time.fixedDeltaTime);
                 remainingClimbStrength -= Time.deltaTime / (baseClimbingDuration * climbingStat);
             }
-            else
+            else if (HorizontalSpeed * moveDir < moveSpeedStat * maxGroundSpeedMultiplier)
             {
                 var airAcceleration = baseAirAcceleration * moveDir * stats.GetValue(airControl);
                 rigidBody.AddForce(airAcceleration * Time.deltaTime / Time.fixedDeltaTime * Vector2.right);

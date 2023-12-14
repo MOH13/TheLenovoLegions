@@ -18,7 +18,7 @@ public class HUD : MonoBehaviour
     private Button _hubButton;
     private Button _mainMenuButton;
     private Button _inventoryButton;
-    
+
     [SerializeField]
     private GameObject _inventory;
 
@@ -63,20 +63,29 @@ public class HUD : MonoBehaviour
 
     private void Update()
     {
-        if (input.UI.Inventory.WasPressedThisFrame()) {
-            if (!_inventory.activeInHierarchy && !PauseMenuActive) {
+        if (input.UI.Inventory.WasPressedThisFrame())
+        {
+            if (!_inventory.activeInHierarchy && !PauseMenuActive)
+            {
                 OnInventoryButton();
-            } else if (_inventory.activeInHierarchy && !PauseMenuActive) {
+            }
+            else if (_inventory.activeInHierarchy && !PauseMenuActive)
+            {
                 OnCloseButton();
             }
         }
 
-        if (input.UI.Pause.WasPressedThisFrame()) {
-            if (!PauseMenuActive && !_inventory.activeInHierarchy) {
+        if (input.UI.Pause.WasPressedThisFrame())
+        {
+            if (!PauseMenuActive && !_inventory.activeInHierarchy)
+            {
                 OnPauseButton();
-            } else if (PauseMenuActive && !_inventory.activeInHierarchy) {
+            }
+            else if (PauseMenuActive && !_inventory.activeInHierarchy)
+            {
                 OnResumeButton();
-            } else if (!PauseMenuActive && _inventory.activeInHierarchy)
+            }
+            else if (!PauseMenuActive && _inventory.activeInHierarchy)
             {
                 OnCloseButton();
             }
@@ -122,7 +131,7 @@ public class HUD : MonoBehaviour
     public void OnHubButton()
     {
         PauseMenuActive = false;
-        SceneManager.LoadScene("HubLevel");
+        SceneController.Instance.NextLevel("HubLevel");
         Time.timeScale = 1;
     }
 

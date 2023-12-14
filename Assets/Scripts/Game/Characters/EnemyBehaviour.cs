@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -61,7 +59,8 @@ public class EnemyBehaviour : MonoBehaviour
         {
             currentAttackCooldown -= Time.deltaTime;
         }
-        if (shouldChase) {
+        if (shouldChase)
+        {
             Collider2D playerCollision = Physics2D.OverlapCircle(transform.position, chaseDistance, player);
             if (playerCollision != null)
             {
@@ -78,7 +77,9 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 transform.Translate(direction * acceleration * Time.deltaTime);
             }
-        } else {
+        }
+        else
+        {
             transform.Translate(direction * acceleration * Time.deltaTime);
         }
         float extraDist = 0.01f + boxCollider.bounds.extents.x * 0.05f;

@@ -25,6 +25,7 @@ public class SceneController : MonoBehaviour
 
     public void NextLevel(string level)
     {
+        SaveManager.Save();
         StartCoroutine(LoadLevel(level));
     }
 

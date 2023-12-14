@@ -51,7 +51,10 @@ MonoBehaviour:
   maxDownwardsOffset: 1
   leadDistance: 0.796875
   flipTime: 1.3
+  yDampTime: 0.2
   zValue: -10
+  yConstraint: {fileID: 0}
+  yConstraintBuffer: 2
 --- !u!114 &7481105562995644232
 MonoBehaviour:
   m_ObjectHideFlags: 0
