@@ -59,18 +59,16 @@ public class EnemyBehaviour : MonoBehaviour
         {
             currentAttackCooldown -= Time.deltaTime;
         }
-        if (shouldChase)
-        {
-            Collider2D playerCollision = Physics2D.OverlapCircle(transform.position, chaseDistance, player);
+        if (shouldChase) {
+            Collider2D playerCollision = Physics2D.OverlapCircle(transform.position, chaseDistance, player); // Maybe move into an OnCollision method
             if (playerCollision != null)
             {
-                Vector3 aiPosition = transform.position, mainCharacterPosition = playerCollision.transform.position;
-                float distance = Vector2.Distance(aiPosition, mainCharacterPosition);
-                Vector2 direction = (mainCharacterPosition - aiPosition);
-                direction.Normalize();
-                if (distance < chaseDistance)
+                Vector3 aiPosition = transform.position, catPosition = playerCollision.transform.position;
+                var cat = playerCollision.gameObject.GetComponent<CatBehaviour>(); // If cat is sneaking or standing still(?), we should consider sneak factor when chasing
+                float distanceToPlayer = Vector2.Distance(aiPosition, catPosition);
+                if (distanceToPlayer < chaseDistance)
                 {
-                    transform.position = Vector2.MoveTowards(aiPosition, mainCharacterPosition, acceleration * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(aiPosition, catPosition, acceleration * Time.deltaTime);
                 }
             }
             else
