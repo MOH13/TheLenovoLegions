@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseAcceleration: 1.05
-  baseAirAcceleration: 0.2
+  baseAirAcceleration: 0.4
   baseSprintMultiplier: 0.8
   maxGroundSpeedMultiplier: 0.25
   jumpImpulseMultiplier: 0.35

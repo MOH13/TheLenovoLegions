@@ -177,13 +177,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  damage: 1
+  damage: 3
   attackRange: 0.5
   attackCooldown: 1
   currentAttackCooldown: 0
+  damageOnCollision: 1
   acceleration: 1
   shouldChase: 0
   chaseDistance: 0
+  swingSetup:
+    shouldSwing: 0
+    swingDistance: 1
+    swingPeriod: 2
+    swingAmplitude: 120
   attackLocation: {fileID: 3405235065958059790}
   player:
     serializedVersion: 2

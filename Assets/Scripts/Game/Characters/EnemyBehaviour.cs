@@ -17,6 +17,7 @@ public class EnemyBehaviour : MonoBehaviour
     public float attackRange;
     public float attackCooldown;
     public float currentAttackCooldown;
+    public bool damageOnCollision;
     public float acceleration;
     public bool shouldChase;
     public float chaseDistance;
@@ -53,26 +54,25 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (currentAttackCooldown <= 0)
+        if (!damageOnCollision)
         {
-            Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player);
-            if (hit != null)
+            if (currentAttackCooldown <= 0)
             {
-                var playerPosition = hit.gameObject.transform;
-                Vector3 enemyDirection = playerPosition.position - transform.position;
-                float angle = Vector2.Angle(direction, enemyDirection);
-                if (angle < 30)
+                Collider2D hit = Physics2D.OverlapCircle(attackLocation.position, attackRange, player);
+                if (hit != null)
                 {
-                    hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
-                    currentAttackCooldown = attackCooldown;
+                    var playerPosition = hit.gameObject.transform;
+                    Vector3 enemyDirection = playerPosition.position - transform.position;
+                    float angle = Vector2.Angle(direction, enemyDirection);
+                    if (angle < 30)
+                    {
+                        hit.gameObject.GetComponent<CatBehaviour>().takeDamage(damage);
+                        currentAttackCooldown = attackCooldown;
+                    }
                 }
             }
-        }
-        else
-        {
-            currentAttackCooldown -= Time.deltaTime;
         }
         if (swingSetup.shouldSwing)
         {
@@ -81,7 +81,7 @@ public class EnemyBehaviour : MonoBehaviour
 
             var x = OriginalPosition.x + swingSetup.swingDistance * Mathf.Cos(angle);
             var y = OriginalPosition.y + swingSetup.swingDistance * Mathf.Sin(angle);
-            transform.position = new Vector2(x, y);
+            rigidBody.MovePosition(new Vector2(x, y));
         }
         else if (shouldChase)
         {
@@ -98,13 +98,20 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else
             {
-                transform.Translate(direction * acceleration * Time.deltaTime);
+                rigidBody.MovePosition(transform.position + acceleration * Time.deltaTime * direction);
+                CheckForDirectionChange();
             }
         }
         else
         {
-            transform.Translate(direction * acceleration * Time.deltaTime);
+            rigidBody.MovePosition(transform.position + acceleration * Time.deltaTime * direction);
+            CheckForDirectionChange();
         }
+        currentAttackCooldown -= Time.deltaTime;
+    }
+
+    void CheckForDirectionChange()
+    {
         float extraDist = 0.01f + boxCollider.bounds.extents.x * 0.05f;
         Vector3 size = new Vector2(boxCollider.bounds.size.x * 0.95f, boxCollider.bounds.size.y * 0.95f); // we make the box cast slightly smaller on y-axis so it doesn't check for collissions on this axis
         RaycastHit2D leftCollision = Physics2D.BoxCast(boxCollider.bounds.center, size, 0f, Vector2.left, extraDist, collisionLayerMask);
@@ -117,7 +124,24 @@ public class EnemyBehaviour : MonoBehaviour
         {
             direction = Vector2.left;
         }
+    }
 
+    void OnCollisionStay2D(Collision2D col)
+    {
+        if (!damageOnCollision || currentAttackCooldown > 0)
+            return;
+
+        if (((1 << col.gameObject.layer) & player) != 0)
+        {
+            var cat = col.gameObject.GetComponent<CatBehaviour>();
+
+            // Don't damage if cat is on top
+            if (cat.BoxCollider2D.bounds.min.y - cat.BoxCollider2D.edgeRadius > boxCollider.bounds.max.y + boxCollider.edgeRadius)
+                return;
+
+            cat.takeDamage(damage);
+            currentAttackCooldown = attackCooldown;
+        }
     }
 
 #if UNITY_EDITOR

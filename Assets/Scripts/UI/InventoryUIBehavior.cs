@@ -75,7 +75,7 @@ namespace LL.UI
                 foreach (var view in document.rootVisualElement.Query<ScrollView>().Build())
                 {
                     var thisView = view;
-                    thisView.RegisterCallback<FocusInEvent>((evt) => thisView.ScrollTo(evt.target as VisualElement));
+                    thisView.RegisterCallback<FocusInEvent>((evt) => { try { thisView.ScrollTo(evt.target as VisualElement); } catch (Exception) { } });
                 }
             }
 
