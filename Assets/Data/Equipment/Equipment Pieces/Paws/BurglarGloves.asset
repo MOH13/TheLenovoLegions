@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BurglarGloves
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Burglar Gloves
-  <PickupText>k__BackingField: 
+  <PickupText>k__BackingField: Improves your sneak!
   <Icon>k__BackingField: {fileID: 21300000, guid: 5fc759a3b5468024084a98f8da82bd20, type: 3}
   slot: {fileID: 11400000, guid: 0dd7c97d76e84c24aadbbd705b9d5059, type: 2}
   effects:

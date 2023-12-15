@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StickyGloves
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Sticky Gloves
-  <PickupText>k__BackingField: 
+  <PickupText>k__BackingField: Improves your climbing!
   <Icon>k__BackingField: {fileID: 21300000, guid: b56390d8c29e7734bb58f2b8ee8be35f, type: 3}
   slot: {fileID: 11400000, guid: 0dd7c97d76e84c24aadbbd705b9d5059, type: 2}
   effects:

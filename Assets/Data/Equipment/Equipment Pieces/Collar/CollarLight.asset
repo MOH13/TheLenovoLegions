@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CollarLight
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Collar Light
-  <PickupText>k__BackingField: 
+  <PickupText>k__BackingField: Improves your night vision!
   <Icon>k__BackingField: {fileID: 21300000, guid: a3880064334434946a7e42703846359e, type: 3}
   slot: {fileID: 11400000, guid: 5182e905cae370542bff497c61110310, type: 2}
   effects:

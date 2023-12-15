@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Wings
   m_EditorClassIdentifier: 
   <EquipmentName>k__BackingField: Wings
-  <PickupText>k__BackingField: 
+  <PickupText>k__BackingField: Improves your air control!
   <Icon>k__BackingField: {fileID: 21300000, guid: b600585185d072c47887736eaf45daa7, type: 3}
   slot: {fileID: 11400000, guid: 8963dce9486639e44bc248e9df07a11b, type: 2}
   effects:
-  - {fileID: 11400000, guid: 7d10c032ca84103438ee8dbf5661d1b9, type: 2}
+  - {fileID: 11400000, guid: c98388cd1834bb749a03cbca3fceb025, type: 2}
