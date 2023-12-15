@@ -88,7 +88,7 @@ public class EnemyBehaviour : MonoBehaviour
             Collider2D playerCollision = Physics2D.OverlapCircle(transform.position, chaseDistance, player); // Maybe move into an OnCollision method
             if (playerCollision != null)
             {
-                Vector3 aiPosition = transform.position, catPosition = playerCollision.transform.position;
+                Vector3 aiPosition = transform.position, catPosition = playerCollision.gameObject.transform.position;
                 var cat = playerCollision.gameObject.GetComponent<CatBehaviour>(); // If cat is sneaking or standing still(?), we should consider sneak factor when chasing
                 float distanceToPlayer = Vector2.Distance(aiPosition, catPosition);
                 if (distanceToPlayer < chaseDistance)
