@@ -20,8 +20,8 @@ MonoBehaviour:
     <Audio>k__BackingField: {fileID: 8300000, guid: 3c126cecad05cf44586b861345592fee, type: 3}
     <PositionHorizontal>k__BackingField: 2
     <PositionVertical>k__BackingField: 0
-  - <Text>k__BackingField: Sprint by holding <b>Shift</b>. Start your jump running
-      to jump further.
+  - <Text>k__BackingField: Start your jump running and hold <b>Space</b> to jump
+      further.
     <LeftIcon>k__BackingField: {fileID: 0}
     <RightIcon>k__BackingField: {fileID: 0}
     <Audio>k__BackingField: {fileID: 0}
