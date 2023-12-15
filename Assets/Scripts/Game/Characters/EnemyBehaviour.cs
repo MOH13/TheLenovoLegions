@@ -21,7 +21,7 @@ public class EnemyBehaviour : MonoBehaviour
     public bool shouldChase;
     public float chaseDistance;
     public SwingSetup swingSetup = new() { shouldSwing = false, swingDistance = 1, swingPeriod = 2, swingAmplitude = 120 };
-    private Vector3 direction;
+    public Vector3 direction;
 
     public Vector2 OriginalPosition { get; private set; }
     public float CurrentSwingAngle { get; private set; }
