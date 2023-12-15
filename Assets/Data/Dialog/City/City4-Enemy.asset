@@ -19,7 +19,7 @@ MonoBehaviour:
     <Audio>k__BackingField: {fileID: 8300000, guid: 3c126cecad05cf44586b861345592fee, type: 3}
     <PositionHorizontal>k__BackingField: 2
     <PositionVertical>k__BackingField: 0
-  - <Text>k__BackingField: Use <b>Left Mouse</b> to attack the enemy.
+  - <Text>k__BackingField: Use <b>Control</b>, or jump on top of the enemy, to attack.
     <LeftIcon>k__BackingField: {fileID: 0}
     <RightIcon>k__BackingField: {fileID: 0}
     <Audio>k__BackingField: {fileID: 8300000, guid: c035a46f4ced5a349bc133228209f852, type: 3}
