@@ -15,8 +15,12 @@ MonoBehaviour:
   pieces:
   - {fileID: 11400000, guid: ed2da450dc4aa3e4f9f19330b3fcf2fd, type: 2}
   - {fileID: 11400000, guid: 2ad0830c4d0cdf645948ede97a83734e, type: 2}
+  - {fileID: 11400000, guid: 0c2d951f280237144b947c46c0fa9fba, type: 2}
+  - {fileID: 11400000, guid: 18ccc8f91115f0e4ca07db146bd11b11, type: 2}
   - {fileID: 11400000, guid: f9aabdc1153ee4a48b4101cd712b5da3, type: 2}
   - {fileID: 11400000, guid: e750e78f3f2d55b45b9addf02a688dd9, type: 2}
+  - {fileID: 11400000, guid: f7a29af9349d598429b9913af8a9fccc, type: 2}
+  - {fileID: 11400000, guid: 86d3fe1bc679e304e98e18d31e68803f, type: 2}
   - {fileID: 11400000, guid: 98e2736650dc96d4394c79f8e60b31e7, type: 2}
   - {fileID: 11400000, guid: e20b624e0c12a8243827a6e5c9cad099, type: 2}
   - {fileID: 11400000, guid: 8acbdb05920fe174381bf5d1f7e85d34, type: 2}
