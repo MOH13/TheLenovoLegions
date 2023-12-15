@@ -94,6 +94,8 @@ public class CatBehaviour : MonoBehaviour
 
     MyPlayerInput input;
 
+    public BoxCollider2D BoxCollider2D => boxCollider2d;
+
     public Vector2? WallClimbingDirection => wallClimbingDirection;
 
     public float LastInputDirection => lastInputDirection;

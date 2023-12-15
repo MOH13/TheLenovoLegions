@@ -29,6 +29,12 @@ public class SceneController : MonoBehaviour
         StartCoroutine(LoadLevel(level));
     }
 
+    public void NextLevel(string level, string checkpointGameObject)
+    {
+        SaveManager.SaveWithCheckpointOverride(level, checkpointGameObject);
+        StartCoroutine(LoadLevel(level));
+    }
+
     IEnumerator LoadLevel(string level)
     {
         if (currentlyLoading != null)

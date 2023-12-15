@@ -79,6 +79,7 @@ public class SaveManager : MonoBehaviour
     [Serializable]
     public struct CheckpointSave
     {
+        public string? checkpointGameObject;
         public Vector2 checkpoint;
         public string level;
     }
@@ -128,6 +129,17 @@ public class SaveManager : MonoBehaviour
         {
             checkpoint = checkpointable.Checkpoint,
             level = SceneManager.GetActiveScene().name,
+        });
+
+        PlayerPrefs.SetString(CHECKPOINT_KEY, checkpointJson);
+    }
+
+    static void SaveCheckpointOverride(string level, string checkpointGameObject)
+    {
+        var checkpointJson = JsonUtility.ToJson(new CheckpointSave
+        {
+            checkpointGameObject = checkpointGameObject,
+            level = level,
         });
 
         PlayerPrefs.SetString(CHECKPOINT_KEY, checkpointJson);
@@ -217,7 +229,18 @@ public class SaveManager : MonoBehaviour
         if (savedCheckpoint.level == SceneManager.GetActiveScene().name)
         {
             var checkpointable = GameObject.FindGameObjectWithTag("Player").GetComponent<Checkpointable>();
+
             checkpointable.SetCheckpoint(savedCheckpoint.checkpoint);
+
+            if (!string.IsNullOrEmpty(savedCheckpoint.checkpointGameObject))
+            {
+                var go = GameObject.Find(savedCheckpoint.checkpointGameObject);
+                if (go != null)
+                {
+                    checkpointable.SetCheckpoint(go.transform.position);
+                }
+            }
+
             checkpointable.ResetToCheckpoint();
         }
 #if UNITY_EDITOR
@@ -256,6 +279,13 @@ public class SaveManager : MonoBehaviour
         SaveInventory();
         SaveLevel();
         SaveCheckpoint();
+    }
+
+    public static void SaveWithCheckpointOverride(string level, string checkpointGameObject)
+    {
+        SaveInventory();
+        SaveLevel();
+        SaveCheckpointOverride(level, checkpointGameObject);
     }
 
 #if UNITY_EDITOR

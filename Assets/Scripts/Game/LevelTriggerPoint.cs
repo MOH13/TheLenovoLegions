@@ -5,11 +5,15 @@ using UnityEngine;
 public class FinishPoint : MonoBehaviour
 {
     public string nextLevel;
+    public string checkpointGameObject;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            SceneController.Instance.NextLevel(nextLevel);
+            if (string.IsNullOrEmpty(checkpointGameObject))
+                SceneController.Instance.NextLevel(nextLevel);
+            else
+                SceneController.Instance.NextLevel(nextLevel, checkpointGameObject);
         }
     }
 }
